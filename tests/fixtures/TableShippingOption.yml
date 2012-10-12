@@ -1,0 +1,64 @@
+TableShippingOption:
+    weight:
+        Name: Weight-based shipping
+        Enabled: 1
+    volume:
+        Name: Volume-based shipping
+        Enabled: 1
+    value:
+        Name: Value-based shipping
+        Enabled: 1
+    quantity:
+        Name: Quantity-based shipping
+        Enabled: 1
+    insured:
+        Name: Insured Table Shipping
+        Description: Same as basic table shipping, but includes insurance.
+        Enabled: 1
+    tracked:
+        Name: Insured Table Shipping
+        Description: Same as basic table shipping, but includes a tracking code.
+        Enabled: 1
+TableShippingRate:
+    int_w4:
+        ShippingOption: =>TableShippingOption.weight
+        Country: '*'
+        WeightMin: 0
+        WeightMax: 4
+        Rate: 8.00
+    int_w6:
+        ShippingOption: =>TableShippingOption.weight
+        Country: '*'
+        WeightMin: 4
+        WeightMax: 6
+        Rate: 12.00
+    int_w15:
+        ShippingOption: =>TableShippingOption.weight
+        Country: '*'
+        WeightMin: 6
+        WeightMax: 15
+        Rate: 27.00
+    int_w70:
+        ShippingOption: =>TableShippingOption.weight
+        Country: '*'
+        WeightMin: 15
+        WeightMax: 70
+        Rate: 96.00
+    int_w100:
+        ShippingOption: =>TableShippingOption.weight
+        Country: '*'
+        WeightMin: 70
+        WeightMax: 100
+        Rate: 116.00
+    int_v4:
+        ShippingOption: =>TableShippingOption.volume
+        Country: '*'
+        VolumeMin: 0
+        VolumeMax: 4
+        Rate: 2.00
+    int_v10:
+        ShippingOption: =>TableShippingOption.volume
+        Country: '*'
+        VolumeMin: 4
+        VolumeMax: 10
+        Rate: 6.00
