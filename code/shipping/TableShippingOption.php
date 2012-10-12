@@ -68,34 +68,4 @@ class TableShippingRate extends RegionRestriction{
 		"ShippingOption" => "TableShippingOption"
 	);
 	
-	function populateDefaults_disabled(){
-		parent::populateDefaults();
-		foreach(array(
-			"Weight","Volume","Value","Quantity"
-		) as $constraint){
-			$this->{$constraint."Min"} = -1;
-			$this->{$constraint."Max"} = -1;
-		}
-	}
-	
-	function onBeforeWrite_disabled(){
-		parent::onBeforeWrite();
-		$constraints = array(
-			"Weight","Volume","Value","Quantity"
-		);
-		foreach($constraints as $constraint){
-			foreach(array($constraint."Min",$constraint."Max") as $minmax){
-				if(!$this->$minmax){
-					$this->$minmax = -1;
-				}
-			}
-		}
-	}
-	
-	function validate(){
-	
-		//if min is set, then max must be set also and vice versa
-	
-	}
-	
 }
