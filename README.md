@@ -2,7 +2,7 @@ This isn't actually a sub-module, but really a bunch of potential changes to the
 
 ## Region Restrictions
 
-The `RegionRestriction` class servces as a base class for providing regionalised restrictions.
+The `RegionRestriction` class serves as a base class for providing regionalised restrictions.
 Restrictions are specified by Country, State, and PostalCode. A value/rate can be given to each
 restriction. To work the appropriate rate, query for all the matchign restrictions, and sort
 by cheapest.

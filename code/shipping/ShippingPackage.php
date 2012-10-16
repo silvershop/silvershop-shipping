@@ -8,35 +8,35 @@
 class ShippingPackage{
 	
 	protected $weight;
-	protected $height, $length, $thickness, $diameter;
+	protected $height, $width, $depth, $diameter;
 	protected $value, $currency;
-	protected $itemcount;
+	protected $quantity;
 	
 	protected $defaultdimensions = array(
-		'height' => null,
-		'length' => null,
-		'thickness' => null,
-		'diameter' => null
+		'height' => 0,
+		'width' => 0,
+		'depth' => 0,
+		'diameter' => 0
 	);
 	
 	protected $defaultoptions = array(
-		'value' => null,
-		'itemcount' => 1,
+		'value' => 0,
+		'quantity' => 0,
 		'shape' => 'box',
 		'weightunit' => 'kg',
-		'lengthunit' => 'cm',
+		'widthunit' => 'cm',
 	);
 	
 	protected $dimensionaliases = array(
 		0 => 'height',
-		1 => 'length',
-		2 => 'thickness',
+		1 => 'width',
+		2 => 'depth',
 		'h' => 'height',
-		'l' => 'length',
-		't' => 'thickness'
+		'w' => 'width',
+		'd' => 'depth'
 	);
 	
-	function __construct($weight = 1, $dimensions = array(), $options = array()){
+	function __construct($weight = 0, $dimensions = array(), $options = array()){
 		$this->weight = $weight;
 		//set via aliases
 		foreach($dimensions as $key => $dimension){
@@ -54,18 +54,25 @@ class ShippingPackage{
 			if(isset($o[$name]))
 				$this->$name = $o[$name];
 		}
+		//force 0 values for anything below 0
+		$zerochecks = array_merge($this->defaultdimensions,array('value' => null, 'quantity' => null));
+		foreach($zerochecks as $dimension => $value){
+			if($this->$dimension < 0){
+				$this->$dimension = 0;
+			}
+		}
 	}
 	
 	function toArray(){
 		$data = array(
-			"w" => $this->weight,
-			"h" => $this->height,
-			"l" => $this->length,
-			"t" => $this->thickness,
-			"d" => $this->diameter,
-			"v" => $this->value,
-			"c" => $this->currency,
-			"i" => $this->itemcount
+			"weight" => $this->weight,
+			"height" => $this->height,
+			"width" => $this->width,
+			"depth" => $this->depth,
+			"diameter" => $this->diameter,
+			"value" => $this->value,
+			"currency" => $this->currency,
+			"quantity" => $this->quantity
 		);
 		return array_filter($data);
 	}
@@ -82,7 +89,7 @@ class ShippingPackage{
 	 * Calculate total volume, based on given dimensions
 	 */
 	function volume(){
-		return $this->height * $this->length * $this->thickness;
+		return $this->height * $this->width * $this->depth;
 	}
 	
 	function weight(){
@@ -93,16 +100,20 @@ class ShippingPackage{
 		return $this->height;
 	}
 	
-	function length(){
-		return $this->length;
+	function width(){
+		return $this->width;
 	}
 	
-	function thickness(){
-		return $this->thickness;
+	function depth(){
+		return $this->depth;
 	}
 	
 	function value(){
 		return $this->value;
 	}
 	
+	function quantity(){
+		return $this->quantity;
+	}
+
 }

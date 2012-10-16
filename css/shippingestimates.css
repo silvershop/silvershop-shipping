@@ -1,0 +1,15 @@
+#ShippingEstimateForm_ShippingEstimateForm .middleColumn,
+#ShippingEstimateForm_ShippingEstimateForm .field,
+#ShippingEstimateForm_ShippingEstimateForm label,
+#ShippingEstimateForm_ShippingEstimateForm fieldset,
+#ShippingEstimateForm_ShippingEstimateForm .Actions{
+	display:inline;
+}
+
+#ShippingEstimateForm_ShippingEstimateForm label{
+	margin-right:10px;
+}
+
+#ShippingEstimateForm_ShippingEstimateForm_PostalCode{
+	width:6em;
+}

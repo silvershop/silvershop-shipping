@@ -17,32 +17,38 @@ class TableShippingOption extends ShippingOption{
 	);
 	
 	/**
-	 * Work out the cost of sending package to given address
+	 * Find the appropriate shipping rate from stored table ranges
 	 */
-	function getRate(ShippingPackage $package, Address $address){
+	function calculateRate(ShippingPackage $package, Address $address){
 		$rate = null;
 		//search for matching: region, weight, volume, value, count
 		//for each shipping constraint: (below max or max is NULL) AND (above min OR min is NULL)
 		$packageconstraints = array(
 			"Weight" => 'weight',
 			"Volume" => 'volume',
-			//"Value",
-			//"Quantity"
+			"Value" => 'value',
+			"Quantity" => 'quantity'
 		);
-		$filters = array(
-			"\"ShippingOptionID\" = ".$this->ID
-		);
+		$constraintfilters = array();
 		foreach($packageconstraints as $db => $pakval){
-			if($package->{$pakval}()){
-				$mincol = "\"TableShippingRate\".\"{$db}Min\"";
-				$maxcol = "\"TableShippingRate\".\"{$db}Max\"";
-				$filters[] = "$mincol >= 0 AND $mincol <= " . $package->{$pakval}() .
-								 " AND $maxcol >= 0 AND $maxcol >= " . $package->{$pakval}();
-			}
+			$mincol = "\"TableShippingRate\".\"{$db}Min\"";
+			$maxcol = "\"TableShippingRate\".\"{$db}Max\"";
+			$constraintfilters[] = "(".
+				"$mincol >= 0" .
+				" AND $mincol <= " . $package->{$pakval}() .
+				" AND $maxcol > 0". //ignore constraints with maxvalue = 0
+				" AND $maxcol >= " . $package->{$pakval}() .
+				" AND $mincol < $maxcol". //sanity check
+			")";
 		}
-		if($tr = DataObject::get_one("TableShippingRate", "(".implode(") AND (",$filters).")", true, "Rate ASC")){
+		$filter = "(".implode(") AND (",array(
+			"\"ShippingOptionID\" = ".$this->ID,
+			implode(" OR ",$constraintfilters)
+		)).")";
+		if($tr = DataObject::get_one("TableShippingRate", $filter, true, "Rate ASC")){
 			$rate = $tr->Rate;
 		}
+		$this->CalculatedRate = $rate;
 		return $rate;
 	}
 	
@@ -51,7 +57,7 @@ class TableShippingOption extends ShippingOption{
 class TableShippingRate extends RegionRestriction{
 	
 	static $db = array(
-		//constraints
+		//constraint values
 		"WeightMin" => "Decimal",
 		"WeightMax" => "Decimal",
 		"VolumeMin" => "Decimal",
@@ -66,6 +72,22 @@ class TableShippingRate extends RegionRestriction{
 	
 	static $has_one = array(
 		"ShippingOption" => "TableShippingOption"
+	);
+	
+	static $summary_fields = array(
+		'Country',
+		'State',
+		'City',
+		'PostalCode',
+		'WeightMin',
+		'WeightMax',
+		'VolumeMin',
+		'VolumeMax',
+		'ValueMin',
+		'ValueMax',
+		'QuantityMin',
+		'QuantityMax',
+		'Rate'
 	);
 	
 }

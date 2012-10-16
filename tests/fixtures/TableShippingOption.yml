@@ -14,11 +14,11 @@ TableShippingOption:
     insured:
         Name: Insured Table Shipping
         Description: Same as basic table shipping, but includes insurance.
-        Enabled: 1
+        Enabled: 0
     tracked:
         Name: Insured Table Shipping
         Description: Same as basic table shipping, but includes a tracking code.
-        Enabled: 1
+        Enabled: 0
 TableShippingRate:
     int_w4:
         ShippingOption: =>TableShippingOption.weight
@@ -50,15 +50,39 @@ TableShippingRate:
         WeightMin: 70
         WeightMax: 100
         Rate: 116.00
-    int_v4:
+    int_vo4:
         ShippingOption: =>TableShippingOption.volume
         Country: '*'
         VolumeMin: 0
         VolumeMax: 4
         Rate: 2.00
-    int_v10:
+    int_vo10:
         ShippingOption: =>TableShippingOption.volume
         Country: '*'
         VolumeMin: 4
         VolumeMax: 10
         Rate: 6.00
+    int_va4:
+        ShippingOption: =>TableShippingOption.value
+        Country: '*'
+        ValueMin: 0
+        ValueMax: 4
+        Rate: 2.00
+    int_va10:
+        ShippingOption: =>TableShippingOption.value
+        Country: '*'
+        ValueMin: 4
+        ValueMax: 10
+        Rate: 6.00       
+    int_q4:
+        ShippingOption: =>TableShippingOption.quantity
+        Country: '*'
+        QuantityMin: 1
+        QuantityMax: 4
+        Rate: 11.00
+    int_q10:
+        ShippingOption: =>TableShippingOption.quantity
+        Country: '*'
+        QuantityMin: 4
+        QuantityMax: 10
+        Rate: 18.60

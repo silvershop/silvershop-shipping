@@ -16,14 +16,16 @@ class ShippingOption extends DataObject{
 		"HandlingFee" => "Currency", //adds extra handling cost to use this method
 	);
 	
-	static $many_many = array(
-		//Groups
-		//Countries / region restrictions
+	static $casting = array(
+		'Rate' => 'Currency'
 	);
 	
+	function calculateRate(Package $package, Address $address){
+		return null;
+	}
 	
-	function getRate(Package $package,$address){
-		
+	function getRate(){
+		return $this->CalculatedRate;
 	}
 	
 }
