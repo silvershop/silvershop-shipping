@@ -28,7 +28,11 @@ class ShippingEstimateForm extends Form{
 			$estimates = $estimator->getEstimates();			
 			Session::set("ShippingEstimates", $estimates);
 		}
-		Director::redirectBack();
+		if(Director::is_ajax()){
+			//TODO: return list of shipping estimates
+		}else{
+			Director::redirectBack();
+		}
 	}
 	
 }

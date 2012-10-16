@@ -46,13 +46,8 @@ class RegionRestrictionTest extends SapphireTest{
 		$this->assertFalse($rate);
 	}
 	
-	//TODO: move this to some generic / abstracted location. RateFinder class perhaps?
 	function getRate(Address $address){
-		$where = array(
-			"TRIM(LOWER(\"Country\")) = TRIM(LOWER('".$address->Country."')) OR \"Country\" = '*'",
-			"TRIM(LOWER(\"State\")) = TRIM(LOWER('".$address->State."')) OR \"State\" = '*'",
-			"TRIM(LOWER(\"PostalCode\")) = TRIM(LOWER('".$address->PostalCode."')) OR \"PostalCode\" = '*'"
-		);
+		$where = RegionRestriction::address_filter($address);
 		return DataObject::get_one("RegionRestriction_RateTest", $where, true, "Rate ASC");
 	}
 	

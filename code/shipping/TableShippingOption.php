@@ -17,12 +17,10 @@ class TableShippingOption extends ShippingOption{
 	);
 	
 	/**
-	 * Find the appropriate shipping rate from stored table ranges
+	 * Find the appropriate shipping rate from stored table range metrics
 	 */
 	function calculateRate(ShippingPackage $package, Address $address){
 		$rate = null;
-		//search for matching: region, weight, volume, value, count
-		//for each shipping constraint: (below max or max is NULL) AND (above min OR min is NULL)
 		$packageconstraints = array(
 			"Weight" => 'weight',
 			"Volume" => 'volume',
@@ -38,12 +36,13 @@ class TableShippingOption extends ShippingOption{
 				" AND $mincol <= " . $package->{$pakval}() .
 				" AND $maxcol > 0". //ignore constraints with maxvalue = 0
 				" AND $maxcol >= " . $package->{$pakval}() .
-				" AND $mincol < $maxcol". //sanity check
+				" AND $mincol < $maxcol" . //sanity check
 			")";
 		}
 		$filter = "(".implode(") AND (",array(
 			"\"ShippingOptionID\" = ".$this->ID,
-			implode(" OR ",$constraintfilters)
+			RegionRestriction::address_filter($address), //address restriction
+			implode(" OR ",$constraintfilters) //metrics restriction
 		)).")";
 		if($tr = DataObject::get_one("TableShippingRate", $filter, true, "Rate ASC")){
 			$rate = $tr->Rate;
@@ -54,6 +53,9 @@ class TableShippingOption extends ShippingOption{
 	
 }
 
+/**
+ * Adds extra metric ranges to restrict with, rather than just region.
+ */
 class TableShippingRate extends RegionRestriction{
 	
 	static $db = array(

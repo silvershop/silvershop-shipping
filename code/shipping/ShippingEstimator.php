@@ -18,10 +18,12 @@ class ShippingEstimator{
 			return $this->estimates;
 		}
 		$output = new DataObjectSet();
-		foreach($this->getShippingOptions() as $option){
-			$option->CalculatedRate = $option->calculateRate($this->package, $this->address);
-			if($option->CalculatedRate !== null){
-				$output->push($option);
+		if($options = $this->getShippingOptions()){
+			foreach($options as $option){
+				$option->CalculatedRate = $option->calculateRate($this->package, $this->address);
+				if($option->CalculatedRate !== null){
+					$output->push($option);
+				}
 			}
 		}
 		// cache estimates
