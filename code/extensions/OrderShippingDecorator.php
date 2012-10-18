@@ -2,6 +2,14 @@
 
 class OrderShippingDecorator extends DataObjectDecorator{
 	
+	function extraStatics(){
+		return array(
+			'db' => array(
+				'ShippingTotal' => 'Currency'
+			)
+		);
+	}
+	
 	function createShippingPackage(){
 		//create package, with total weight, dimensions, value, etc
 		$weight = $width = $height = $depth = $value = $quantity = 0;

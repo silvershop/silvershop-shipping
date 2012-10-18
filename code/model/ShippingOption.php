@@ -11,9 +11,11 @@ class ShippingOption extends DataObject{
 		"Name" => "Varchar",
 		"Description" => "Varchar",
 		"Enabled" => "Boolean",
-		"WeightMin" => "Decimal",
-		"WeightMax" => "Decimal",
-		"HandlingFee" => "Currency", //adds extra handling cost to use this method
+		
+		//TODO
+		//"WeightMin" => "Decimal",
+		//"WeightMax" => "Decimal",
+		//"HandlingFee" => "Currency", //adds extra handling cost to use this method
 	);
 	
 	static $casting = array(
@@ -26,6 +28,14 @@ class ShippingOption extends DataObject{
 	
 	function getRate(){
 		return $this->CalculatedRate;
+	}
+	
+	function Title(){
+		return implode(" - ",array_filter(array(
+			$this->CalculatedRate,
+			$this->Name,
+			$this->Description
+		)));
 	}
 	
 }
