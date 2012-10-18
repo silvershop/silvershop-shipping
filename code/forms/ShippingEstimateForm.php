@@ -27,12 +27,11 @@ class ShippingEstimateForm extends Form{
 			$estimator = new ShippingEstimator($package, $address);
 			$estimates = $estimator->getEstimates();			
 			Session::set("ShippingEstimates", $estimates);
+			if(Director::is_ajax()){
+				return json_encode($estimates->toArray()); //TODO: replace with an AJAXResponse class that can output to different formats
+			}
 		}
-		if(Director::is_ajax()){
-			//TODO: return list of shipping estimates
-		}else{
-			Director::redirectBack();
-		}
+		Director::redirectBack();
 	}
 	
 }
