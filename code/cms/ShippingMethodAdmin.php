@@ -1,13 +1,13 @@
 <?php
-class ShippingOptionAdmin extends ModelAdmin{
+class ShippingMethodAdmin extends ModelAdmin{
 
 	static $url_segment = "shipping-option";
 	static $menu_title = "Shipping Options";
 	static $menu_priority = 6;
 
 	static $managed_models = array(
-		'ShippingOption' => array(
-			'collection_controller' => 'ShippingOptionAdmin_CollectionController'	
+		'ShippingMethod' => array(
+			'collection_controller' => 'ShippingMethodAdmin_CollectionController'	
 		)
 	);
 
@@ -15,11 +15,11 @@ class ShippingOptionAdmin extends ModelAdmin{
 	
 }
 
-class ShippingOptionAdmin_CollectionController extends ModelAdmin_CollectionController{
+class ShippingMethodAdmin_CollectionController extends ModelAdmin_CollectionController{
 	
 	function CreateForm(){
 		$form = parent::CreateForm();
-		$options = ClassInfo::subclassesFor("ShippingOption");
+		$options = ClassInfo::subclassesFor("ShippingMethod");
 		unset($options[0]);
 		$form->Fields()->push(new DropdownField("ClassName","Type",$options));
 		return $form;

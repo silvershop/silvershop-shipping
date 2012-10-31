@@ -1,11 +1,11 @@
 <?php
 /**
- * ShippingOption is a base class for providing shipping options to customers. 
+ * ShippingMethod is a base class for providing shipping options to customers. 
  * 
  * @package shop
  * @subpackage shipping 
  */
-class ShippingOption extends DataObject{
+class ShippingMethod extends DataObject{
 	
 	static $db = array(
 		"Name" => "Varchar",

@@ -18,7 +18,7 @@ class ShippingEstimator{
 			return $this->estimates;
 		}
 		$output = new DataObjectSet();
-		if($options = $this->getShippingOptions()){
+		if($options = $this->getShippingMethods()){
 			foreach($options as $option){
 				$option->CalculatedRate = $option->calculateRate($this->package, $this->address);
 				if($option->CalculatedRate !== null){
@@ -35,8 +35,8 @@ class ShippingEstimator{
 	/**
 	 * get options that apply to package and location
 	 */
-	function getShippingOptions(){
-		$options = DataObject::get("ShippingOption","\"Enabled\" = 1");
+	function getShippingMethods(){
+		$options = DataObject::get("ShippingMethod","\"Enabled\" = 1");
 		//TODO: restrict options to region / package specs
 		return $options;
 	}

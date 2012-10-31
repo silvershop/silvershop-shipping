@@ -3,7 +3,7 @@
 class ShippingEstimateFormTest extends FunctionalTest{
 	
 	static $fixturefile = array(
-		"shop_shippingframework/tests/fixtures/TableShippingOption.yml"
+		"shop_shippingframework/tests/fixtures/TableShippingMethod.yml"
 	);
 	
 	function testGetEstimates(){

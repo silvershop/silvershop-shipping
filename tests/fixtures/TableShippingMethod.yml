@@ -1,4 +1,4 @@
-TableShippingOption:
+TableShippingMethod:
     weight:
         Name: Weight-based shipping
         Enabled: 1
@@ -22,134 +22,134 @@ TableShippingOption:
 TableShippingRate:
     #international rates
     int_w4:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: '*'
         WeightMin: 0
         WeightMax: 4
         Rate: 8.00
     int_w6:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: '*'
         WeightMin: 4
         WeightMax: 6
         Rate: 12.00
     int_w15:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: '*'
         WeightMin: 6
         WeightMax: 15
         Rate: 27.00
     int_w70:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: '*'
         WeightMin: 15
         WeightMax: 70
         Rate: 96.00
     int_w100:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: '*'
         WeightMin: 70
         WeightMax: 100
         Rate: 116.00
     int_vo4:
-        ShippingOption: =>TableShippingOption.volume
+        ShippingMethod: =>TableShippingMethod.volume
         Country: '*'
         VolumeMin: 0
         VolumeMax: 4
         Rate: 2.00
     int_vo10:
-        ShippingOption: =>TableShippingOption.volume
+        ShippingMethod: =>TableShippingMethod.volume
         Country: '*'
         VolumeMin: 4
         VolumeMax: 10
         Rate: 6.00
     int_va4:
-        ShippingOption: =>TableShippingOption.value
+        ShippingMethod: =>TableShippingMethod.value
         Country: '*'
         ValueMin: 0
         ValueMax: 4
         Rate: 2.00
     int_va10:
-        ShippingOption: =>TableShippingOption.value
+        ShippingMethod: =>TableShippingMethod.value
         Country: '*'
         ValueMin: 4
         ValueMax: 10
         Rate: 6.00       
     int_q4:
-        ShippingOption: =>TableShippingOption.quantity
+        ShippingMethod: =>TableShippingMethod.quantity
         Country: '*'
         QuantityMin: 1
         QuantityMax: 4
         Rate: 11.00
     int_q10:
-        ShippingOption: =>TableShippingOption.quantity
+        ShippingMethod: =>TableShippingMethod.quantity
         Country: '*'
         QuantityMin: 4
         QuantityMax: 10
         Rate: 18.60
     # localised rates
     loc_w4:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: 'NZ'
         WeightMin: 0
         WeightMax: 4
         Rate: 4.00
     loc_w6:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: 'NZ'
         WeightMin: 4
         WeightMax: 6
         Rate: 6.00
     loc_w15:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: 'NZ'
         WeightMin: 6
         WeightMax: 15
         Rate: 13.50
     loc_w70:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: 'NZ'
         WeightMin: 15
         WeightMax: 70
         Rate: 48.00
     loc_w100:
-        ShippingOption: =>TableShippingOption.weight
+        ShippingMethod: =>TableShippingMethod.weight
         Country: 'NZ'
         WeightMin: 70
         WeightMax: 100
         Rate: 58.00
     loc_vo4:
-        ShippingOption: =>TableShippingOption.volume
+        ShippingMethod: =>TableShippingMethod.volume
         Country: 'NZ'
         VolumeMin: 0
         VolumeMax: 4
         Rate: 1.00
     loc_vo10:
-        ShippingOption: =>TableShippingOption.volume
+        ShippingMethod: =>TableShippingMethod.volume
         Country: 'NZ'
         VolumeMin: 4
         VolumeMax: 10
         Rate: 3.00
     loc_va4:
-        ShippingOption: =>TableShippingOption.value
+        ShippingMethod: =>TableShippingMethod.value
         Country: 'NZ'
         ValueMin: 0
         ValueMax: 4
         Rate: 1.00
     loc_va10:
-        ShippingOption: =>TableShippingOption.value
+        ShippingMethod: =>TableShippingMethod.value
         Country: 'NZ'
         ValueMin: 4
         ValueMax: 10
         Rate: 3.00       
     loc_q4:
-        ShippingOption: =>TableShippingOption.quantity
+        ShippingMethod: =>TableShippingMethod.quantity
         Country: 'NZ'
         QuantityMin: 1
         QuantityMax: 4
         Rate: 5.50
     loc_q10:
-        ShippingOption: =>TableShippingOption.quantity
+        ShippingMethod: =>TableShippingMethod.quantity
         Country: 'NZ'
         QuantityMin: 4
         QuantityMax: 10

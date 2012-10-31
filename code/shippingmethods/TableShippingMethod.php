@@ -5,7 +5,7 @@
  * @package shop
  * @subpackage shipping
  */
-class TableShippingOption extends ShippingOption{
+class TableShippingMethod extends ShippingMethod{
 	
 	static $defaults = array(
 		'Name' => 'Table Shipping',
@@ -40,7 +40,7 @@ class TableShippingOption extends ShippingOption{
 			")";
 		}
 		$filter = "(".implode(") AND (",array(
-			"\"ShippingOptionID\" = ".$this->ID,
+			"\"ShippingMethodID\" = ".$this->ID,
 			RegionRestriction::address_filter($address), //address restriction
 			implode(" OR ",$constraintfilters) //metrics restriction
 		)).")";
@@ -73,7 +73,7 @@ class TableShippingRate extends RegionRestriction{
 	);
 	
 	static $has_one = array(
-		"ShippingOption" => "TableShippingOption"
+		"ShippingMethod" => "TableShippingMethod"
 	);
 	
 	static $summary_fields = array(

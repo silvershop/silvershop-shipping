@@ -1,18 +1,18 @@
 <?php
 
-class TableShippingOptionTest extends SapphireTest{
+class TableShippingMethodTest extends SapphireTest{
 	
 	static $fixture_file = array(
-		'shop_shippingframework/tests/fixtures/TableShippingOption.yml',
+		'shop_shippingframework/tests/fixtures/TableShippingMethod.yml',
 		'shop/tests/fixtures/Addresses.yml'
 	);
 	
 	function setUp(){
 		parent::setUp();
-		$this->weightshipping = $this->objFromFixture("TableShippingOption", "weight");
-		$this->volumeshipping = $this->objFromFixture("TableShippingOption", "volume");
-		$this->valueshipping = $this->objFromFixture("TableShippingOption", "value");
-		$this->quantityshipping = $this->objFromFixture("TableShippingOption", "quantity");
+		$this->weightshipping = $this->objFromFixture("TableShippingMethod", "weight");
+		$this->volumeshipping = $this->objFromFixture("TableShippingMethod", "volume");
+		$this->valueshipping = $this->objFromFixture("TableShippingMethod", "value");
+		$this->quantityshipping = $this->objFromFixture("TableShippingMethod", "quantity");
 
 		$this->p0 = new ShippingPackage();
 		$this->p1 = new ShippingPackage(2.34, array(0.5,1,2), array('value' => 2, 'quantity' => 3));
