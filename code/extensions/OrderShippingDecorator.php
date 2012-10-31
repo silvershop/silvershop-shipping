@@ -6,6 +6,9 @@ class OrderShippingDecorator extends DataObjectDecorator{
 		return array(
 			'db' => array(
 				'ShippingTotal' => 'Currency'
+			),
+			'has_one' => array(
+				'ShippingMethod' => 'ShippingMethod'
 			)
 		);
 	}
@@ -16,7 +19,7 @@ class OrderShippingDecorator extends DataObjectDecorator{
 		
 		$items = $this->owner->Items();
 		
-		$weight = $items->Sum('Weight',true);
+		$weight = $items->Sum('Weight',true); //Sum is found on OrdItemList (Component Extension)
 		$width = $items->Sum('Width',true);
 		$height = $items->Sum('Height',true);
 		$depth = $items->Sum('Depth',true);
