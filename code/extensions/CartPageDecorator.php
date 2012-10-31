@@ -11,7 +11,10 @@ class CartPageDecorator extends Extension{
 	}
 	
 	function ShippingEstimates(){
-		return Session::get("ShippingEstimates");
+		$estimates = Session::get("ShippingEstimates");
+		Session::set("ShippingEstimates",null);
+		Session::clear("ShippingEstimates");
+		return $estimates;
 	}
 	
 }

@@ -26,6 +26,7 @@ class ShippingEstimator{
 				}
 			}
 		}
+		$output->sort("CalculatedRate","ASC"); //sort by rate, lowest to highest
 		// cache estimates
 		$this->estimates = $output;
 		$this->calculated = true;

@@ -3,4 +3,3 @@
 Object::add_extension("PopulateShopTask", "PopulateTableShippingTask");
 Object::add_extension("Order", "OrderShippingDecorator");
 Object::add_extension("CartPage_Controller", "CartPageDecorator");
-Object::add_extension('CheckoutPage_Controller','CheckoutPageControllerExtension');

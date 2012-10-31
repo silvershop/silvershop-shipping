@@ -23,3 +23,4 @@ Table shipping rates also have optional weight, volume, value, and quantity cons
 
  * Add Country and State models. Include pre-defined lists for popular countries.
  * Create API-connected shipping options.
+ * Store estimate data in session to pre-populate the checkout form(s)
