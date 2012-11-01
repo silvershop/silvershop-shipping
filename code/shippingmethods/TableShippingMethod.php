@@ -51,6 +51,50 @@ class TableShippingMethod extends ShippingMethod{
 		return $rate;
 	}
 	
+	function getCMSFields(){
+		$fields = parent::getCMSFields();
+		
+		$fieldList = array(
+			"Country" => "Country",
+			"State" => "State",
+			"City" => "City",
+			"PostalCode" => "PostalCode",
+			"WeightMin" => "WeightMin",
+			"WeightMax" => "WeightMax",
+			"VolumeMin" => "VolumeMin",
+			"VolumeMax" => "VolumeMax",
+			"ValueMin" => "ValueMin",
+			"ValueMax" => "ValueMax",
+			"QuantityMin" => "QuantityMin",
+			"QuantityMax" => "QuantityMax",
+			"Rate" => "Rate"
+		);
+		
+		$fieldTypes = array(
+			"Country" => "TextField",
+			"State" => "TextField",
+			"City" => "TextField",
+			"PostalCode" => "TextField",
+			"WeightMin" => "TextField",
+			"WeightMax" => "TextField",
+			"VolumeMin" => "TextField",
+			"VolumeMax" => "TextField",
+			"ValueMin" => "TextField",
+			"ValueMax" => "TextField",
+			"QuantityMin" => "TextField",
+			"QuantityMax" => "TextField",
+			"Rate" => "TextField"
+		);
+		
+		$fields->removeFieldFromTab("Root.Rates", "Rates");
+		if($this->isInDB()){
+			$tablefield = new TableField("Rates", "TableShippingRate", $fieldList, $fieldTypes);
+			$tablefield->setCustomSourceItems($this->Rates());
+			$fields->addFieldToTab("Root.Rates", $tablefield);
+		}
+		return $fields;
+	}
+	
 }
 
 /**

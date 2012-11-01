@@ -28,4 +28,13 @@ class RegionRestriction extends DataObject{
 		return "(".implode(") AND (", $where).")";
 	}
 	
+	function onBeforeWrite(){
+		foreach(self::$defaults as $field => $value){
+			if(empty($this->$field)){
+				$this->$field = $value;
+			}
+		}
+		parent::onBeforeWrite();
+	}
+	
 }
