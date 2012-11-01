@@ -69,6 +69,7 @@ class ShippingPackage{
 			"height" => $this->height,
 			"width" => $this->width,
 			"depth" => $this->depth,
+			"volume" => $this->volume(),
 			"diameter" => $this->diameter,
 			"value" => $this->value,
 			"currency" => $this->currency,
