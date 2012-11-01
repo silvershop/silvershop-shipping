@@ -31,7 +31,7 @@ class OrderShippingDecorator extends DataObjectDecorator{
 			array($height,$width,$depth),
 			array(
 				'value' => $value,
-				'itemcount' => $quantity
+				'quantity' => $quantity
 			)
 		);
 		return $package;
