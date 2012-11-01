@@ -37,7 +37,7 @@ class TableShippingMethodTest extends SapphireTest{
 		$this->assertMatch($type, $this->p0, $address_int, 2); //volume = 0cm3
 		$this->assertMatch($type, $this->p1, $address_int, 2); //volume = 1cm3
 		$this->assertMatch($type, $this->p2, $address_int, 6); //volume = 6cm3
-		$this->assertNoMatch($type, $this->p3, $address_int); //volume = 18927.783cm3
+		$this->assertMatch($type, $this->p3, $address_int, 520); //volume = 18927.783cm3
 		$this->assertNoMatch($type, $this->p4, $address_int); //volume = 2000000cm3
 
 		//value based
@@ -73,7 +73,7 @@ class TableShippingMethodTest extends SapphireTest{
 		$this->assertMatch($type, $this->p0, $address_loc, 1); //volume = 0cm3
 		$this->assertMatch($type, $this->p1, $address_loc, 1); //volume = 1cm3
 		$this->assertMatch($type, $this->p2, $address_loc, 3); //volume = 6cm3
-		$this->assertNoMatch($type, $this->p3, $address_loc); //volume = 18927.783cm3
+		$this->assertMatch($type, $this->p3, $address_loc, 520); //volume = 18927.783cm3
 		$this->assertNoMatch($type, $this->p4, $address_loc); //volume = 2000000cm3
 		
 		//value based

@@ -20,7 +20,7 @@ TableShippingMethod:
         Description: Same as basic table shipping, but includes a tracking code.
         Enabled: 0
 TableShippingRate:
-    #international rates
+    #weight-based rates
     int_w4:
         ShippingMethod: =>TableShippingMethod.weight
         Country: '*'
@@ -51,43 +51,6 @@ TableShippingRate:
         WeightMin: 70
         WeightMax: 100
         Rate: 116.00
-    int_vo4:
-        ShippingMethod: =>TableShippingMethod.volume
-        Country: '*'
-        VolumeMin: 0
-        VolumeMax: 4
-        Rate: 2.00
-    int_vo10:
-        ShippingMethod: =>TableShippingMethod.volume
-        Country: '*'
-        VolumeMin: 4
-        VolumeMax: 10
-        Rate: 6.00
-    int_va4:
-        ShippingMethod: =>TableShippingMethod.value
-        Country: '*'
-        ValueMin: 0
-        ValueMax: 4
-        Rate: 2.00
-    int_va10:
-        ShippingMethod: =>TableShippingMethod.value
-        Country: '*'
-        ValueMin: 4
-        ValueMax: 10
-        Rate: 6.00       
-    int_q4:
-        ShippingMethod: =>TableShippingMethod.quantity
-        Country: '*'
-        QuantityMin: 1
-        QuantityMax: 4
-        Rate: 11.00
-    int_q10:
-        ShippingMethod: =>TableShippingMethod.quantity
-        Country: '*'
-        QuantityMin: 4
-        QuantityMax: 10
-        Rate: 18.60
-    # localised rates
     loc_w4:
         ShippingMethod: =>TableShippingMethod.weight
         Country: 'NZ'
@@ -118,6 +81,43 @@ TableShippingRate:
         WeightMin: 70
         WeightMax: 100
         Rate: 58.00
+    #volume-based rates
+    int_vo4:
+        ShippingMethod: =>TableShippingMethod.volume
+        Country: '*'
+        VolumeMin: 0
+        VolumeMax: 4
+        Rate: 2.00
+    int_vo10:
+        ShippingMethod: =>TableShippingMethod.volume
+        Country: '*'
+        VolumeMin: 4
+        VolumeMax: 10
+        Rate: 6.00
+    int_vo50:
+        ShippingMethod: =>TableShippingMethod.volume
+        Country: '*'
+        VolumeMin: 10
+        VolumeMax: 50
+        Rate: 30.00
+    int_vo1000:
+        ShippingMethod: =>TableShippingMethod.volume
+        Country: '*'
+        VolumeMin: 50
+        VolumeMax: 1000
+        Rate: 100.00
+    int_vol10000:
+        ShippingMethod: =>TableShippingMethod.volume
+        Country: '*'
+        VolumeMin: 1000
+        VolumeMax: 10000
+        Rate: 300.00
+    int_vol100000:
+        ShippingMethod: =>TableShippingMethod.volume
+        Country: '*'
+        VolumeMin: 10000
+        VolumeMax: 100000
+        Rate: 520.00
     loc_vo4:
         ShippingMethod: =>TableShippingMethod.volume
         Country: 'NZ'
@@ -130,6 +130,31 @@ TableShippingRate:
         VolumeMin: 4
         VolumeMax: 10
         Rate: 3.00
+    #value-based rates
+    int_va4:
+        ShippingMethod: =>TableShippingMethod.value
+        Country: '*'
+        ValueMin: 0
+        ValueMax: 4
+        Rate: 2.00
+    int_va10:
+        ShippingMethod: =>TableShippingMethod.value
+        Country: '*'
+        ValueMin: 4
+        ValueMax: 10
+        Rate: 6.00
+    int_va50:
+        ShippingMethod: =>TableShippingMethod.value
+        Country: '*'
+        ValueMin: 10
+        ValueMax: 50
+        Rate: 25.00
+    int_va200:
+        ShippingMethod: =>TableShippingMethod.value
+        Country: '*'
+        ValueMin: 50
+        ValueMax: 200
+        Rate: 50.00
     loc_va4:
         ShippingMethod: =>TableShippingMethod.value
         Country: 'NZ'
@@ -142,6 +167,19 @@ TableShippingRate:
         ValueMin: 4
         ValueMax: 10
         Rate: 3.00       
+    #quantity-based rates  
+    int_q4:
+        ShippingMethod: =>TableShippingMethod.quantity
+        Country: '*'
+        QuantityMin: 1
+        QuantityMax: 4
+        Rate: 11.00
+    int_q10:
+        ShippingMethod: =>TableShippingMethod.quantity
+        Country: '*'
+        QuantityMin: 4
+        QuantityMax: 10
+        Rate: 18.60
     loc_q4:
         ShippingMethod: =>TableShippingMethod.quantity
         Country: 'NZ'
