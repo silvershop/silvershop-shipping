@@ -18,13 +18,22 @@ class RegionRestriction extends DataObject{
 	
 	static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
 	
-	static function address_filter(Address $address){
-		$where = array(
-			"TRIM(LOWER(\"Country\")) = TRIM(LOWER('".$address->Country."')) OR \"Country\" = '*'",
-			"TRIM(LOWER(\"State\")) = TRIM(LOWER('".$address->State."')) OR \"State\" = '*'",
-			"TRIM(LOWER(\"City\")) = TRIM(LOWER('".$address->City."')) OR \"City\" = '*'",
-			"TRIM(LOWER(\"PostalCode\")) = TRIM(LOWER('".$address->PostalCode."')) OR \"PostalCode\" = '*'"
+	
+	/**
+	 * Produce a SQL filter to get matching RegionRestrictions to a given address
+	 * @param Address $address
+	 */
+	static function address_filter(Address $address){	
+		$restrictables = array(
+			"Country",
+			"State",
+			"City",
+			"PostalCode"
 		);
+		$where = array();
+		foreach($restrictables as $field){
+			$where[] = "TRIM(LOWER(\"$field\")) = TRIM(LOWER('".$address->$field."')) OR \"$field\" = '*' OR \"$field\" = ''";
+		}
 		return "(".implode(") AND (", $where).")";
 	}
 	
