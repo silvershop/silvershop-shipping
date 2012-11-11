@@ -17,7 +17,7 @@ you can run the task: `yoursite.tld/dev/tasks/PopulateTableShippingTask`
 
 ## Architecture
 
-`ShippingPackage` is a class used to encapsulate shipping data such as weight.
+`ShippingPackage` is a class used to encapsulate shipping data including: weight, dimensions, value, quantity.
 
 `ShippingMethod` is the base class for different types of shipping calculation.
 These could either be flat rates, table based rates, or a
