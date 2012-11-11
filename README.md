@@ -11,28 +11,28 @@ This isn't actually a sub-module, but really a bunch of potential changes to the
  * Put the shop_shippingframework folder into your SilverStripe root directory
  * Add the ShippingFrameWorkModifier to your modifiers config, eg:
 
-	Order::set_modifiers(array(
-		'ShippingFrameworkModifier',
-		'FlatTaxModifier'
-	));
+    Order::set_modifiers(array(
+        'ShippingFrameworkModifier',
+        'FlatTaxModifier'
+    ));
 
  * You need to use the new SteppedCheckout system to allow customers to set their address
  before they choose their shipping method. To set up steps, including the shippingmethod step,
  add the following to your mysite/_config.php file:
 
-	SteppedCheckout::setupSteps(array(
-		'contactdetails' => 'CheckoutStep_ContactDetails',
-		'shippingaddress' => 'CheckoutStep_Address',
-		'billingaddress' => 'CheckoutStep_Address',
-		'shippingmethod' => 'CheckoutStep_ShippingMethod',
-		'paymentmethod' => 'CheckoutStep_PaymentMethod',
-		'summary' => 'CheckoutStep_Summary'
-	));
+    SteppedCheckout::setupSteps(array(
+        'contactdetails' => 'CheckoutStep_ContactDetails',
+        'shippingaddress' => 'CheckoutStep_Address',
+        'billingaddress' => 'CheckoutStep_Address',
+        'shippingmethod' => 'CheckoutStep_ShippingMethod',
+        'paymentmethod' => 'CheckoutStep_PaymentMethod',
+        'summary' => 'CheckoutStep_Summary'
+    ));
 
  * To add the shipping estimation form to your CartPage template, add the following
  somewhere on your CartPage.ss template:
 
-	<% include ShippingEstimator %>
+    <% include ShippingEstimator %>
 
 If you need some example tableshipping data to populate your site for testing/development, 
 you can run the task: `yoursite.tld/dev/tasks/PopulateTableShippingTask`
