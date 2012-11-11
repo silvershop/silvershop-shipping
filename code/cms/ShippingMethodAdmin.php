@@ -2,8 +2,8 @@
 class ShippingMethodAdmin extends ModelAdmin{
 
 	static $url_segment = "shipping-option";
-	static $menu_title = "Shipping Options";
-	static $menu_priority = 6;
+	static $menu_title = "Shipping";
+	static $menu_priority = 0;
 
 	static $managed_models = array(
 		'ShippingMethod' => array(
