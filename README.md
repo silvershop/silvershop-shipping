@@ -11,6 +11,9 @@ This isn't actually a sub-module, but really a bunch of potential changes to the
 		'ShippingFrameworkModifier',
 		'FlatTaxModifier'
 	));
+	
+If you need some example tableshipping data to populate your site for testing/development, 
+you can run the task: `yoursite.tld/dev/tasks/PopulateTableShippingTask`
 
 ## Architecture
 
@@ -30,10 +33,3 @@ restriction. To work the appropriate rate, query for all the matchign restrictio
 by cheapest.
 
 The wildcard '*' means the restriction will match any region.
-
-## To Do:
-
- * Add Country and State models. Include pre-defined lists for popular countries.
- * Create API-connected shipping options.
- * Store estimate data in session to pre-populate the checkout form(s)
- * Possibly ditch the ShippingFrameworkModifier, and enforce always using the shippingframework
