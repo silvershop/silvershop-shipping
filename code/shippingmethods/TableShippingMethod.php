@@ -58,7 +58,7 @@ class TableShippingMethod extends ShippingMethod{
 			"Country" => "Country",
 			"State" => "State",
 			"City" => "City",
-			"PostalCode" => "PostalCode",
+			"PostalCode" => "PostCode",
 			"WeightMin" => "WeightMin",
 			"WeightMax" => "WeightMax",
 			"VolumeMin" => "VolumeMin",
@@ -70,11 +70,7 @@ class TableShippingMethod extends ShippingMethod{
 			"Rate" => "Rate"
 		);
 		
-		$fieldTypes = array(
-			"Country" => "TextField",
-			"State" => "TextField",
-			"City" => "TextField",
-			"PostalCode" => "TextField",
+		$fieldTypes = array_merge(RegionRestriction::get_table_field_types(),array(
 			"WeightMin" => "TextField",
 			"WeightMax" => "TextField",
 			"VolumeMin" => "TextField",
@@ -84,13 +80,13 @@ class TableShippingMethod extends ShippingMethod{
 			"QuantityMin" => "TextField",
 			"QuantityMax" => "TextField",
 			"Rate" => "TextField"
-		);
+		));
 		
-		$fields->removeFieldFromTab("Root.Rates", "Rates");
+		$fields->fieldByName('Root')->removeByName("Rates");
 		if($this->isInDB()){
 			$tablefield = new TableField("Rates", "TableShippingRate", $fieldList, $fieldTypes);
 			$tablefield->setCustomSourceItems($this->Rates());
-			$fields->addFieldToTab("Root.Rates", $tablefield);
+			$fields->addFieldToTab("Root.Main", $tablefield);
 		}
 		return $fields;
 	}
