@@ -22,7 +22,7 @@ class ShippingMethod extends DataObject{
 		'Rate' => 'Currency'
 	);
 	
-	function calculateRate(Package $package, Address $address){
+	function calculateRate(ShippingPackage $package, Address $address){
 		return null;
 	}
 	
