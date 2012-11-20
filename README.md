@@ -24,10 +24,11 @@ This isn't actually a sub-module, but really a bunch of potential changes to the
 
 ```php
     SteppedCheckout::setupSteps(array(
+		  'membership' => 'CheckoutStep_Membership',
         'contactdetails' => 'CheckoutStep_ContactDetails',
         'shippingaddress' => 'CheckoutStep_Address',
         'billingaddress' => 'CheckoutStep_Address',
-        'shippingmethod' => 'CheckoutStep_ShippingMethod',
+        'shippingmethod' => 'CheckoutStep_ShippingMethod', //extra line for shipping method
         'paymentmethod' => 'CheckoutStep_PaymentMethod',
         'summary' => 'CheckoutStep_Summary'
     ));
