@@ -1,0 +1,208 @@
+Zone:
+    int:
+        Name: International
+    loc:
+        Name: Local
+        
+ZoneRegion:
+    int:
+        Country: '*'
+        Zone: =>Zone.int
+    loc:
+        Country: 'NZ'
+        Zone: =>Zone.loc
+
+ZonedShippingMethod:
+    weight:
+        Name: Weight-based shipping
+        Enabled: 1
+    volume:
+        Name: Volume-based shipping
+        Enabled: 1
+    value:
+        Name: Value-based shipping
+        Enabled: 1
+    quantity:
+        Name: Quantity-based shipping
+        Enabled: 1
+    insured:
+        Name: Insured Table Shipping
+        Description: Same as basic table shipping, but includes insurance.
+        Enabled: 0
+    tracked:
+        Name: Insured Table Shipping
+        Description: Same as basic table shipping, but includes a tracking code.
+        Enabled: 0
+ZonedShippingRate:
+    #weight-based rates
+    int_w4:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.int
+        WeightMin: 0
+        WeightMax: 4
+        Rate: 8.00
+    int_w6:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.int
+        WeightMin: 4
+        WeightMax: 6
+        Rate: 12.00
+    int_w15:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.int
+        WeightMin: 6
+        WeightMax: 15
+        Rate: 27.00
+    int_w70:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.int
+        WeightMin: 15
+        WeightMax: 70
+        Rate: 96.00
+    int_w100:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.int
+        WeightMin: 70
+        WeightMax: 100
+        Rate: 116.00
+    loc_w4:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.loc
+        WeightMin: 0
+        WeightMax: 4
+        Rate: 4.00
+    loc_w6:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.loc
+        WeightMin: 4
+        WeightMax: 6
+        Rate: 6.00
+    loc_w15:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.loc
+        WeightMin: 6
+        WeightMax: 15
+        Rate: 13.50
+    loc_w70:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.loc
+        WeightMin: 15
+        WeightMax: 70
+        Rate: 48.00
+    loc_w100:
+        ZonedShippingMethod: =>ZonedShippingMethod.weight
+        Zone: =>Zone.loc
+        WeightMin: 70
+        WeightMax: 100
+        Rate: 58.00
+    #volume-based rates
+    int_vo4:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.int
+        VolumeMin: 0
+        VolumeMax: 4
+        Rate: 2.00
+    int_vo10:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.int
+        VolumeMin: 4
+        VolumeMax: 10
+        Rate: 6.00
+    int_vo50:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.int
+        VolumeMin: 10
+        VolumeMax: 50
+        Rate: 30.00
+    int_vo1000:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.int
+        VolumeMin: 50
+        VolumeMax: 1000
+        Rate: 100.00
+    int_vol10000:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.int
+        VolumeMin: 1000
+        VolumeMax: 10000
+        Rate: 300.00
+    int_vol100000:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.int
+        VolumeMin: 10000
+        VolumeMax: 100000
+        Rate: 520.00
+    loc_vo4:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.loc
+        VolumeMin: 0
+        VolumeMax: 4
+        Rate: 1.00
+    loc_vo10:
+        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        Zone: =>Zone.loc
+        VolumeMin: 4
+        VolumeMax: 10
+        Rate: 3.00
+    #value-based rates
+    int_va4:
+        ZonedShippingMethod: =>ZonedShippingMethod.value
+        Zone: =>Zone.int
+        ValueMin: 0
+        ValueMax: 4
+        Rate: 2.00
+    int_va10:
+        ZonedShippingMethod: =>ZonedShippingMethod.value
+        Zone: =>Zone.int
+        ValueMin: 4
+        ValueMax: 10
+        Rate: 6.00
+    int_va50:
+        ZonedShippingMethod: =>ZonedShippingMethod.value
+        Zone: =>Zone.int
+        ValueMin: 10
+        ValueMax: 50
+        Rate: 25.00
+    int_va200:
+        ZonedShippingMethod: =>ZonedShippingMethod.value
+        Zone: =>Zone.int
+        ValueMin: 50
+        ValueMax: 200
+        Rate: 50.00
+    loc_va4:
+        ZonedShippingMethod: =>ZonedShippingMethod.value
+        Zone: =>Zone.loc
+        ValueMin: 0
+        ValueMax: 4
+        Rate: 1.00
+    loc_va10:
+        ZonedShippingMethod: =>ZonedShippingMethod.value
+        Zone: =>Zone.loc
+        ValueMin: 4
+        ValueMax: 10
+        Rate: 3.00       
+    #quantity-based rates  
+    int_q4:
+        ZonedShippingMethod: =>ZonedShippingMethod.quantity
+        Zone: =>Zone.int
+        QuantityMin: 1
+        QuantityMax: 4
+        Rate: 11.00
+    int_q10:
+        ZonedShippingMethod: =>ZonedShippingMethod.quantity
+        Zone: =>Zone.int
+        QuantityMin: 4
+        QuantityMax: 10
+        Rate: 18.60
+    loc_q4:
+        ZonedShippingMethod: =>ZonedShippingMethod.quantity
+        Zone: =>Zone.loc
+        QuantityMin: 1
+        QuantityMax: 4
+        Rate: 5.50
+    loc_q10:
+        ZonedShippingMethod: =>ZonedShippingMethod.quantity
+        Zone: =>Zone.loc
+        QuantityMin: 4
+        QuantityMax: 10
+        Rate: 9.30
