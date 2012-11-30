@@ -132,4 +132,6 @@ class TableShippingRate extends RegionRestriction{
 		'Rate'
 	);
 	
+	static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
+	
 }
