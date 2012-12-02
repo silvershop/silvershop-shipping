@@ -54,6 +54,7 @@ class TableShippingMethod extends ShippingMethod{
 	function getCMSFields(){
 		$fields = parent::getCMSFields();
 		
+		/*
 		$fieldList = array(
 			"Country" => "Country",
 			"State" => "State",
@@ -82,12 +83,16 @@ class TableShippingMethod extends ShippingMethod{
 			"Rate" => "TextField"
 		));
 		
+		
 		$fields->fieldByName('Root')->removeByName("Rates");
 		if($this->isInDB()){
 			$tablefield = new TableField("Rates", "TableShippingRate", $fieldList, $fieldTypes);
 			$tablefield->setCustomSourceItems($this->Rates());
 			$fields->addFieldToTab("Root.Main", $tablefield);
 		}
+		return $fields;
+		*/
+		
 		return $fields;
 	}
 	
@@ -133,5 +138,26 @@ class TableShippingRate extends RegionRestriction{
 	);
 	
 	static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
+	
+	function getCMSFields(){
+		$fields = new FieldList();
+		
+		$fields->push(new RestrictionRegionCountryDropdownField("Country","Country"));
+		$fields->push(new TextField("State","State"));
+		$fields->push(new TextField("City","City"));
+		$fields->push(new TextField("PostalCode","PostCode"));
+		
+		$fields->push(new TextField("WeightMin","Weight Min"));
+		$fields->push(new TextField("WeightMax","Weight Max"));
+		$fields->push(new TextField("VolumeMin","Volume Min"));
+		$fields->push(new TextField("VolumeMax","Volume Max"));
+		$fields->push(new TextField("ValueMin","Value Min"));
+		$fields->push(new TextField("ValueMax","Value Max"));
+		$fields->push(new TextField("QuantityMin","Quantity Min"));
+		$fields->push(new TextField("QuantityMax","Quantity Max"));
+		$fields->push(new TextField("Rate","Rate"));
+
+		return $fields;
+	}
 	
 }
