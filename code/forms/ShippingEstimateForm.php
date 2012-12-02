@@ -6,13 +6,13 @@ class ShippingEstimateForm extends Form{
 		$countries = SiteConfig::current_site_config()->getCountriesList();
 		$countryfield = (count($countries)) ? new DropdownField("Country",_t('Address.COUNTRY','Country'),$countries) : new ReadonlyField("Country",_t('Address.COUNTRY','Country'));
 		$countryfield->setHasEmptyDefault(true);
-		$fields = new FieldSet(
+		$fields = new FieldList(
 			$countryfield,
 			$statefield = new TextField('State', _t('Address.STATE','State')),
 			$cityfield = new TextField('City', _t('Address.CITY','City')),
 			$postcodefield = new TextField('PostalCode', _t('Address.POSTALCODE','Postal Code'))
 		);
-		$actions =  new FieldSet(
+		$actions =  new FieldList(
 			new FormAction("submit","Submit")
 		);
 		//TODO: required: Country

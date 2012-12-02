@@ -6,15 +6,11 @@ class ShippingMethodAdmin extends ModelAdmin{
 	static $menu_priority = 0;
 
 	static $managed_models = array(
-		'ShippingMethod' => array(
-			'collection_controller' => 'ShippingMethodAdmin_CollectionController'	
-		)
+		'ShippingMethod'
 	);
-
-	public static $model_importers = array();
 	
 }
-
+/*
 class ShippingMethodAdmin_CollectionController extends ModelAdmin_CollectionController{
 	
 	function CreateForm(){
@@ -72,3 +68,4 @@ class ShippingMethodAdmin_CollectionController extends ModelAdmin_CollectionCont
 	}
 	
 }
+*/
