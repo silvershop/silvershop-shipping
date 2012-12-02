@@ -26,7 +26,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		$estimates = $checkout->getShippingEstimates();
 		$fields = new FieldList();
 		if($estimates->exists()){
-			$fields->push(new OptionsetField("ShippingMethodID","",$estimates->toDropDownMap(),$estimates->First()->ID));
+			$fields->push(new OptionsetField("ShippingMethodID","",$estimates->map("ID","Title"),$estimates->First()->ID));
 		}else{
 			$fields->push(new LiteralField("NoShippingMethods", "<p class=\"message warning\">There are no shipping methods available</p>"));
 		}
