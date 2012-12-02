@@ -67,7 +67,8 @@ class ZonedShippingMethod extends ShippingMethod{
 	
 	function getCMSFields(){
 		$fields = parent::getCMSFields();
-	
+		
+		/*
 		$fieldList = array(
 			"ZoneID" =>  "Zone",
 			"WeightMin" => "WeightMin",
@@ -94,12 +95,14 @@ class ZonedShippingMethod extends ShippingMethod{
 			"Rate" => "TextField"
 		);
 	
+		
 		$fields->fieldByName('Root')->removeByName("Rates");
 		if($this->isInDB()){
 			$tablefield = new TableField("Rates", "ZonedShippingRate", $fieldList, $fieldTypes);
 			$tablefield->setCustomSourceItems($this->Rates());
 			$fields->addFieldToTab("Root.Main", $tablefield);
 		}
+		*/
 		return $fields;
 	}
 	
@@ -137,6 +140,24 @@ class ZonedShippingRate extends DataObject{
 		'QuantityMax',
 		'Rate'
 	);
+	
+	function getCMSFields(){
+		$fields = new FieldList();
+	
+		$fields->push(new ZoneSelectField("ZoneID","Zone"));
+	
+		$fields->push(new TextField("WeightMin","Weight Min"));
+		$fields->push(new TextField("WeightMax","Weight Max"));
+		$fields->push(new TextField("VolumeMin","Volume Min"));
+		$fields->push(new TextField("VolumeMax","Volume Max"));
+		$fields->push(new TextField("ValueMin","Value Min"));
+		$fields->push(new TextField("ValueMax","Value Max"));
+		$fields->push(new TextField("QuantityMin","Quantity Min"));
+		$fields->push(new TextField("QuantityMax","Quantity Max"));
+		$fields->push(new TextField("Rate","Rate"));
+	
+		return $fields;
+	}
 	
 	static $default_sort = "\"Rate\" ASC";
 	
