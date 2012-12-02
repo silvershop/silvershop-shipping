@@ -17,10 +17,10 @@ class OrderShippingDecorator extends DataExtension{
 		
 		$items = $this->owner->Items();
 		
-		$weight = $items->Sum('Weight',true); //Sum is found on OrdItemList (Component Extension)
-		$width = $items->Sum('Width',true);
-		$height = $items->Sum('Height',true);
-		$depth = $items->Sum('Depth',true);
+		$weight = $items->orderItemsSum('Weight',true); //Sum is found on OrdItemList (Component Extension)
+		$width = $items->orderItemsSum('Width',true);
+		$height = $items->orderItemsSum('Height',true);
+		$depth = $items->orderItemsSum('Depth',true);
 		
 		$value = $this->owner->SubTotal();
 		$quantity = $items->Quantity();
