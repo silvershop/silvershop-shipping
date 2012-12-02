@@ -17,12 +17,12 @@ class ShippingEstimator{
 		if($this->calculated){
 			return $this->estimates;
 		}
-		$output = new DataObjectSet();
+		$output = new ArrayList();
 		if($options = $this->getShippingMethods()){
 			foreach($options as $option){
 				$option->CalculatedRate = $option->calculateRate($this->package, $this->address);
 				if($option->CalculatedRate !== null){
-					$output->push($option);
+					$output->add($option);
 				}
 			}
 		}
