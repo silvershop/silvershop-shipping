@@ -15,8 +15,11 @@ class ShippingEstimateForm extends Form{
 		$actions =  new FieldSet(
 			new FormAction("submit","Submit")
 		);
-		//TODO: required: Country
-		parent::__construct($controller, $name, $fields, $actions);
+		$validator = new RequiredFields(array(
+			'Country'
+		));
+		parent::__construct($controller, $name, $fields, $actions, $validator);
+		$this->extend('updateForm');
 	}
 	
 	function submit($data, $form){
