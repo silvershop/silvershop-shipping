@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zoned shipping is a variant of TableShipping that regionalises using zones,
  * which are collections of regions, rather than regionalising using specific
@@ -18,10 +17,11 @@ class ZonedShippingMethod extends ShippingMethod{
 	
 	function calculateRate(ShippingPackage $package, $address){
 		$rate = null;
-		$ids = Zone::get_zone_ids();
-		if(!$ids){
+		$ids = Zone::get_zones_for_address($address);
+		if(!$ids->exists()){
 			return $rate;
 		}
+		$ids = $ids->map('ID','ID');
 		$packageconstraints = array(
 			"Weight" => 'weight',
 			"Volume" => 'volume',

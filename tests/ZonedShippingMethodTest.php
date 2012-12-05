@@ -23,7 +23,6 @@ class ZonedShippingMethodTest extends SapphireTest{
 	
 	function testInternationalRates(){
 		$address_int = $this->objFromFixture("Address", "bukhp193eq"); //international address
-		Zone::cache_zone_ids($address_int);
 		
 		//weight based
 		$type = "weight";
@@ -60,7 +59,6 @@ class ZonedShippingMethodTest extends SapphireTest{
 	
 	function testLocalRates(){
 		$address_loc = $this->objFromFixture("Address", "wnz6022"); //New Zealand address
-		Zone::cache_zone_ids($address_loc);
 		
 		//weight based
 		$type = "weight";
