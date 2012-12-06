@@ -9,4 +9,12 @@ class ShippingFrameworkModifier extends ShippingModifier{
 		}
 	}
 	
+	function TableTitle(){
+		$title = $this->i18n_singular_name();
+		if($this->Order() && $this->Order()->ShippingMethod()->exists()){
+			$title .= " (".$this->Order()->ShippingMethod()->Name.")";
+		}
+		return $title;
+	}
+	
 }
