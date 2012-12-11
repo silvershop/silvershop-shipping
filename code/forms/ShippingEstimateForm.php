@@ -25,8 +25,7 @@ class ShippingEstimateForm extends Form{
 	function submit($data, $form){
 		if($order = ShoppingCart::singleton()->current()){
 			$package = $order->createShippingPackage();
-			$address = new Address();
-			$form->saveInto($address);
+			$address = new Address(Convert::raw2sql($data)); //escape data
 			$estimator = new ShippingEstimator($package, $address);
 			$estimates = $estimator->getEstimates();			
 			Session::set("ShippingEstimates", $estimates);
