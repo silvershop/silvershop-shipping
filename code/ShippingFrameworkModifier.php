@@ -7,6 +7,7 @@ class ShippingFrameworkModifier extends ShippingModifier{
 		if($order && $order->exists() && $shipping = $order->ShippingMethod()){
 			return $shipping->calculateRate($order->createShippingPackage(),$order->ShippingAddress());
 		}
+		return 0;
 	}
 	
 	function TableTitle(){

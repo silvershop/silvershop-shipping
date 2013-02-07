@@ -18,7 +18,7 @@ class ZonedShippingMethod extends ShippingMethod{
 	function calculateRate(ShippingPackage $package, $address){
 		$rate = null;
 		$ids = Zone::get_zones_for_address($address);
-		if(!$ids->exists()){
+		if(!$ids){
 			return $rate;
 		}
 		$ids = $ids->map('ID','ID');
