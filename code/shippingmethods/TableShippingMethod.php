@@ -70,22 +70,9 @@ class TableShippingMethod extends ShippingMethod{
 			"Rate" => "Rate"
 		);
 		
-		$fieldTypes = array_merge(RegionRestriction::get_table_field_types(),array(
-			"WeightMin" => "TextField",
-			"WeightMax" => "TextField",
-			"VolumeMin" => "TextField",
-			"VolumeMax" => "TextField",
-			"ValueMin" => "TextField",
-			"ValueMax" => "TextField",
-			"QuantityMin" => "TextField",
-			"QuantityMax" => "TextField",
-			"Rate" => "TextField"
-		));
-		
 		$fields->fieldByName('Root')->removeByName("Rates");
 		if($this->isInDB()){
-			$tablefield = new TableField("Rates", "TableShippingRate", $fieldList, $fieldTypes);
-			$tablefield->setCustomSourceItems($this->Rates());
+			$tablefield = new GridField("Rates", "TableShippingRate", $this->Rates(), new GridFieldConfig_RelationEditor());
 			$fields->addFieldToTab("Root.Main", $tablefield);
 		}
 		return $fields;
@@ -134,4 +121,9 @@ class TableShippingRate extends RegionRestriction{
 	
 	static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
 	
+	function getCMSFields(){
+		$fields = parent::getCMSFields();
+		$fields->removeByName('ShippingMethodID');
+		return $fields;
+	}
 }

@@ -7,8 +7,9 @@ class PopulateZonedShippingTask extends BuildTask{
 
 	function run($request = null){
 		if(!DataObject::get_one('ZonedShippingMethod')){
+			$factory = Injector::inst()->create('FixtureFactory');
 			$fixture = new YamlFixture('shop_shippingframework/tests/fixtures/ZonedShippingMethod.yml');
-			$fixture->saveIntoDatabase();
+			$fixture->writeInto($factory);
 			DB::alteration_message('Created zoned shipping methods', 'created');
 		}else{
 			DB::alteration_message('Some zoned shipping methods already exist. None were created.');

@@ -17,7 +17,7 @@ class ShippingEstimator{
 		if($this->calculated){
 			return $this->estimates;
 		}
-		$output = new DataObjectSet();
+		$output = new ArrayList();
 		if($options = $this->getShippingMethods()){
 			foreach($options as $option){
 				$option->CalculatedRate = $option->calculateRate($this->package, $this->address);

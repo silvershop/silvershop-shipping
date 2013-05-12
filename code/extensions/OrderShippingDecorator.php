@@ -1,17 +1,13 @@
 <?php
 
-class OrderShippingDecorator extends DataObjectDecorator{
+class OrderShippingDecorator extends DataExtension{
 	
-	function extraStatics(){
-		return array(
-			'db' => array(
-				'ShippingTotal' => 'Currency'
-			),
-			'has_one' => array(
-				'ShippingMethod' => 'ShippingMethod'
-			)
-		);
-	}
+	static $db = array(
+		'ShippingTotal' => 'Currency'
+	);
+	static $has_one = array(
+		'ShippingMethod' => 'ShippingMethod'
+	);
 	
 	function createShippingPackage(){
 		//create package, with total weight, dimensions, value, etc

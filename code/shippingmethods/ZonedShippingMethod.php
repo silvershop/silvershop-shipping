@@ -4,24 +4,24 @@
  * which are collections of regions, rather than regionalising using specific
  * locations / wildcards.
  */
-class ZonedShippingMethod extends ShippingMethod{
-	
+class ZonedShippingMethod extends ShippingMethod {
+
 	static $defaults = array(
 		'Name' => 'Zoned Shipping',
 		'Description' => 'Works out shipping from a pre-defined zone rates'
 	);
-	
+
 	static $has_many = array(
 		"Rates" => "ZonedShippingRate"
 	);
-	
-	function calculateRate(ShippingPackage $package, $address){
+
+	function calculateRate(ShippingPackage $package, Address $address){
 		$rate = null;
 		$ids = Zone::get_zones_for_address($address);
 		if(!$ids){
 			return $rate;
 		}
-		$ids = $ids->map('ID','ID');
+		$ids = $ids->map('ID','ID')->toArray();
 		$packageconstraints = array(
 			"Weight" => 'weight',
 			"Volume" => 'volume',
@@ -40,7 +40,6 @@ class ZonedShippingMethod extends ShippingMethod{
 				" AND $mincol < $maxcol" . //sanity check
 			")";
 		}
-		
 		$filter = "(".implode(") AND (",array(
 			"\"ZonedShippingMethodID\" = ".$this->ID,
 			"\"ZoneID\" IN(".implode(",", $ids).")", //zone restriction
@@ -68,7 +67,7 @@ class ZonedShippingMethod extends ShippingMethod{
 	function getCMSFields(){
 		$fields = parent::getCMSFields();
 	
-		$fieldList = array(
+		$displayFieldsList = array(
 			"ZoneID" =>  "Zone",
 			"WeightMin" => "WeightMin",
 			"WeightMax" => "WeightMax",
@@ -81,24 +80,11 @@ class ZonedShippingMethod extends ShippingMethod{
 			"Rate" => "Rate"
 		);
 	
-		$fieldTypes = array(
-			"ZoneID" => "ZoneSelectField",
-			"WeightMin" => "TextField",
-			"WeightMax" => "TextField",
-			"VolumeMin" => "TextField",
-			"VolumeMax" => "TextField",
-			"ValueMin" => "TextField",
-			"ValueMax" => "TextField",
-			"QuantityMin" => "TextField",
-			"QuantityMax" => "TextField",
-			"Rate" => "TextField"
-		);
-	
 		$fields->fieldByName('Root')->removeByName("Rates");
 		if($this->isInDB()){
-			$tablefield = new TableField("Rates", "ZonedShippingRate", $fieldList, $fieldTypes);
-			$tablefield->setCustomSourceItems($this->Rates());
-			$fields->addFieldToTab("Root.Main", $tablefield);
+			$gridField = new GridField("Rates", "ZonedShippingRate", $this->Rates(), new GridFieldConfig_RelationEditor());
+			$gridField->getConfig()->getComponentByType('GridFieldDataColumns')->setDisplayFields($displayFieldsList);
+			$fields->addFieldToTab("Root.Main", $gridField);
 		}
 		return $fields;
 	}
@@ -139,5 +125,11 @@ class ZonedShippingRate extends DataObject{
 	);
 	
 	static $default_sort = "\"Rate\" ASC";
+
+	function getCMSFields(){
+		$fields = parent::getCMSFields();
+		$fields->removeByName('ZonedShippingMethodID');
+		return $fields;
+	}
 	
 }
