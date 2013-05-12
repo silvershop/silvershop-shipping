@@ -48,7 +48,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 			$checkout = new Checkout($cart);
 			$checkout->setShippingMethod($option);
 		}
-		Director::redirect($this->NextStepLink('paymentmethod'));
+		Controller::curr()->redirect($this->NextStepLink('paymentmethod'));
 	}
 	
 }
