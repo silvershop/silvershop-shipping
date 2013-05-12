@@ -6,11 +6,10 @@ class ShippingMethodAdmin extends ModelAdmin{
 	static $menu_priority = 2;
 
 	static $managed_models = array(
-		'ShippingMethod'
+		'ZonedShippingMethod',
+		'TableShippingMethod'
 	);
 
 	public static $model_importers = array();
-
-	//TODO: allow choosing what kind of shipping method to create
 	
 }
