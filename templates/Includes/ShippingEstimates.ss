@@ -1,7 +1,7 @@
 <% if ShippingEstimates %>
 	<ul class="estimatelist">
-		<% control ShippingEstimates %>
+		<% loop ShippingEstimates %>
 			<li>$Rate.Nice - $Name: $Description</li>
-		<% end_control %>
+		<% end_loop %>
 	</ul>
 <% end_if %>
