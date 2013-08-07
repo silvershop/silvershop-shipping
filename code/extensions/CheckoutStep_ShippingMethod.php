@@ -4,6 +4,8 @@
  * 
  */
 class CheckoutStep_ShippingMethod extends CheckoutStep{
+
+	static $cheapest_first = true;
 	
 	static $allowed_actions = array(
 		'shippingmethod',
@@ -26,7 +28,8 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		$estimates = $checkout->getShippingEstimates();
 		$fields = new FieldSet();
 		if($estimates->exists()){
-			$fields->push(new OptionsetField("ShippingMethodID","",$estimates->toDropDownMap(),$estimates->First()->ID));
+			$default = self::$cheapest_first ? $estimates->First()->ID : $estimates->Last()->ID;
+			$fields->push(new OptionsetField("ShippingMethodID","",$estimates->toDropDownMap(),$default));
 		}else{
 			$fields->push(new LiteralField("NoShippingMethods", "<p class=\"message warning\">There are no shipping methods available</p>"));
 		}
