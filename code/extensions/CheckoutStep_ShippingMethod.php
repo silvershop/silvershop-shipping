@@ -31,7 +31,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 			$default = self::$cheapest_first ? $estimates->First()->ID : $estimates->Last()->ID;
 			$fields->push(new OptionsetField("ShippingMethodID","",$estimates->toDropDownMap(),$default));
 		}else{
-			$fields->push(new LiteralField("NoShippingMethods", "<p class=\"message warning\">There are no shipping methods available</p>"));
+			$fields->push(new LiteralField("NoShippingMethods", "<p class=\"message warning\">Free Shipping</p>"));
 		}
 		$actions = new FieldSet(
 			new FormAction("setShippingMethod","Continue")
