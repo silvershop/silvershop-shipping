@@ -5,7 +5,7 @@
  */
 class CheckoutStep_ShippingMethod extends CheckoutStep{
 	
-	static $allowed_actions = array(
+	private static $allowed_actions = array(
 		'shippingmethod',
 		'ShippingMethodForm'
 	);
@@ -17,7 +17,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 			$form->loadDataFrom($cart);
 		}
 		return array(
-			'Form' => $form
+			'OrderForm' => $form
 		);
 	}
 	
@@ -49,7 +49,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 			$checkout = new Checkout($cart);
 			$checkout->setShippingMethod($option);
 		}
-		Director::redirect($this->NextStepLink('paymentmethod'));
+		$this->owner->redirect($this->NextStepLink('paymentmethod'));
 	}
 	
 }

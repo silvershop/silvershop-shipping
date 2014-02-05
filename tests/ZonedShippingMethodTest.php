@@ -3,7 +3,7 @@
 class ZonedShippingMethodTest extends SapphireTest{
 	
 	static $fixture_file = array(
-		'shop_shippingframework/tests/fixtures/ZonedShippingMethod.yml',
+		'shop_shipping/tests/fixtures/ZonedShippingMethod.yml',
 		'shop/tests/fixtures/Addresses.yml'
 	);
 	

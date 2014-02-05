@@ -1,21 +1,25 @@
-## Shipping Framework
+## SilverStripe Shop Shipping Framework
 
-This isn't actually a sub-module, but really a bunch of potential changes to the shop system.
+Introduce shipping options to the SilverStripe shop.
 
 ## Requirements
 
- * Shop module v0.9
+ * [Shop module](https://github.com/burnbright/silverstripe-shop)
 
 ## Installation
+
+```sh
+composer reqire burnbright/silverstripe-shop-shipping
+```
 
  * Put the shop_shippingframework folder into your SilverStripe root directory
  * Add the ShippingFrameWorkModifier to your modifiers config, eg:
 
-```php
-    Order::set_modifiers(array(
-        'ShippingFrameworkModifier',
-        'FlatTaxModifier'
-    ));
+```yaml
+Order:
+    modifiers
+        - ShippingFrameworkModifier
+        - FlatTaxModifier
 ```
 
  * You need to use the new SteppedCheckout system to allow customers to set their address
@@ -24,7 +28,7 @@ This isn't actually a sub-module, but really a bunch of potential changes to the
 
 ```php
     SteppedCheckout::setupSteps(array(
-		  'membership' => 'CheckoutStep_Membership',
+		'membership' => 'CheckoutStep_Membership',
         'contactdetails' => 'CheckoutStep_ContactDetails',
         'shippingaddress' => 'CheckoutStep_Address',
         'billingaddress' => 'CheckoutStep_Address',

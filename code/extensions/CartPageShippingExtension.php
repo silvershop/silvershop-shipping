@@ -1,18 +1,18 @@
 <?php
 
-class CartPageDecorator extends Extension{
+class CartPageShippingExtension extends Extension{
 	
-	static $allowed_actions = array(
+	private static $allowed_actions = array(
 		'ShippingEstimateForm'
 	);
 	
-	function ShippingEstimateForm(){
+	function ShippingEstimateForm() {
 		return new ShippingEstimateForm($this->owner);
 	}
 	
-	function ShippingEstimates(){
+	function ShippingEstimates() {
 		$estimates = Session::get("ShippingEstimates");
-		Session::set("ShippingEstimates",null);
+		Session::set("ShippingEstimates", null);
 		Session::clear("ShippingEstimates");
 		return $estimates;
 	}

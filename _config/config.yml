@@ -1,0 +1,14 @@
+---
+Name: shopshippingconfig
+After: shop/*
+---
+
+PopulateShopTask:
+  extensions:
+    - PopulateShopTableShippingTask
+Order:
+  extensions:
+    - PopulateShopTableShippingTask
+CartPage_Controller:
+  extensions:
+    - CartPageShippingExtension

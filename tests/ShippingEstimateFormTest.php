@@ -3,11 +3,11 @@
 class ShippingEstimateFormTest extends FunctionalTest{
 	
 	static $fixture_file = array(
-		"shop_shippingframework/tests/fixtures/TableShippingMethod.yml",
+		"shop_shipping/tests/fixtures/TableShippingMethod.yml",
 		'shop/tests/fixtures/shop.yml'
 	);
 	
-	function setUp(){
+	function setUp() {
 		parent::setUp();
 		ShopTest::setConfiguration();
 		$this->cartpage = $this->objFromFixture("CartPage", "cart");
@@ -15,7 +15,7 @@ class ShippingEstimateFormTest extends FunctionalTest{
 		ShoppingCart::singleton()->setCurrent($this->objFromFixture("Order", "cart")); //set the current cart
 	}
 	
-	function testGetEstimates(){
+	function testGetEstimates() {
 		
 		$resp = $this->get('/cart'); //required to prep things
 		//good data

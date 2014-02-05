@@ -6,14 +6,17 @@
  */
 class ShippingEstimator{
 	
-	protected $package, $address, $estimates = null, $calculated = false;
+	protected $package;
+	protected $address;
+	protected $estimates = null;
+	protected $calculated = false;
 	
-	function __construct(ShippingPackage $package, Address $address){
+	function __construct(ShippingPackage $package, Address $address) {
 		$this->package = $package;
 		$this->address = $address;
 	}
 	
-	function getEstimates(){
+	function getEstimates() {
 		if($this->calculated){
 			return $this->estimates;
 		}
@@ -26,7 +29,7 @@ class ShippingEstimator{
 				}
 			}
 		}
-		$output->sort("CalculatedRate","ASC"); //sort by rate, lowest to highest
+		$output->sort("CalculatedRate", "ASC"); //sort by rate, lowest to highest
 		// cache estimates
 		$this->estimates = $output;
 		$this->calculated = true;
@@ -36,10 +39,9 @@ class ShippingEstimator{
 	/**
 	 * get options that apply to package and location
 	 */
-	function getShippingMethods(){
-		$options = DataObject::get("ShippingMethod","\"Enabled\" = 1");
+	function getShippingMethods() {
 		//TODO: restrict options to region / package specs
-		return $options;
+		return ShippingMethod::get()->filter("Enabled", 1);
 	}
 	
 }
