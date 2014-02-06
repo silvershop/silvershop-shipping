@@ -8,7 +8,7 @@ PopulateShopTask:
     - PopulateShopTableShippingTask
 Order:
   extensions:
-    - PopulateShopTableShippingTask
+    - OrderShippingExtension
 CartPage_Controller:
   extensions:
     - CartPageShippingExtension
