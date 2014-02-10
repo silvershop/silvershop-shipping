@@ -26,16 +26,16 @@ Order:
  before they choose their shipping method. To set up steps, including the shippingmethod step,
  add the following to your mysite/_config.php file:
 
-```php
-    SteppedCheckout::setupSteps(array(
-		'membership' => 'CheckoutStep_Membership',
-        'contactdetails' => 'CheckoutStep_ContactDetails',
-        'shippingaddress' => 'CheckoutStep_Address',
-        'billingaddress' => 'CheckoutStep_Address',
-        'shippingmethod' => 'CheckoutStep_ShippingMethod', //extra line for shipping method
-        'paymentmethod' => 'CheckoutStep_PaymentMethod',
-        'summary' => 'CheckoutStep_Summary'
-    ));
+```yaml
+CheckoutPage:
+    steps:
+		'membership' : 'CheckoutStep_Membership'
+        'contactdetails' : 'CheckoutStep_ContactDetails'
+        'shippingaddress' : 'CheckoutStep_Address'
+        'billingaddress' : 'CheckoutStep_Address'
+        'shippingmethod' : 'CheckoutStep_ShippingMethod' #extra line for shipping method
+        'paymentmethod' : 'CheckoutStep_PaymentMethod'
+        'summary' : 'CheckoutStep_Summary'
 ```
 
  * To add the shipping estimation form to your CartPage template, add the following
