@@ -1,5 +1,12 @@
 ## SilverStripe Shop Shipping Framework
 
+[![Latest Stable Version](https://poser.pugx.org/burnbright/silverstripe-shop-shipping/v/stable.png)](https://packagist.org/packages/burnbright/silverstripe-shop-shipping)
+[![Latest Unstable Version](https://poser.pugx.org/burnbright/silverstripe-shop-shipping/v/unstable.png)](https://packagist.org/packages/burnbright/silverstripe-shop-shipping)
+[![Build Status](https://secure.travis-ci.org/burnbright/silverstripe-shop-shipping.png)](http://travis-ci.org/burnbright/silverstripe-shop)
+[![Code Coverage](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/badges/coverage.png?s=cae0140f6d9a99c35b20c23b8bbe88711d526246)](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/badges/quality-score.png?s=802731e23565b5a7051b5622a56fccb7b764662a)](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/)
+[![Total Downloads](https://poser.pugx.org/burnbright/silverstripe-shop-shipping/downloads.png)](https://packagist.org/packages/burnbright/silverstripe-shop-shipping)
+
 Introduce shipping options to the SilverStripe shop.
 
 ## Requirements
