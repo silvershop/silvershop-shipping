@@ -27,11 +27,11 @@ ZonedShippingMethod:
         Enabled: 1
     insured:
         Name: Insured Table Shipping
-        Description: Same as basic table shipping, but includes insurance.
+        Description: 'Same as basic table shipping, but includes insurance.'
         Enabled: 0
     tracked:
         Name: Insured Table Shipping
-        Description: Same as basic table shipping, but includes a tracking code.
+        Description: 'Same as basic table shipping, but includes a tracking code.'
         Enabled: 0
 ZonedShippingRate:
     #weight-based rates

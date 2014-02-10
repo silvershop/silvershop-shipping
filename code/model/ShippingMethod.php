@@ -7,9 +7,9 @@
  */
 class ShippingMethod extends DataObject{
 	
-	static $db = array(
+	private static $db = array(
 		"Name" => "Varchar",
-		"Description" => "Varchar",
+		"Description" => "Text",
 		"Enabled" => "Boolean",
 		
 		//TODO
@@ -18,20 +18,20 @@ class ShippingMethod extends DataObject{
 		//"HandlingFee" => "Currency", //adds extra handling cost to use this method
 	);
 	
-	static $casting = array(
+	private static $casting = array(
 		'Rate' => 'Currency'
 	);
 	
-	function calculateRate(ShippingPackage $package, Address $address){
+	function calculateRate(ShippingPackage $package, Address $address) {
 		return null;
 	}
 	
-	function getRate(){
+	function getRate() {
 		return $this->CalculatedRate;
 	}
 	
-	function Title(){
-		return implode(" - ",array_filter(array(
+	function Title() {
+		return implode(" - ", array_filter(array(
 			$this->CalculatedRate,
 			$this->Name,
 			$this->Description
