@@ -13,6 +13,6 @@
 		"installer-name": "shop_shipping"
 	},
 	"require": {
-		"burnbright/silverstripe-shop": "*"
+		"burnbright/silverstripe-shop": "dev-master"
 	}
 }
