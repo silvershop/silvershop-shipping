@@ -65,6 +65,8 @@ These could either be flat rates, table based rates, or a
 `TableShippingMethod` has many `TableShippingRate`, where `TableShppingRate extends RegionRestriction`.
 Table shipping rates also have optional weight, volume, value, and quantity constraint fields.
 
+`DistanceShippingMethod` has  many `DistanceShippingFare`, and requires the [shop_geocoding](https://github.com/burnbright/silverstripe-shop-geocoding) module to be present.
+
 ### Region Restrictions
 
 The `RegionRestriction` class serves as a base class for providing regionalised restrictions.
