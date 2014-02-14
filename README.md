@@ -19,7 +19,7 @@ Introduce shipping options to the SilverStripe shop.
 composer reqire burnbright/silverstripe-shop-shipping
 ```
 
- * Put the shop_shippingframework folder into your SilverStripe root directory
+ * Put the shop_shipping folder into your SilverStripe root directory
  * Add the ShippingFrameWorkModifier to your modifiers config, eg:
 
 ```yaml
