@@ -15,6 +15,33 @@ class TableShippingMethod extends ShippingMethod{
 	private static $has_many = array(
 		"Rates" => "TableShippingRate"
 	);
+
+	public function getCMSFields() {
+		$fields = parent::getCMSFields();
+		
+		$fieldList = array(
+			"Country" => "Country",
+			"State" => "State",
+			"City" => "City",
+			"PostalCode" => "PostCode",
+			"WeightMin" => "WeightMin",
+			"WeightMax" => "WeightMax",
+			"VolumeMin" => "VolumeMin",
+			"VolumeMax" => "VolumeMax",
+			"ValueMin" => "ValueMin",
+			"ValueMax" => "ValueMax",
+			"QuantityMin" => "QuantityMin",
+			"QuantityMax" => "QuantityMax",
+			"Rate" => "Rate"
+		);
+		
+		$fields->fieldByName('Root')->removeByName("Rates");
+		if($this->isInDB()){
+			$tablefield = new GridField("Rates", "TableShippingRate", $this->Rates(), new GridFieldConfig_RecordEditor());
+			$fields->addFieldToTab("Root.Main", $tablefield);
+		}
+		return $fields;
+	}
 	
 	/**
 	 * Find the appropriate shipping rate from stored table range metrics
@@ -49,33 +76,6 @@ class TableShippingMethod extends ShippingMethod{
 		}
 		$this->CalculatedRate = $rate;
 		return $rate;
-	}
-	
-	public function getCMSFields() {
-		$fields = parent::getCMSFields();
-		
-		$fieldList = array(
-			"Country" => "Country",
-			"State" => "State",
-			"City" => "City",
-			"PostalCode" => "PostCode",
-			"WeightMin" => "WeightMin",
-			"WeightMax" => "WeightMax",
-			"VolumeMin" => "VolumeMin",
-			"VolumeMax" => "VolumeMax",
-			"ValueMin" => "ValueMin",
-			"ValueMax" => "ValueMax",
-			"QuantityMin" => "QuantityMin",
-			"QuantityMax" => "QuantityMax",
-			"Rate" => "Rate"
-		);
-		
-		$fields->fieldByName('Root')->removeByName("Rates");
-		if($this->isInDB()){
-			$tablefield = new GridField("Rates", "TableShippingRate", $this->Rates(), new GridFieldConfig_RelationEditor());
-			$fields->addFieldToTab("Root.Main", $tablefield);
-		}
-		return $fields;
 	}
 	
 }
