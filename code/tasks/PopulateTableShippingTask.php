@@ -8,7 +8,7 @@ class PopulateTableShippingTask extends BuildTask{
 	function run($request = null) {
 		if(!DataObject::get_one('TableShippingMethod')){
 			$factory = Injector::inst()->create('FixtureFactory');
-			$fixture = new YamlFixture('shop_shippingframework/tests/fixtures/TableShippingMethod.yml');
+			$fixture = new YamlFixture('shop_shipping/tests/fixtures/TableShippingMethod.yml');
 			$fixture->writeInto($factory);
 			DB::alteration_message('Created table shipping methods', 'created');
 		}else{
