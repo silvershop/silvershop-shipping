@@ -13,6 +13,7 @@
 		"installer-name": "shop_shipping"
 	},
 	"require": {
-		"burnbright/silverstripe-shop": "dev-master"
+		"burnbright/silverstripe-shop": "dev-master",
+		"ajshort/silverstripe-gridfieldextensions": "1.0.x"
 	}
 }
