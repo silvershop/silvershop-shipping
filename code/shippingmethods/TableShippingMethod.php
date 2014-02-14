@@ -7,19 +7,19 @@
  */
 class TableShippingMethod extends ShippingMethod{
 	
-	static $defaults = array(
+	private static $defaults = array(
 		'Name' => 'Table Shipping',
 		'Description' => 'Works out shipping from a pre-defined table'
 	);
 
-	static $has_many = array(
+	private static $has_many = array(
 		"Rates" => "TableShippingRate"
 	);
 	
 	/**
 	 * Find the appropriate shipping rate from stored table range metrics
 	 */
-	function calculateRate(ShippingPackage $package, Address $address){
+	public function calculateRate(ShippingPackage $package, Address $address) {
 		$rate = null;
 		$packageconstraints = array(
 			"Weight" => 'weight',
@@ -39,10 +39,10 @@ class TableShippingMethod extends ShippingMethod{
 				" AND $mincol < $maxcol" . //sanity check
 			")";
 		}
-		$filter = "(".implode(") AND (",array(
+		$filter = "(".implode(") AND (", array(
 			"\"ShippingMethodID\" = ".$this->ID,
 			RegionRestriction::address_filter($address), //address restriction
-			implode(" OR ",$constraintfilters) //metrics restriction
+			implode(" OR ", $constraintfilters) //metrics restriction
 		)).")";
 		if($tr = DataObject::get_one("TableShippingRate", $filter, true, "Rate ASC")){
 			$rate = $tr->Rate;
@@ -51,7 +51,7 @@ class TableShippingMethod extends ShippingMethod{
 		return $rate;
 	}
 	
-	function getCMSFields(){
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
 		$fieldList = array(
@@ -85,7 +85,7 @@ class TableShippingMethod extends ShippingMethod{
  */
 class TableShippingRate extends RegionRestriction{
 	
-	static $db = array(
+	private static $db = array(
 		//constraint values
 		"WeightMin" => "Decimal",
 		"WeightMax" => "Decimal",
@@ -99,11 +99,11 @@ class TableShippingRate extends RegionRestriction{
 		"Rate" => "Currency"
 	);
 	
-	static $has_one = array(
+	private static $has_one = array(
 		"ShippingMethod" => "TableShippingMethod"
 	);
 	
-	static $summary_fields = array(
+	private static $summary_fields = array(
 		'Country',
 		'State',
 		'City',
@@ -119,9 +119,9 @@ class TableShippingRate extends RegionRestriction{
 		'Rate'
 	);
 	
-	static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
+	private static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
 	
-	function getCMSFields(){
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		$fields->removeByName('ShippingMethodID');
 		return $fields;

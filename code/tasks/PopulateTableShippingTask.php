@@ -5,7 +5,7 @@ class PopulateTableShippingTask extends BuildTask{
 	protected $title = "Populate Table Shipping Methods";
 	protected $description = 'If no table shipping methods exist, it creates multiple different setups of table shipping.';
 	
-	function run($request = null){
+	function run($request = null) {
 		if(!DataObject::get_one('TableShippingMethod')){
 			$factory = Injector::inst()->create('FixtureFactory');
 			$fixture = new YamlFixture('shop_shippingframework/tests/fixtures/TableShippingMethod.yml');
@@ -23,7 +23,7 @@ class PopulateTableShippingTask extends BuildTask{
  */
 class PopulateShopTableShippingTask extends Extension{
 	
-	function beforePopulate(){
+	function beforePopulate() {
 		$task = new PopulateTableShippingTask();
 		$task->run();
 	}

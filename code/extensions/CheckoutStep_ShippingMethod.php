@@ -10,7 +10,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		'ShippingMethodForm'
 	);
 	
-	function shippingmethod(){
+	function shippingmethod() {
 		$form = $this->ShippingMethodForm();
 		$cart = ShoppingCart::singleton()->current();
 		if($cart->ShippingMethodID){
@@ -21,28 +21,35 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		);
 	}
 	
-	function ShippingMethodForm(){
+	function ShippingMethodForm() {
 		$checkout = new Checkout($this->owner->Cart());
 		$estimates = $checkout->getShippingEstimates();
 		$fields = new FieldList();
 		if($estimates->exists()){
-			$fields->push(new OptionsetField("ShippingMethodID","",$estimates->map(),$estimates->First()->ID));
+			$fields->push(
+				OptionsetField::create("ShippingMethodID", "", $estimates->map(), $estimates->First()->ID)
+			);
 		}else{
-			$fields->push(new LiteralField("NoShippingMethods", "<p class=\"message warning\">There are no shipping methods available</p>"));
+			$fields->push(
+				LiteralField::create(
+					"NoShippingMethods",
+					"<p class=\"message warning\">There are no shipping methods available</p>"
+				)
+			);
 		}
 		$actions = new FieldList(
-			new FormAction("setShippingMethod","Continue")
+			new FormAction("setShippingMethod", "Continue")
 		);
-		$form = new Form($this->owner,"ShippingMethodForm",$fields,$actions);
-		$this->owner->extend('updateShippingMethodForm',$form);
+		$form = new Form($this->owner, "ShippingMethodForm", $fields, $actions);
+		$this->owner->extend('updateShippingMethodForm', $form);
 		return $form;
 	}
 	
-	function setShippingMethod($data, $form){
+	function setShippingMethod($data, $form) {
 		$cart = $this->owner->Cart();
 		$option = null;
 		if(isset($data['ShippingMethodID'])){
-			$option = DataObject::get_by_id("ShippingMethod",(int)$data['ShippingMethodID']);
+			$option = DataObject::get_by_id("ShippingMethod", (int)$data['ShippingMethodID']);
 		}
 		//assign option to order / modifier
 		if($option){

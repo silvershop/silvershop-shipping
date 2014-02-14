@@ -5,7 +5,7 @@ class PopulateZonedShippingTask extends BuildTask{
 	protected $title = "Populate Zoned Shipping Methods";
 	protected $description = 'If no zoned shipping methods exist, it creates some.';
 
-	function run($request = null){
+	function run($request = null) {
 		if(!DataObject::get_one('ZonedShippingMethod')){
 			$factory = Injector::inst()->create('FixtureFactory');
 			$fixture = new YamlFixture('shop_shippingframework/tests/fixtures/ZonedShippingMethod.yml');
@@ -23,7 +23,7 @@ class PopulateZonedShippingTask extends BuildTask{
  */
 class PopulateShopZonedShippingTask extends Extension{
 
-	function beforePopulate(){
+	function beforePopulate() {
 		$task = new PopulateZonedShippingTask();
 		$task->run();
 	}

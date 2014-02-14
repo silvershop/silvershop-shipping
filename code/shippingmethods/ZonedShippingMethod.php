@@ -6,22 +6,22 @@
  */
 class ZonedShippingMethod extends ShippingMethod {
 
-	static $defaults = array(
+	private static $defaults = array(
 		'Name' => 'Zoned Shipping',
 		'Description' => 'Works out shipping from a pre-defined zone rates'
 	);
 
-	static $has_many = array(
+	private static $has_many = array(
 		"Rates" => "ZonedShippingRate"
 	);
 
-	function calculateRate(ShippingPackage $package, Address $address){
+	public function calculateRate(ShippingPackage $package, Address $address) {
 		$rate = null;
 		$ids = Zone::get_zones_for_address($address);
 		if(!$ids){
 			return $rate;
 		}
-		$ids = $ids->map('ID','ID')->toArray();
+		$ids = $ids->map('ID', 'ID')->toArray();
 		$packageconstraints = array(
 			"Weight" => 'weight',
 			"Volume" => 'volume',
@@ -40,10 +40,10 @@ class ZonedShippingMethod extends ShippingMethod {
 				" AND $mincol < $maxcol" . //sanity check
 			")";
 		}
-		$filter = "(".implode(") AND (",array(
+		$filter = "(".implode(") AND (", array(
 			"\"ZonedShippingMethodID\" = ".$this->ID,
 			"\"ZoneID\" IN(".implode(",", $ids).")", //zone restriction
-			implode(" OR ",$constraintfilters) //metrics restriction
+			implode(" OR ", $constraintfilters) //metrics restriction
 		)).")";
 		//order by zone specificity
 		$orderby = "";
@@ -64,7 +64,7 @@ class ZonedShippingMethod extends ShippingMethod {
 		return $rate;
 	}
 	
-	function getCMSFields(){
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 	
 		$displayFieldsList = array(
@@ -93,7 +93,7 @@ class ZonedShippingMethod extends ShippingMethod {
 
 class ZonedShippingRate extends DataObject{
 	
-	static $db = array(
+	private static $db = array(
 		"WeightMin" => "Decimal",
 		"WeightMax" => "Decimal",
 		"VolumeMin" => "Decimal",
@@ -106,12 +106,12 @@ class ZonedShippingRate extends DataObject{
 		"Rate" => "Currency"
 	);
 	
-	static $has_one = array(
+	private static $has_one = array(
 		'Zone' => 'Zone',
 		'ZonedShippingMethod' => 'ZonedShippingMethod'
 	);
 	
-	static $summary_fields = array(
+	private static $summary_fields = array(
 		'Zone.Name' => 'Zone',
 		'WeightMin',
 		'WeightMax',
@@ -124,11 +124,12 @@ class ZonedShippingRate extends DataObject{
 		'Rate'
 	);
 	
-	static $default_sort = "\"Rate\" ASC";
+	private static $default_sort = "\"Rate\" ASC";
 
-	function getCMSFields(){
+	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		$fields->removeByName('ZonedShippingMethodID');
+		
 		return $fields;
 	}
 	

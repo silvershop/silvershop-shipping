@@ -8,8 +8,12 @@
 class ShippingPackage{
 	
 	protected $weight;
-	protected $height, $width, $depth, $diameter;
-	protected $value, $currency;
+	protected $height;
+	protected $width;
+	protected $depth;
+	protected $diameter;
+	protected $value;
+	protected $currency;
 	protected $quantity;
 	
 	protected $defaultdimensions = array(
@@ -36,7 +40,7 @@ class ShippingPackage{
 		'd' => 'depth'
 	);
 	
-	function __construct($weight = 0, $dimensions = array(), $options = array()){
+	function __construct($weight = 0, $dimensions = array(), $options = array()) {
 		$this->weight = $weight;
 		//set via aliases
 		foreach($dimensions as $key => $dimension){
@@ -46,16 +50,21 @@ class ShippingPackage{
 		}
 		$d = array_merge($this->defaultdimensions, $dimensions);
 		foreach($this->defaultdimensions as $name => $dimension){
-			if(isset($d[$name]))
+			if(isset($d[$name])){
 				$this->$name = (float)$d[$name]; //force float type for dimensions
+			}
 		}
 		$o = array_merge($this->defaultoptions, $options);
 		foreach($this->defaultoptions as $name => $option){
-			if(isset($o[$name]))
+			if(isset($o[$name])){
 				$this->$name = $o[$name];
+			}
 		}
 		//force 0 values for anything below 0
-		$zerochecks = array_merge($this->defaultdimensions,array('value' => null, 'quantity' => null));
+		$zerochecks = array_merge(
+			$this->defaultdimensions,
+			array('value' => null, 'quantity' => null)
+		);
 		foreach($zerochecks as $dimension => $value){
 			if($this->$dimension < 0){
 				$this->$dimension = 0;
@@ -63,7 +72,7 @@ class ShippingPackage{
 		}
 	}
 	
-	function toArray(){
+	function toArray() {
 		$data = array(
 			"weight" => $this->weight,
 			"height" => $this->height,
@@ -78,7 +87,7 @@ class ShippingPackage{
 		return array_filter($data);
 	}
 	
-	function __toString(){
+	function __toString() {
 		$out = "";
 		foreach($this->toArray() as $key => $value){
 			$out .= strtoupper($key).$value;
@@ -89,31 +98,31 @@ class ShippingPackage{
 	/**
 	 * Calculate total volume, based on given dimensions
 	 */
-	function volume(){
+	function volume() {
 		return $this->height * $this->width * $this->depth;
 	}
 	
-	function weight(){
+	function weight() {
 		return $this->weight;
 	}
 
-	function height(){
+	function height() {
 		return $this->height;
 	}
 	
-	function width(){
+	function width() {
 		return $this->width;
 	}
 	
-	function depth(){
+	function depth() {
 		return $this->depth;
 	}
 	
-	function value(){
+	function value() {
 		return $this->value;
 	}
 	
-	function quantity(){
+	function quantity() {
 		return $this->quantity;
 	}
 
