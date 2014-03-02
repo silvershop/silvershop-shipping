@@ -16,7 +16,7 @@ Introduce shipping options to the SilverStripe shop.
 ## Installation
 
 ```sh
-composer reqire burnbright/silverstripe-shop-shipping
+composer require burnbright/silverstripe-shop-shipping:master
 ```
 
  * Put the `shop_shipping` folder into your SilverStripe root directory
