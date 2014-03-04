@@ -22,18 +22,25 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 	}
 	
 	function ShippingMethodForm() {
-		$checkout = new Checkout($this->owner->Cart());
-		$estimates = $checkout->getShippingEstimates();
+		$order = $this->owner->Cart();
+		$estimates = $order->getShippingEstimates();
 		$fields = new FieldList();
 		if($estimates->exists()){
 			$fields->push(
-				OptionsetField::create("ShippingMethodID", "", $estimates->map(), $estimates->First()->ID)
+				OptionsetField::create(
+					"ShippingMethodID",
+					"Shipping Options",
+					$estimates->map(),
+					$estimates->First()->ID
+				)
 			);
 		}else{
 			$fields->push(
 				LiteralField::create(
 					"NoShippingMethods",
-					"<p class=\"message warning\">There are no shipping methods available</p>"
+					"<p class=\"message warning\">
+						There are no shipping methods available
+					</p>"
 				)
 			);
 		}
@@ -46,15 +53,15 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 	}
 	
 	function setShippingMethod($data, $form) {
-		$cart = $this->owner->Cart();
+		$order = $this->owner->Cart();
 		$option = null;
 		if(isset($data['ShippingMethodID'])){
-			$option = DataObject::get_by_id("ShippingMethod", (int)$data['ShippingMethodID']);
+			$option = ShippingMethod::get()
+						->byID((int)$data['ShippingMethodID']);
 		}
 		//assign option to order / modifier
 		if($option){
-			$checkout = new Checkout($cart);
-			$checkout->setShippingMethod($option);
+			$order->setShippingMethod($option);
 		}
 		$this->owner->redirect($this->NextStepLink('paymentmethod'));
 	}

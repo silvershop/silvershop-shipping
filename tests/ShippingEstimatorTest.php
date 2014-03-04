@@ -2,15 +2,16 @@
 
 class ShippingEstimatorTest extends SapphireTest{
 	
-	static $fixture_file = array(
+	protected static $fixture_file = array(
 		'shop_shipping/tests/fixtures/TableShippingMethod.yml',
 		//'shop/tests/fixtures/Addresses.yml'
 	);
 	
-	function testGetEstimates(){
+	function testGetEstimates() {
+		$order = new Order();
 		$address = new Address();
 		$package = new ShippingPackage(2);
-		$estimator = new ShippingEstimator($package, $address);
+		$estimator = new ShippingEstimator($order, $address);
 
 		$options = $estimator->getShippingMethods();
 		$this->assertNotNull($options, "options found");

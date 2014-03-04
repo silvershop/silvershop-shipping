@@ -10,12 +10,12 @@ class ShippingEstimateForm extends Form{
 		$countryfield->setHasEmptyDefault(true);
 		$fields = new FieldList(
 			$countryfield,
-			$statefield = new TextField('State', _t('Address.STATE', 'State')),
-			$cityfield = new TextField('City', _t('Address.CITY', 'City')),
-			$postcodefield = new TextField('PostalCode', _t('Address.POSTALCODE', 'Postal Code'))
+			TextField::create('State', _t('Address.STATE', 'State')),
+			TextField::create('City', _t('Address.CITY', 'City')),
+			TextField::create('PostalCode', _t('Address.POSTALCODE', 'Postal Code'))
 		);
 		$actions =  new FieldList(
-			new FormAction("submit", "Submit")
+			FormAction::create("submit", "Submit")
 		);
 		$validator = new RequiredFields(array(
 			'Country'
@@ -26,9 +26,10 @@ class ShippingEstimateForm extends Form{
 	
 	function submit($data, $form) {
 		if($order = ShoppingCart::singleton()->current()){
-			$package = $order->createShippingPackage();
-			$address = new Address(Convert::raw2sql($data)); //escape data
-			$estimator = new ShippingEstimator($package, $address);
+			$estimator = new ShippingEstimator(
+				$order,
+				new Address(Convert::raw2sql($data))
+			);
 			$estimates = $estimator->getEstimates();			
 			Session::set("ShippingEstimates", $estimates);
 			if(Director::is_ajax()){
@@ -36,7 +37,7 @@ class ShippingEstimateForm extends Form{
 				return json_encode($estimates->toArray());
 			}
 		}
-		Controller::curr()->redirectBack();
+		$this->controller->redirectBack();
 	}
 	
 }

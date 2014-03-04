@@ -6,14 +6,14 @@
  */
 class ShippingEstimator{
 	
-	protected $package;
+	protected $order;
 	protected $address;
 	protected $estimates = null;
 	protected $calculated = false;
 	
-	function __construct(ShippingPackage $package, Address $address) {
-		$this->package = $package;
-		$this->address = $address;
+	function __construct(Order $order, Address $address = null) {
+		$this->order = $order;
+		$this->address = $address ? $address : $order->getShippingAddress();
 	}
 	
 	function getEstimates() {
@@ -23,8 +23,9 @@ class ShippingEstimator{
 		$output = new ArrayList();
 		if($options = $this->getShippingMethods()){
 			foreach($options as $option){
-				$option->CalculatedRate = $option->calculateRate($this->package, $this->address);
-				if($option->CalculatedRate !== null){
+				$rate = $option->getCalculator($this->order)->calculate();
+				if($rate !== null){
+					$option->CalculatedRate = $rate;
 					$output->push($option);
 				}
 			}

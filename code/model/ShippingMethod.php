@@ -10,27 +10,26 @@ class ShippingMethod extends DataObject{
 	private static $db = array(
 		"Name" => "Varchar",
 		"Description" => "Text",
-		"Enabled" => "Boolean",
-		
-		//TODO
-		//"WeightMin" => "Decimal",
-		//"WeightMax" => "Decimal",
-		//"HandlingFee" => "Currency", //adds extra handling cost to use this method
+		"Enabled" => "Boolean"
 	);
 	
 	private static $casting = array(
 		'Rate' => 'Currency'
 	);
 	
-	function calculateRate(ShippingPackage $package, Address $address) {
+	public function getCalculator(Order $order) {
+		return new ShippingCalculator($this, $order);
+	}
+
+	public function calculateRate(ShippingPackage $package, Address $address) {
 		return null;
 	}
 	
-	function getRate() {
+	public function getRate() {
 		return $this->CalculatedRate;
 	}
 	
-	function Title() {
+	public function Title() {
 		return implode(" - ", array_filter(array(
 			$this->CalculatedRate,
 			$this->Name,
@@ -38,4 +37,26 @@ class ShippingMethod extends DataObject{
 		)));
 	}
 	
+}
+
+/**
+ * Helper class for encapsulating shipping calculation logic.
+ */
+class ShippingCalculator{
+
+	protected $method;
+	protected $order;
+	
+	function __construct(ShippingMethod $method, Order $order) {
+		$this->method = $method;
+		$this->order = $order;
+	}
+
+	function calculate() {
+		return $this->method->calculateRate(
+			$this->order->createShippingPackage(),
+			$this->order->ShippingAddress()
+		);
+	}
+
 }
