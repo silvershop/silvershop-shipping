@@ -14,6 +14,7 @@
 	},
 	"require": {
 		"burnbright/silverstripe-shop": "dev-master",
-		"ajshort/silverstripe-gridfieldextensions": "1.0.x"
+		"ajshort/silverstripe-gridfieldextensions": "1.0.x",
+		"burnbright/silverstripe-hasonefield": "dev-master"
 	}
 }

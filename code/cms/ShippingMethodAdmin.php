@@ -7,7 +7,8 @@ class ShippingMethodAdmin extends ModelAdmin{
 	private static $menu_icon = 'shop_shipping/images/shipping.png';
 
 	private static $managed_models = array(
-		'ShippingMethod'
+		'ShippingMethod',
+		'Warehouse'
 	);
 
 	public static $model_importers = array();

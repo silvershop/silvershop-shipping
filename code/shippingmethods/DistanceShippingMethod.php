@@ -44,9 +44,8 @@ class DistanceShippingMethod extends ShippingMethod{
 		return $fields;
 	}
 
-
 	public function calculateRate(ShippingPackage $package, Address $address) {
-		$warehouse = $this->closestWarehouse($address);
+		$warehouse = Warehouse::closest_to($address);
 		$distance = $warehouse->Address()->distanceTo($address);
 
 		return $this->getDistanceFare($distance);
@@ -73,21 +72,6 @@ class DistanceShippingMethod extends ShippingMethod{
 		return $this->DistanceFares()
 				->sort("Cost", "DESC")
 				->first();
-	}
-
-	public function closestWarehouse(Address $address) {
-		$warehouses = Warehouse::get()->filter('AddressID:not', 'NULL');
-		$closestwarehouse = null;
-		$shortestdistance = null;
-		foreach($warehouses as $warehouse) {
-			$dist = $warehouse->Address()->distanceTo($address);
-			if($dist && ($shortestdistance === null || $dist < $shortestdistance)){
-				$closestwarehouse = $warehouse;
-				$shortestdistance = $dist;
-			}
-		}
-
-		return $closestwarehouse;
 	}
 
 }

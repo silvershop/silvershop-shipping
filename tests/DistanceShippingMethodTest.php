@@ -18,18 +18,6 @@ class DistanceShippingMethodTest extends SapphireTest{
 		//what if address is invalid?
 	}
 
-	function testClosestWarehouse() {
-		$method = $this->objFromFixture("DistanceShippingMethod", "ds");
-		$warehouse = $method->closestWarehouse(
-			$this->objFromFixture("Address", "customeraddress1")
-		);
-		$this->assertEquals("Main warehouse", $warehouse->Title);
-		$warehouse = $method->closestWarehouse(
-			$this->objFromFixture("Address", "customeraddress2")
-		);
-		$this->assertEquals("NSW depot", $warehouse->Title);
-	}
-
 	function testCalculateRates() {
 		$method = $this->objFromFixture("DistanceShippingMethod", "ds");
 		$this->assertEquals(234,
