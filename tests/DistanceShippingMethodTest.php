@@ -4,7 +4,10 @@ if(class_exists("AddressGeocoding")){
 
 class DistanceShippingMethodTest extends SapphireTest{
 	
-	protected static $fixture_file = 'shop_shipping/tests/fixtures/DistanceShippingMethod.yml';
+	protected static $fixture_file = array(
+		'shop_shipping/tests/fixtures/DistanceShippingMethod.yml',
+		'shop_shipping/tests/fixtures/Warehouses.yml'
+	);
 
 	function testDistanceFare() {
 		$method = $this->objFromFixture("DistanceShippingMethod", "ds");

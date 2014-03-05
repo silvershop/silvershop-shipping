@@ -2,7 +2,7 @@
 
 class WarehouseTest extends SapphireTest{
 
-	protected static $fixture_file = 'shop_shipping/tests/fixtures/DistanceShippingMethod.yml';
+	protected static $fixture_file = 'shop_shipping/tests/fixtures/Warehouses.yml';
 	
 	function testClosestWarehouse() {
 
