@@ -14,7 +14,6 @@ class Warehouse extends DataObject{
 		'Title', 'Address'
 	);
 
-
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		$fields->removeByName("AddressID");
@@ -27,6 +26,7 @@ class Warehouse extends DataObject{
 
 	/**
 	 * Get the closest warehouse to an address.
+	 * 
 	 * @param  Address $address
 	 * @return Warehouse
 	 */

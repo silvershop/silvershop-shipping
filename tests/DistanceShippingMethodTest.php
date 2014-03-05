@@ -1,7 +1,5 @@
 <?php
 
-if(class_exists("AddressGeocoding")){
-
 class DistanceShippingMethodTest extends SapphireTest{
 	
 	protected static $fixture_file = array(
@@ -36,7 +34,5 @@ class DistanceShippingMethodTest extends SapphireTest{
 			)
 		);
 	}
-
-}
 
 }

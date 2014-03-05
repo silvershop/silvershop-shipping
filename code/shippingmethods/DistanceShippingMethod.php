@@ -1,8 +1,5 @@
 <?php
 
-if(class_exists("AddressGeocoding")){
-
-//requires shop_geocoding submodule
 class DistanceShippingMethod extends ShippingMethod{
 	
 	private static $defaults = array(
@@ -117,7 +114,5 @@ class DistanceShippingFare extends DataObject{
 
 		return $dist;
 	}
-
-}
 
 }
