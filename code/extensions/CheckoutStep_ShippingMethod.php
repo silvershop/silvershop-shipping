@@ -63,7 +63,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		if($option){
 			$order->setShippingMethod($option);
 		}
-		$this->owner->redirect($this->NextStepLink('paymentmethod'));
+		$this->owner->redirect($this->NextStepLink());
 	}
 	
 }
