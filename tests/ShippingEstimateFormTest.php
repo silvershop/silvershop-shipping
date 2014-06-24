@@ -4,7 +4,8 @@ class ShippingEstimateFormTest extends FunctionalTest{
 	
 	static $fixture_file = array(
 		"shop_shipping/tests/fixtures/TableShippingMethod.yml",
-		'shop/tests/fixtures/shop.yml'
+		"shop/tests/fixtures/shop.yml",
+		"shop/tests/fixtures/Pages.yml"
 	);
 	
 	function setUp() {
@@ -39,6 +40,7 @@ class ShippingEstimateFormTest extends FunctionalTest{
 		$resp = $this->post('/cart/ShippingEstimateForm', $data);
 		
 		//TODO: assertions
+		$this->markTestIncomplete("add assertions");
 	}
 	
 }
