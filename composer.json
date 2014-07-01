@@ -13,9 +13,9 @@
 		"installer-name": "shop_shipping"
 	},
 	"require": {
-		"burnbright/silverstripe-shop": "dev-master",
-		"burnbright/silverstripe-shop-geocoding": "dev-master",
-		"ajshort/silverstripe-gridfieldextensions": "1.0.x",
+		"burnbright/silverstripe-shop": "~1.0",
+		"burnbright/silverstripe-shop-geocoding": "~1.0",
+		"ajshort/silverstripe-gridfieldextensions": "~1.0",
 		"burnbright/silverstripe-hasonefield": "dev-master"
 	}
 }
