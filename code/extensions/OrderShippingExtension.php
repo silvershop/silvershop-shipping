@@ -38,7 +38,7 @@ class OrderShippingExtension extends DataExtension{
 
 	/**
 	 * Get shipping estimates
-	 * @return DataObjectSet
+	 * @return DataList
 	 */
 	public function getShippingEstimates() {
 		//$package = $this->order->createShippingPackage();
