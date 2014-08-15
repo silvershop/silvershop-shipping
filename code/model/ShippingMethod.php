@@ -52,10 +52,10 @@ class ShippingCalculator{
 		$this->order = $order;
 	}
 
-	function calculate() {
+	function calculate($address = null) {
 		return $this->method->calculateRate(
 			$this->order->createShippingPackage(),
-			$this->order->ShippingAddress()
+			$address ? $address : $this->order->ShippingAddress()
 		);
 	}
 

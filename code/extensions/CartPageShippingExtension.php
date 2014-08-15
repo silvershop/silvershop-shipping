@@ -14,6 +14,7 @@ class CartPageShippingExtension extends Extension{
 		$estimates = Session::get("ShippingEstimates");
 		Session::set("ShippingEstimates", null);
 		Session::clear("ShippingEstimates");
+		
 		return $estimates;
 	}
 	

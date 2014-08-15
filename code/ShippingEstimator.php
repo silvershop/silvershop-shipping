@@ -23,7 +23,7 @@ class ShippingEstimator{
 		$output = new ArrayList();
 		if($options = $this->getShippingMethods()){
 			foreach($options as $option){
-				$rate = $option->getCalculator($this->order)->calculate();
+				$rate = $option->getCalculator($this->order)->calculate($this->address);
 				if($rate !== null){
 					$option->CalculatedRate = $rate;
 					$output->push($option);
@@ -34,6 +34,7 @@ class ShippingEstimator{
 		// cache estimates
 		$this->estimates = $output;
 		$this->calculated = true;
+
 		return $output;
 	}
 	

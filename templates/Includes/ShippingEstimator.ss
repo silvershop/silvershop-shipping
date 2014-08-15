@@ -1,5 +1,5 @@
-<div class="shippingestimator">
-	<% require themedCSS(shippingestimates) %>
+<div class="shippingestimator well">
+	<% require themedCSS(shippingestimates,shop_shipping) %>
 	<h3>Get shipping estimate:</h3>
 	$ShippingEstimateForm
 	<div class="estimates">

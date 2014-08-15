@@ -15,7 +15,7 @@ class ShippingEstimateForm extends Form{
 			TextField::create('PostalCode', _t('Address.POSTALCODE', 'Postal Code'))
 		);
 		$actions =  new FieldList(
-			FormAction::create("submit", "Submit")
+			FormAction::create("submit", "Estimate")
 		);
 		$validator = new RequiredFields(array(
 			'Country'
@@ -30,7 +30,10 @@ class ShippingEstimateForm extends Form{
 				$order,
 				new Address(Convert::raw2sql($data))
 			);
-			$estimates = $estimator->getEstimates();			
+			$estimates = $estimator->getEstimates();
+			if(!$estimates->exists()){
+				$form->sessionMessage("No estimates could be found for that location.","warning");
+			}
 			Session::set("ShippingEstimates", $estimates);
 			if(Director::is_ajax()){
 				//TODO: replace with an AJAXResponse class that can output to different formats

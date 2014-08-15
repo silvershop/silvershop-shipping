@@ -3,8 +3,7 @@
 class ShippingEstimatorTest extends SapphireTest{
 	
 	protected static $fixture_file = array(
-		'shop_shipping/tests/fixtures/TableShippingMethod.yml',
-		//'shop/tests/fixtures/Addresses.yml'
+		'shop_shipping/tests/fixtures/TableShippingMethod.yml'
 	);
 	
 	function testGetEstimates() {
