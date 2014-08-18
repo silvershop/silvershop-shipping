@@ -29,9 +29,9 @@ class ShippingMethod extends DataObject{
 		return $this->CalculatedRate;
 	}
 	
-	public function Title() {
+	public function getTitle() {
 		return implode(" - ", array_filter(array(
-			$this->CalculatedRate,
+			$this->Rate,
 			$this->Name,
 			$this->Description
 		)));
