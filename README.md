@@ -24,7 +24,7 @@ composer require burnbright/silverstripe-shop-shipping:master
 
 ```yaml
 Order:
-    modifiers
+    modifiers:
         - ShippingFrameworkModifier
         - FlatTaxModifier
 ```
