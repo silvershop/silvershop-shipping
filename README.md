@@ -45,6 +45,8 @@ CheckoutPage:
         'summary': 'CheckoutStep_Summary'
 ```
 
+ * If included, remove SteppedCheckout::setupSteps() from your _config.php file (SteppedCheckout::setupSteps() creates default checkout page steps no longer needed with the above yaml entries).
+
  * To add the shipping estimation form to your CartPage template, add the following
  somewhere on your CartPage.ss template:
 
