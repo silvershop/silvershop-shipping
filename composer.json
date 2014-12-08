@@ -15,7 +15,7 @@
 	"require": {
 		"burnbright/silverstripe-shop": "~1.0",
 		"burnbright/silverstripe-shop-geocoding": "~1.2",
-		"ajshort/silverstripe-gridfieldextensions": "~1.0",
+		"silverstripe-australia/gridfieldextensions": "~1.0",
 		"burnbright/silverstripe-hasonefield": "dev-master"
 	}
 }
