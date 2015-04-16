@@ -29,6 +29,7 @@ class ZonedShippingMethod extends ShippingMethod {
 			"Quantity" => 'quantity'
 		);
 		$constraintfilters = array();
+		$emptyconstraint = array();
 		foreach($packageconstraints as $db => $pakval){
 			$mincol = "\"ZonedShippingRate\".\"{$db}Min\"";
 			$maxcol = "\"ZonedShippingRate\".\"{$db}Max\"";
@@ -39,7 +40,11 @@ class ZonedShippingMethod extends ShippingMethod {
 				" AND $maxcol >= " . $package->{$pakval}() .
 				" AND $mincol < $maxcol" . //sanity check
 			")";
+			//also include a special case where all constraints are empty
+			$emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
 		}
+		$constraintfilters[] = "(".implode(" AND ", $emptyconstraint).")";
+
 		$filter = "(".implode(") AND (", array(
 			"\"ZonedShippingMethodID\" = ".$this->ID,
 			"\"ZoneID\" IN(".implode(",", $ids).")", //zone restriction

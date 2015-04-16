@@ -3,7 +3,11 @@ Zone:
         Name: International
     loc:
         Name: Local
-        
+    nz6000:
+        Name: New Zealand 5032
+    wellington:
+        Name: Wellington NZ
+
 ZoneRegion:
     int:
         Country: '*'
@@ -11,6 +15,14 @@ ZoneRegion:
     loc:
         Country: 'NZ'
         Zone: =>Zone.loc
+    nz6000:
+        Country: 'NZ'
+        PostalCode: 6000
+        Zone: =>Zone.nz6000
+    wellington:
+        Country: 'NZ'
+        State: 'Wellington'
+        Zone: =>Zone.wellington
 
 ZonedShippingMethod:
     weight:
@@ -33,6 +45,9 @@ ZonedShippingMethod:
         Name: Insured Table Shipping
         Description: 'Same as basic table shipping, but includes a tracking code.'
         Enabled: 0
+    address:
+        Name: Address-based shipping
+        Enabled: 1
 ZonedShippingRate:
     #weight-based rates
     int_w4:
@@ -206,3 +221,16 @@ ZonedShippingRate:
         QuantityMin: 4
         QuantityMax: 10
         Rate: 9.30
+    #address-based rates
+    nz:
+        ZonedShippingMethod: =>ZonedShippingMethod.address
+        Zone: =>Zone.loc
+        Rate: 50
+    postcode6000:
+        ZonedShippingMethod: =>ZonedShippingMethod.address
+        Zone: =>Zone.nz6000
+        Rate: 45
+    wellington:
+        ZonedShippingMethod: =>ZonedShippingMethod.address
+        Zone: =>Zone.wellington
+        Rate: 30

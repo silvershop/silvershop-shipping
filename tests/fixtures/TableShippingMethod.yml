@@ -19,6 +19,9 @@ TableShippingMethod:
         Name: Insured Table Shipping
         Description: Same as basic table shipping, but includes a tracking code.
         Enabled: 0
+    address:
+        Name: Address-based shipping
+        Enabled: 1
 TableShippingRate:
     #weight-based rates
     int_w4:
@@ -192,3 +195,18 @@ TableShippingRate:
         QuantityMin: 4
         QuantityMax: 10
         Rate: 9.30
+    #address-based rates
+    nz:
+        ShippingMethod: =>TableShippingMethod.address
+        Country: 'NZ'
+        Rate: 50
+    postcode6000:
+        ShippingMethod: =>TableShippingMethod.address
+        Country: 'NZ'
+        PostalCode: 6000
+        Rate: 45
+    wellington:
+        ShippingMethod: =>TableShippingMethod.address
+        Country: 'NZ'
+        State: 'Wellington'
+        Rate: 30
