@@ -55,17 +55,24 @@ class TableShippingMethod extends ShippingMethod{
 			"Quantity" => 'quantity'
 		);
 		$constraintfilters = array();
+		$emptyconstraint = array();
 		foreach($packageconstraints as $db => $pakval){
 			$mincol = "\"TableShippingRate\".\"{$db}Min\"";
 			$maxcol = "\"TableShippingRate\".\"{$db}Max\"";
-			$constraintfilters[] = "(".
+			//constrain to rates with valid constraints
+			$constraintfilters[] = 
+			"(".
 				"$mincol >= 0" .
 				" AND $mincol <= " . $package->{$pakval}() .
 				" AND $maxcol > 0". //ignore constraints with maxvalue = 0
 				" AND $maxcol >= " . $package->{$pakval}() .
 				" AND $mincol < $maxcol" . //sanity check
 			")";
+			//also include a special case where all constraints are empty
+			$emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
 		}
+		$constraintfilters[] = "(".implode(" AND ", $emptyconstraint).")";
+
 		$filter = "(".implode(") AND (", array(
 			"\"ShippingMethodID\" = ".$this->ID,
 			RegionRestriction::address_filter($address), //address restriction
