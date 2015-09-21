@@ -32,7 +32,7 @@ class ShippingCheckoutComponent extends CheckoutComponent{
 		}		
 		
 		if(!ShippingMethod::get()->byID($data['ShippingMethodID'])){
-		 	$result->error("Gateway not supported", "ShippingMethod");
+		 	$result->error("Shipping Method does not exist", "ShippingMethod");
 		 	throw new ValidationException($result);
 		}
 	}
