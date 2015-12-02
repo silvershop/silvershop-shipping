@@ -3,13 +3,9 @@
 class ShippingEstimateForm extends Form{
 	
 	function __construct($controller, $name = "ShippingEstimateForm") {
-		$countries = SiteConfig::current_site_config()->getCountriesList();
-		$countryfield = (count($countries)) ? 
-			DropdownField::create("Country", _t('Address.COUNTRY', 'Country'), $countries) : 
-			ReadonlyField::create("Country", _t('Address.COUNTRY', 'Country'));
-		$countryfield->setHasEmptyDefault(true);
+		$address = new Address();  // get address to access it's getCountryField method
 		$fields = new FieldList(
-			$countryfield,
+			$address->getCountryField(),
 			TextField::create('State', _t('Address.STATE', 'State')),
 			TextField::create('City', _t('Address.CITY', 'City')),
 			TextField::create('PostalCode', _t('Address.POSTALCODE', 'Postal Code'))
@@ -25,6 +21,9 @@ class ShippingEstimateForm extends Form{
 	}
 	
 	function submit($data, $form) {
+		if($country = SiteConfig::current_site_config()->getSingleCountry()){  // Add Country if missing due to ReadonlyField in form
+			$data['Country'] = $country;
+		}
 		if($order = ShoppingCart::singleton()->current()){
 			$estimator = new ShippingEstimator(
 				$order,

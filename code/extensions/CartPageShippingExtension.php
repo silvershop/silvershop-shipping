@@ -10,7 +10,7 @@ class CartPageShippingExtension extends Extension{
 		return new ShippingEstimateForm($this->owner);
 	}
 	
-	function ShippingEstimates() {
+	public function ShippingEstimates() {
 		$estimates = Session::get("ShippingEstimates");
 		Session::set("ShippingEstimates", null);
 		Session::clear("ShippingEstimates");
