@@ -78,7 +78,7 @@ class TableShippingMethod extends ShippingMethod{
 			RegionRestriction::address_filter($address), //address restriction
 			implode(" OR ", $constraintfilters) //metrics restriction
 		)).")";
-		if($tr = DataObject::get_one("TableShippingRate", $filter, true, "Rate ASC")){
+		if($tr = DataObject::get_one("TableShippingRate", $filter, true, "LENGTH(\"RegionRestriction\".\"PostalCode\") DESC, Rate ASC")){
 			$rate = $tr->Rate;
 		}
 		$this->CalculatedRate = $rate;
