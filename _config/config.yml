@@ -1,6 +1,6 @@
 ---
-Name: shopshippingconfig
-After: shop/*
+Name: silvershop-shipping
+After: silvershop/*
 ---
 
 PopulateShopTask:

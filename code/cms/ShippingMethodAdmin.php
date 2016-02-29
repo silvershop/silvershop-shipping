@@ -1,10 +1,17 @@
 <?php
-class ShippingMethodAdmin extends ModelAdmin{
+
+/**
+ * @package silvershop-shipping
+ */
+class ShippingMethodAdmin extends ModelAdmin {
 
 	private static $url_segment = "shipping";
+
 	private static $menu_title = "Shipping";
+
 	private static $menu_priority = 3;
-	private static $menu_icon = 'shop_shipping/images/shipping.png';
+
+	private static $menu_icon = 'silvershop-shipping/images/shipping.png';
 
 	private static $managed_models = array(
 		'ShippingMethod',
@@ -28,5 +35,5 @@ class ShippingMethodAdmin extends ModelAdmin{
 		}
 		return $form;
 	}
-	
+
 }

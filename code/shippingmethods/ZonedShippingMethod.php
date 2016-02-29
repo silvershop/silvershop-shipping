@@ -3,6 +3,8 @@
  * Zoned shipping is a variant of TableShipping that regionalises using zones,
  * which are collections of regions, rather than regionalising using specific
  * locations / wildcards.
+ *
+ * @package silvershop-shipping
  */
 class ZonedShippingMethod extends ShippingMethod {
 
@@ -68,10 +70,10 @@ class ZonedShippingMethod extends ShippingMethod {
 		$this->CalculatedRate = $rate;
 		return $rate;
 	}
-	
+
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
-	
+
 		$displayFieldsList = array(
 			"ZoneID" =>  "Zone",
 			"WeightMin" => "WeightMin",
@@ -84,7 +86,7 @@ class ZonedShippingMethod extends ShippingMethod {
 			"QuantityMax" => "QuantityMax",
 			"Rate" => "Rate"
 		);
-	
+
 		$fields->fieldByName('Root')->removeByName("Rates");
 		if($this->isInDB()){
 			$gridField = new GridField("Rates", "ZonedShippingRate", $this->Rates(), new GridFieldConfig_RelationEditor());
@@ -93,11 +95,11 @@ class ZonedShippingMethod extends ShippingMethod {
 		}
 		return $fields;
 	}
-	
+
 }
 
 class ZonedShippingRate extends DataObject{
-	
+
 	private static $db = array(
 		"WeightMin" => "Decimal",
 		"WeightMax" => "Decimal",
@@ -107,15 +109,15 @@ class ZonedShippingRate extends DataObject{
 		"ValueMax" => "Currency",
 		"QuantityMin" => "Int",
 		"QuantityMax" => "Int",
-		
+
 		"Rate" => "Currency"
 	);
-	
+
 	private static $has_one = array(
 		'Zone' => 'Zone',
 		'ZonedShippingMethod' => 'ZonedShippingMethod'
 	);
-	
+
 	private static $summary_fields = array(
 		'Zone.Name' => 'Zone',
 		'WeightMin',
@@ -128,14 +130,14 @@ class ZonedShippingRate extends DataObject{
 		'QuantityMax',
 		'Rate'
 	);
-	
+
 	private static $default_sort = "\"Rate\" ASC";
 
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
 		$fields->removeByName('ZonedShippingMethodID');
-		
+
 		return $fields;
 	}
-	
+
 }

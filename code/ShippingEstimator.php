@@ -3,19 +3,21 @@
 /**
  * Helper class for calculating rates for available shipping options.
  * Provides a little caching, so estimates aren't calculated more than once.
+ *
+ * @package silvershop-shipping
  */
-class ShippingEstimator{
-	
+class ShippingEstimator {
+
 	protected $order;
 	protected $address;
 	protected $estimates = null;
 	protected $calculated = false;
-	
+
 	function __construct(Order $order, Address $address = null) {
 		$this->order = $order;
 		$this->address = $address ? $address : $order->getShippingAddress();
 	}
-	
+
 	function getEstimates() {
 		if($this->calculated){
 			return $this->estimates;
@@ -37,7 +39,7 @@ class ShippingEstimator{
 
 		return $output;
 	}
-	
+
 	/**
 	 * get options that apply to package and location
 	 */
@@ -45,5 +47,5 @@ class ShippingEstimator{
 		//TODO: restrict options to region / package specs
 		return ShippingMethod::get()->filter("Enabled", 1);
 	}
-	
+
 }

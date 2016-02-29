@@ -1,26 +1,25 @@
 ## SilverStripe Shop Shipping Framework
 
-[![Latest Stable Version](https://poser.pugx.org/burnbright/silverstripe-shop-shipping/v/stable.png)](https://packagist.org/packages/burnbright/silverstripe-shop-shipping)
-[![Latest Unstable Version](https://poser.pugx.org/burnbright/silverstripe-shop-shipping/v/unstable.png)](https://packagist.org/packages/burnbright/silverstripe-shop-shipping)
-[![Build Status](https://secure.travis-ci.org/burnbright/silverstripe-shop-shipping.png)](http://travis-ci.org/burnbright/silverstripe-shop-shipping)
-[![Code Coverage](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/badges/coverage.png?s=cae0140f6d9a99c35b20c23b8bbe88711d526246)](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/badges/quality-score.png?s=802731e23565b5a7051b5622a56fccb7b764662a)](https://scrutinizer-ci.com/g/burnbright/silverstripe-shop-shipping/)
-[![Total Downloads](https://poser.pugx.org/burnbright/silverstripe-shop-shipping/downloads.png)](https://packagist.org/packages/burnbright/silverstripe-shop-shipping)
+[![Latest Stable Version](https://poser.pugx.org/silvershop/silvershop-shipping/v/stable.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
+[![Latest Unstable Version](https://poser.pugx.org/silvershop/silvershop-shipping/v/unstable.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
+[![Build Status](https://secure.travis-ci.org/silvershop/silvershop-shipping.png)](http://travis-ci.org/silvershop/silvershop-shipping)
+[![Code Coverage](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/coverage.png?s=cae0140f6d9a99c35b20c23b8bbe88711d526246)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/quality-score.png?s=802731e23565b5a7051b5622a56fccb7b764662a)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
+[![Total Downloads](https://poser.pugx.org/silvershop/silvershop-shipping/downloads.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
 
-Introduce shipping options to the SilverStripe shop.
+Introduce shipping options to SilverShop
 
 ## Requirements
 
- * [Shop module](https://github.com/burnbright/silverstripe-shop)
+ * [Shop module](https://github.com/silvershop/silvershop-core)
 
 ## Installation
 
 ```sh
-composer require burnbright/silverstripe-shop-shipping:master
+composer require silvershop/silvershop-shipping:master
 ```
 
- * Put the `shop_shipping` folder into your SilverStripe root directory
- * Add the ShippingFrameWorkModifier to your modifiers config, eg:
+Add the ShippingFrameWorkModifier to your modifiers config, eg:
 
 ```yaml
 Order:
@@ -29,9 +28,9 @@ Order:
         - FlatTaxModifier
 ```
 
- * You need to use the new SteppedCheckout system to allow customers to set their address
- before they choose their shipping method. To set up steps, including the shippingmethod step,
- add the following to your mysite/_config/config.yml file:
+You need to use the new SteppedCheckout system to allow customers to set their
+address before they choose their shipping method. To set up steps, including the
+shippingmethod step, add the following to your mysite/_config/config.yml file:
 
 ```yaml
 CheckoutPage:
@@ -45,16 +44,17 @@ CheckoutPage:
         'summary': 'CheckoutStep_Summary'
 ```
 
- * If included, remove SteppedCheckout::setupSteps() from your _config.php file (SteppedCheckout::setupSteps() creates default checkout page steps no longer needed with the above yaml entries).
+If included, remove SteppedCheckout::setupSteps() from your _config.php file (SteppedCheckout::setupSteps() creates default checkout page steps no longer
+needed with the above YAML entries).
 
- * To add the shipping estimation form to your CartPage template, add the following
- somewhere on your CartPage.ss template:
+To add the shipping estimation form to your CartPage template, add the following
+somewhere on your CartPage.ss template:
 
 ```
     <% include ShippingEstimator %>
 ```
 
-If you need some example tableshipping data to populate your site for testing/development, 
+If you need some example tableshipping data to populate your site for testing/development,
 you can run the task: `yoursite.tld/dev/tasks/PopulateTableShippingTask`
 
 ## Architecture

@@ -1,7 +1,10 @@
 <?php
 
-class ShippingFrameworkModifier extends ShippingModifier{
-	
+/**
+ * @package silvershop-shipping
+ */
+class ShippingFrameworkModifier extends ShippingModifier {
+
 	function value($incoming) {
 		$order = $this->Order();
 		if($order && $order->exists() && $shipping = $order->ShippingMethod()){
@@ -9,7 +12,7 @@ class ShippingFrameworkModifier extends ShippingModifier{
 		}
 		return 0;
 	}
-	
+
 	function TableTitle() {
 		$title = $this->i18n_singular_name();
 		if($this->Order() && $this->Order()->ShippingMethod()->exists()){
@@ -17,5 +20,5 @@ class ShippingFrameworkModifier extends ShippingModifier{
 		}
 		return $title;
 	}
-	
+
 }

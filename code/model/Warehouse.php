@@ -1,7 +1,10 @@
 <?php
 
-class Warehouse extends DataObject{
-	
+/**
+ * @package silvershop-shipping
+ */
+class Warehouse extends DataObject {
+
 	private static $db = array(
 		'Title' => 'Varchar'
 	);
@@ -26,7 +29,7 @@ class Warehouse extends DataObject{
 
 	/**
 	 * Get the closest warehouse to an address.
-	 * 
+	 *
 	 * @param  Address $address
 	 * @return Warehouse
 	 */

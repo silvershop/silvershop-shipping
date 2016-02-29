@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @package silvershop_shipping
+ * @package silvershop-shipping
  */
 class ShippingCheckoutComponent extends CheckoutComponent {
 
 	public function getFormFields(Order $order) {
 		$fields = new FieldList();
 		$estimates = $order->getShippingEstimates();
-		
+
 		$fields->push(
 			OptionsetField::create(
 				"ShippingMethodID",
@@ -30,8 +30,8 @@ class ShippingCheckoutComponent extends CheckoutComponent {
 		if(!isset($data['ShippingMethodID'])){
 			$result->error("Shipping method not provided", "ShippingMethod");
 			throw new ValidationException($result);
-		}		
-		
+		}
+
 		if(!ShippingMethod::get()->byID($data['ShippingMethodID'])){
 		 	$result->error("Shipping Method does not exist", "ShippingMethod");
 		 	throw new ValidationException($result);
@@ -49,7 +49,7 @@ class ShippingCheckoutComponent extends CheckoutComponent {
 	}
 
 	public function setData(Order $order, array $data) {
-		
+
 		$option = null;
 		if(isset($data['ShippingMethodID'])){
 			$option = ShippingMethod::get()

@@ -1,7 +1,11 @@
 <?php
 
-class ShippingEstimateForm extends Form{
-	
+/**
+ * @package silvershop-shipping
+ */
+class ShippingEstimateForm extends Form
+{
+
 	function __construct($controller, $name = "ShippingEstimateForm") {
 		$address = new Address();  // get address to access it's getCountryField method
 		$fields = new FieldList(
@@ -19,7 +23,7 @@ class ShippingEstimateForm extends Form{
 		parent::__construct($controller, $name, $fields, $actions, $validator);
 		$this->extend('updateForm');
 	}
-	
+
 	function submit($data, $form) {
 		if($country = SiteConfig::current_site_config()->getSingleCountry()){  // Add Country if missing due to ReadonlyField in form
 			$data['Country'] = $country;
@@ -41,5 +45,5 @@ class ShippingEstimateForm extends Form{
 		}
 		$this->controller->redirectBack();
 	}
-	
+
 }

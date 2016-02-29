@@ -1,6 +1,10 @@
 <?php
 
-class PopulateZonedShippingTask extends BuildTask{
+/**
+ * @package silvershop-shipping
+ */
+class PopulateZonedShippingTask extends BuildTask
+{
 
 	protected $title = "Populate Zoned Shipping Methods";
 	protected $description = 'If no zoned shipping methods exist, it creates some.';
@@ -20,6 +24,8 @@ class PopulateZonedShippingTask extends BuildTask{
 
 /**
  * Makes PopulateZonedShippingTask get run before PopulateShopTask is run
+ *
+ * @package silvershop-shipping
  */
 class PopulateShopZonedShippingTask extends Extension{
 

@@ -1,19 +1,14 @@
 {
-	"name": "burnbright/silverstripe-shop-shipping",
-	"description": "Optional shipping methods for the silverstripe shop module.",
+	"name": "silvershop/shipping",
+	"description": "Shipping methods for the SilverShop.",
 	"type": "silverstripe-module",
-	"keywords": ["silverstripe", "ecommerce", "shop", "shipping", "freight"],
+	"keywords": ["silverstripe", "ecommerce", "shop", "shipping", "freight", "silvershop"],
 	"license": "BSD2",
-	"authors": [{
-		"name": "Jeremy Shipman",
-		"email": "jeremy@burnbright.net",
-		"homepage": "http://github.com/jedateach"
-	}],
 	"extra": {
-		"installer-name": "shop_shipping"
+		"installer-name": "silvershop-shipping"
 	},
 	"require": {
-		"burnbright/silverstripe-shop": "~1.0",
+		"silvershop/silvershop-core": "~1.0",
 		"burnbright/silverstripe-shop-geocoding": "~1.2",
 		"silverstripe-australia/gridfieldextensions": "~1.0",
 		"burnbright/silverstripe-hasonefield": "dev-master"

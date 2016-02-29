@@ -1,7 +1,10 @@
 <?php
 
-class DistanceShippingMethod extends ShippingMethod{
-	
+/**
+ * @package silvershop-shipping
+ */
+class DistanceShippingMethod extends ShippingMethod {
+
 	private static $defaults = array(
 		'Name' => 'Distance Shipping',
 		'Description' => 'Per product shipping'
@@ -37,7 +40,7 @@ class DistanceShippingMethod extends ShippingMethod{
 				);
 			}
 		}
-		
+
 		return $fields;
 	}
 
@@ -61,7 +64,7 @@ class DistanceShippingMethod extends ShippingMethod{
 		if($fare->exists()){
 			$cost = $fare->Cost;
 		}
-		
+
 		return $cost;
 	}
 

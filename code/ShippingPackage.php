@@ -1,12 +1,15 @@
 <?php
-/*
+/**
  * Encapsulation of shipping package data
- * 
+ *
  * @todo: unit conversion support
  * @todo: different shape support (eg cylinder) ...with ability to roll back to 'box' if need be
+ *
+ * @package silvershop-shipping
  */
-class ShippingPackage{
-	
+class ShippingPackage
+{
+
 	protected $weight;
 	protected $height;
 	protected $width;
@@ -15,14 +18,14 @@ class ShippingPackage{
 	protected $value;
 	protected $currency;
 	protected $quantity;
-	
+
 	protected $defaultdimensions = array(
 		'height' => 0,
 		'width' => 0,
 		'depth' => 0,
 		'diameter' => 0
 	);
-	
+
 	protected $defaultoptions = array(
 		'value' => 0,
 		'quantity' => 0,
@@ -30,7 +33,7 @@ class ShippingPackage{
 		'weightunit' => 'kg',
 		'widthunit' => 'cm',
 	);
-	
+
 	protected $dimensionaliases = array(
 		0 => 'height',
 		1 => 'width',
@@ -39,7 +42,7 @@ class ShippingPackage{
 		'w' => 'width',
 		'd' => 'depth'
 	);
-	
+
 	function __construct($weight = 0, $dimensions = array(), $options = array()) {
 		$this->weight = $weight;
 		//set via aliases
@@ -71,7 +74,7 @@ class ShippingPackage{
 			}
 		}
 	}
-	
+
 	function toArray() {
 		$data = array(
 			"weight" => $this->weight,
@@ -86,7 +89,7 @@ class ShippingPackage{
 		);
 		return array_filter($data);
 	}
-	
+
 	function __toString() {
 		$out = "";
 		foreach($this->toArray() as $key => $value){
@@ -94,14 +97,14 @@ class ShippingPackage{
 		}
 		return $out;
 	}
-	
+
 	/**
 	 * Calculate total volume, based on given dimensions
 	 */
 	function volume() {
 		return $this->height * $this->width * $this->depth;
 	}
-	
+
 	function weight() {
 		return $this->weight;
 	}
@@ -109,19 +112,19 @@ class ShippingPackage{
 	function height() {
 		return $this->height;
 	}
-	
+
 	function width() {
 		return $this->width;
 	}
-	
+
 	function depth() {
 		return $this->depth;
 	}
-	
+
 	function value() {
 		return $this->value;
 	}
-	
+
 	function quantity() {
 		return $this->quantity;
 	}

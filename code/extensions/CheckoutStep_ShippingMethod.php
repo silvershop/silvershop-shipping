@@ -1,15 +1,17 @@
 <?php
 /**
  * Gives methods to ship by, based on previously given address and order items.
- * 
+ *
+ * @package silvershop-shipping
  */
-class CheckoutStep_ShippingMethod extends CheckoutStep{
-	
+class CheckoutStep_ShippingMethod extends CheckoutStep
+{
+
 	private static $allowed_actions = array(
 		'shippingmethod',
 		'ShippingMethodForm'
 	);
-	
+
 	function shippingmethod() {
 		$form = $this->ShippingMethodForm();
 		$cart = ShoppingCart::singleton()->current();
@@ -20,7 +22,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 			'OrderForm' => $form
 		);
 	}
-	
+
 	function ShippingMethodForm() {
 		$order = $this->owner->Cart();
 		$estimates = $order->getShippingEstimates();
@@ -51,7 +53,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		$this->owner->extend('updateShippingMethodForm', $form);
 		return $form;
 	}
-	
+
 	function setShippingMethod($data, $form) {
 		$order = $this->owner->Cart();
 		$option = null;
@@ -65,5 +67,5 @@ class CheckoutStep_ShippingMethod extends CheckoutStep{
 		}
 		$this->owner->redirect($this->NextStepLink());
 	}
-	
+
 }
