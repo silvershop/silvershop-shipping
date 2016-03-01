@@ -1,4 +1,4 @@
-## SilverStripe Shop Shipping Framework
+# SilverShop - Shipping Module
 
 [![Latest Stable Version](https://poser.pugx.org/silvershop/silvershop-shipping/v/stable.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
 [![Latest Unstable Version](https://poser.pugx.org/silvershop/silvershop-shipping/v/unstable.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
