@@ -1,11 +1,11 @@
 # SilverShop - Shipping Module
 
-[![Latest Stable Version](https://poser.pugx.org/silvershop/silvershop-shipping/v/stable.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
-[![Latest Unstable Version](https://poser.pugx.org/silvershop/silvershop-shipping/v/unstable.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
+[![Latest Stable Version](https://poser.pugx.org/silvershop/shipping/v/stable.png)](https://packagist.org/packages/silvershop/shipping)
+[![Latest Unstable Version](https://poser.pugx.org/silvershop/shipping/v/unstable.png)](https://packagist.org/packages/silvershop/shipping)
 [![Build Status](https://secure.travis-ci.org/silvershop/silvershop-shipping.png)](http://travis-ci.org/silvershop/silvershop-shipping)
 [![Code Coverage](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/coverage.png?s=cae0140f6d9a99c35b20c23b8bbe88711d526246)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/quality-score.png?s=802731e23565b5a7051b5622a56fccb7b764662a)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
-[![Total Downloads](https://poser.pugx.org/silvershop/silvershop-shipping/downloads.png)](https://packagist.org/packages/silvershop/silvershop-shipping)
+[![Total Downloads](https://poser.pugx.org/silvershop/shipping/downloads.png)](https://packagist.org/packages/silvershop/shipping)
 
 Introduce shipping options to SilverShop
 
