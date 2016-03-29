@@ -16,7 +16,7 @@ Introduce shipping options to SilverShop
 ## Installation
 
 ```sh
-composer require silvershop/silvershop-shipping:master
+composer require silvershop/shipping:master
 ```
 
 Add the ShippingFrameWorkModifier to your modifiers config, eg:
