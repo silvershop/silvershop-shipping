@@ -8,7 +8,7 @@
 		"installer-name": "silvershop-shipping"
 	},
 	"require": {
-		"silvershop/core": "~1.0",
+    "silvershop/core": "~1.0 || ~2.0",
 		"burnbright/silverstripe-shop-geocoding": "~1.2",
 		"silverstripe-australia/gridfieldextensions": "~1.0",
 		"burnbright/silverstripe-hasonefield": "dev-master"
