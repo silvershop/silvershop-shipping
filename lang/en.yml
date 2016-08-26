@@ -1,0 +1,18 @@
+en:
+  ShippingCheckoutComponent:
+    ShippingOptions: 'Shipping Options'
+    ShippingMethodNotProvidedMessage: 'Shipping method not provided'
+    ShippingMethodDoesNotExistMessage: 'Shipping Method does not exist'
+    ShippingMethodErrorCode: 'ShippingMethod'
+  CheckoutStep_ShippingMethod:
+    ShippingOptions: 'Shipping Options'
+    NoShippingMethods: '<p class="message warning">There are no shipping methods available</p>'
+  OrderShippingExtension:
+    NoPackage: 'Shipping package information not available'
+    NoAddress: 'No address has been set'
+  ShippingEstimateForm:
+    FormActionTitle: 'Estimate'
+    FormActionWarningMessage: 'No estimates could be found for that location.'
+    FormActionWarningCode: 'warning'
+  ShippingFrameworkModifier:
+    SINGULARNAME: 'Shipping'

@@ -31,7 +31,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep
 			$fields->push(
 				OptionsetField::create(
 					"ShippingMethodID",
-					"Shipping Options",
+                    _t('CheckoutStep_ShippingMethod.ShippingOptions', 'Shipping Options'),
 					$estimates->map(),
 					$estimates->First()->ID
 				)
@@ -40,9 +40,9 @@ class CheckoutStep_ShippingMethod extends CheckoutStep
 			$fields->push(
 				LiteralField::create(
 					"NoShippingMethods",
-					"<p class=\"message warning\">
-						There are no shipping methods available
-					</p>"
+                    _t('CheckoutStep_ShippingMethod.NoShippingMethods',
+                        '<p class=\"message warning\">There are no shipping methods available</p>'
+                    )
 				)
 			);
 		}

@@ -1,0 +1,18 @@
+nn:
+  ShippingCheckoutComponent:
+    ShippingOptions: 'Sendingalternativ'
+    ShippingMethodNotProvidedMessage: 'Sendingalternativ er ikkje oppgitt'
+    ShippingMethodDoesNotExistMessage: 'Sendingalternativ finnes ikkje'
+    ShippingMethodErrorCode: 'ShippingMethod'
+  CheckoutStep_ShippingMethod:
+    ShippingOptions: 'Sendingalternativ'
+    NoShippingMethods: '<p class="message warning">Der er ingen sendingalternativ tilgjengelig</p>'
+  OrderShippingExtension:
+    NoPackage: 'Informasjon om sending er ikkje tilgjengeleg'
+    NoAddress: 'Adresse er ikke oppgitt'
+  ShippingEstimateForm:
+    FormActionTitle: 'Estimer'
+    FormActionWarningMessage: 'Kunne ikkje berekna estimat for din lokasjon.'
+    FormActionWarningCode: 'warning'
+  ShippingFrameworkModifier:
+    SINGULARNAME: 'Frakt'

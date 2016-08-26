@@ -1,0 +1,18 @@
+nb:
+  ShippingCheckoutComponent:
+    ShippingOptions: 'Fraktalternativ'
+    ShippingMethodNotProvidedMessage: 'Fraktalternativ er ikke oppgitt'
+    ShippingMethodDoesNotExistMessage: 'Fraktalternativ finnes ikke'
+    ShippingMethodErrorCode: 'ShippingMethod'
+  CheckoutStep_ShippingMethod:
+    ShippingOptions: 'Fraktalternativ'
+    NoShippingMethods: '<p class="message warning">Der er ingen Fraktalternativ tilgjengelig</p>'
+  OrderShippingExtension:
+    NoPackage: 'Informasjon om forsendelse er ikke tilgjengelig'
+    NoAddress: 'Adresse er ikke oppgitt'
+  ShippingEstimateForm:
+    FormActionTitle: 'Estimer'
+    FormActionWarningMessage: 'Kunne ikke beregne estimat for din lokasjon.'
+    FormActionWarningCode: 'warning'
+  ShippingFrameworkModifier:
+    SINGULARNAME: 'Frakt'

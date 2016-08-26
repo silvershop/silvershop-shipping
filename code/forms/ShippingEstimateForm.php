@@ -10,12 +10,15 @@ class ShippingEstimateForm extends Form
 		$address = new Address();  // get address to access it's getCountryField method
 		$fields = new FieldList(
 			$address->getCountryField(),
-			TextField::create('State', _t('Address.STATE', 'State')),
-			TextField::create('City', _t('Address.CITY', 'City')),
-			TextField::create('PostalCode', _t('Address.POSTALCODE', 'Postal Code'))
+			TextField::create('State', _t('Address.db_State', 'State')),
+			TextField::create('City', _t('Address.db_City', 'City')),
+			TextField::create('PostalCode', _t('Address.db_PostalCode', 'Postal Code'))
 		);
 		$actions =  new FieldList(
-			FormAction::create("submit", "Estimate")
+			FormAction::create(
+                "submit",
+                _t('ShippingEstimateForm.FormActionTitle', 'Estimate')
+            )
 		);
 		$validator = new RequiredFields(array(
 			'Country'
@@ -35,7 +38,10 @@ class ShippingEstimateForm extends Form
 			);
 			$estimates = $estimator->getEstimates();
 			if(!$estimates->exists()){
-				$form->sessionMessage("No estimates could be found for that location.","warning");
+				$form->sessionMessage(
+                    _t('ShippingEstimateForm.FormActionWarningMessage', 'No estimates could be found for that location.'),
+                    _t('ShippingEstimateForm.FormActionWarningCode', "warning")
+                );
 			}
 			Session::set("ShippingEstimates", $estimates);
 			if(Director::is_ajax()){
