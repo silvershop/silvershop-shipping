@@ -12,7 +12,7 @@ class ShippingCheckoutComponent extends CheckoutComponent {
 		$fields->push(
 			OptionsetField::create(
 				"ShippingMethodID",
-				"Shipping Options",
+                _t('ShippingCheckoutComponent.ShippingOptions', 'Shipping Options'),
 				$estimates->map(),
 				$estimates->First()->ID
 			)
@@ -28,12 +28,18 @@ class ShippingCheckoutComponent extends CheckoutComponent {
 	public function validateData(Order $order, array $data) {
 		$result = new ValidationResult();
 		if(!isset($data['ShippingMethodID'])){
-			$result->error("Shipping method not provided", "ShippingMethod");
+			$result->error(
+                _t('ShippingCheckoutComponent.ShippingMethodNotProvidedMessage', "Shipping method not provided"),
+                _t('ShippingCheckoutComponent.ShippingMethodErrorCode', "ShippingMethod")
+            );
 			throw new ValidationException($result);
 		}
 
 		if(!ShippingMethod::get()->byID($data['ShippingMethodID'])){
-		 	$result->error("Shipping Method does not exist", "ShippingMethod");
+		 	$result->error(
+                _t('ShippingCheckoutComponent.ShippingMethodDoesNotExistMessage', "Shipping Method does not exist"),
+                _t('ShippingCheckoutComponent.ShippingMethodErrorCode', "ShippingMethod")
+            );
 		 	throw new ValidationException($result);
 		}
 	}

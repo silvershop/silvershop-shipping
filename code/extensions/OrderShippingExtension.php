@@ -61,13 +61,13 @@ class OrderShippingExtension extends DataExtension
 		$package = $this->owner->createShippingPackage();
 		if(!$package){
 			return $this->error(
-				_t("Checkout.NOPACKAGE", "Shipping package information not available")
+				_t("OrderShippingExtension.NoPackage", "Shipping package information not available")
 			);
 		}
 		$address = $this->owner->getShippingAddress();
 		if(!$address || !$address->exists()){
 			return $this->error(
-				_t("Checkout.NOADDRESS", "No address has been set")
+				_t("OrderShippingExtension.NoAddress", "No address has been set")
 			);
 		}
 		$this->owner->ShippingTotal = $option->calculateRate($package, $address);
