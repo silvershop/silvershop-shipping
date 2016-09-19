@@ -46,7 +46,7 @@ class ShippingEstimateForm extends Form
 			Session::set("ShippingEstimates", $estimates);
 			if(Director::is_ajax()){
 				//TODO: replace with an AJAXResponse class that can output to different formats
-				return json_encode($estimates->toArray());
+				return json_encode($estimates->toNestedArray());
 			}
 		}
 		$this->controller->redirectBack();
