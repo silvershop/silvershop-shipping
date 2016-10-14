@@ -32,7 +32,7 @@ class ShippingEstimateForm extends Form
 			$data['Country'] = $country;
 		}
 		if($order = ShoppingCart::singleton()->current()){
-			$estimator = new ShippingEstimator(
+			$estimator = ShippingEstimator::create(
 				$order,
 				new Address(Convert::raw2sql($data))
 			);

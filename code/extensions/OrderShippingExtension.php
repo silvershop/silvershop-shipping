@@ -9,6 +9,7 @@ class OrderShippingExtension extends DataExtension
 	private static $db = array(
 		'ShippingTotal' => 'Currency'
 	);
+
 	private static $has_one = array(
 		'ShippingMethod' => 'ShippingMethod'
 	);
@@ -42,19 +43,24 @@ class OrderShippingExtension extends DataExtension
 
 	/**
 	 * Get shipping estimates
+     *
 	 * @return DataList
 	 */
-	public function getShippingEstimates() {
-		//$package = $this->order->createShippingPackage();
+	public function getShippingEstimates()
+    {
 		$address = $this->owner->getShippingAddress();
-		$estimator = new ShippingEstimator($this->owner, $address);
+
+		$estimator = ShippingEstimator::create($this->owner, $address);
 		$estimates = $estimator->getEstimates();
+
 		return $estimates;
 	}
 
-	/*
+	/**
 	 * Set shipping method and shipping cost
+     *
 	 * @param $option - shipping option to set, and calculate shipping from
+     *
 	 * @return boolean sucess/failure of setting
 	 */
 	public function setShippingMethod(ShippingMethod $option) {
