@@ -47,7 +47,7 @@ class CheckoutStep_ShippingMethod extends CheckoutStep
 			);
 		}
 		$actions = new FieldList(
-			new FormAction("setShippingMethod", "Continue")
+			new FormAction("setShippingMethod", _t('CheckoutStep_ShippingMethod.Continue','Continue'))
 		);
 		$form = new Form($this->owner, "ShippingMethodForm", $fields, $actions);
 		$this->owner->extend('updateShippingMethodForm', $form);

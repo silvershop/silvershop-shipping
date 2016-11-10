@@ -7,6 +7,7 @@ en:
   CheckoutStep_ShippingMethod:
     ShippingOptions: 'Shipping Options'
     NoShippingMethods: '<p class="message warning">There are no shipping methods available</p>'
+    Continue: 'Continue'
   OrderShippingExtension:
     NoPackage: 'Shipping package information not available'
     NoAddress: 'No address has been set'
