@@ -7,9 +7,10 @@ nn:
   CheckoutStep_ShippingMethod:
     ShippingOptions: 'Sendingalternativ'
     NoShippingMethods: '<p class="message warning">Der er ingen sendingalternativ tilgjengelig</p>'
+    Continue: 'Hald fram'
   OrderShippingExtension:
     NoPackage: 'Informasjon om sending er ikkje tilgjengeleg'
-    NoAddress: 'Adresse er ikke oppgitt'
+    NoAddress: 'Adressa er ikkje oppgitt'
   ShippingEstimateForm:
     FormActionTitle: 'Estimer'
     FormActionWarningMessage: 'Kunne ikkje berekna estimat for din lokasjon.'
