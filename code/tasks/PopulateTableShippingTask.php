@@ -9,17 +9,17 @@ class PopulateTableShippingTask extends BuildTask
 
     protected $description = 'If no table shipping methods exist, it creates multiple different setups of table shipping.';
 
-    function run($request = null) {
-        if(!DataObject::get_one('TableShippingMethod')){
+    public function run($request = null)
+    {
+        if (!DataObject::get_one('TableShippingMethod')) {
             $factory = Injector::inst()->create('FixtureFactory');
             $fixture = new YamlFixture('silvershop-shipping/tests/fixtures/TableShippingMethod.yml');
             $fixture->writeInto($factory);
             DB::alteration_message('Created table shipping methods', 'created');
-        }else{
+        } else {
             DB::alteration_message('Some table shipping methods already exist. None were created.');
         }
     }
-
 }
 
 /**
@@ -27,11 +27,11 @@ class PopulateTableShippingTask extends BuildTask
  *
  * @package silvershop-shipping
  */
-class PopulateShopTableShippingTask extends Extension{
-
-    function beforePopulate() {
+class PopulateShopTableShippingTask extends Extension
+{
+    public function beforePopulate()
+    {
         $task = new PopulateTableShippingTask();
         $task->run();
     }
-
 }
