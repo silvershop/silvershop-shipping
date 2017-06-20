@@ -30,11 +30,14 @@ class ShippingMethod extends DataObject{
 	}
 
 	public function getTitle() {
-		return implode(" - ", array_filter(array(
+        $title = implode(" - ", array_filter(array(
 			$this->Rate,
 			$this->Name,
 			$this->Description
 		)));
+
+        $this->extend('updateTitle', $title);
+        return $title;
 	}
 
 }
