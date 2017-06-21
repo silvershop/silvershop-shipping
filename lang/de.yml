@@ -1,0 +1,26 @@
+de:
+  ShippingMethodAdmin:
+    MENUTITLE: Versand
+  ShippingMethod:
+    SINGULARNAME: Versandart
+    PLURALNAME: Versandarten
+  Warehouse:
+    SINGULARNAME: Lager
+    PLURALNAME: Lager
+  ShippingCheckoutComponent:
+    ShippingOptions: 'Versandarten'
+    ShippingMethodNotProvidedMessage: 'Keine Versandart angegeben'
+    ShippingMethodDoesNotExistMessage: 'Versandart existiert nicht'
+    ShippingMethodErrorCode: 'Versandart'
+  CheckoutStep_ShippingMethod:
+    ShippingOptions: 'Versandarten'
+    NoShippingMethods: '<p class="message warning">Keine Versandarten verfügbar</p>'
+  OrderShippingExtension:
+    NoPackage: 'Shipping package information not available'
+    NoAddress: 'No address has been set'
+  ShippingEstimateForm:
+    FormActionTitle: 'Versandkosten berechnen'
+    FormActionWarningMessage: 'Für die Adresse wurden keine Versandkosten gefunden'
+    FormActionWarningCode: 'warning'
+  ShippingFrameworkModifier:
+    SINGULARNAME: 'Versand'
