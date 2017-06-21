@@ -16,8 +16,8 @@ de:
     ShippingOptions: 'Versandarten'
     NoShippingMethods: '<p class="message warning">Keine Versandarten verfügbar</p>'
   OrderShippingExtension:
-    NoPackage: 'Shipping package information not available'
-    NoAddress: 'No address has been set'
+    NoPackage: 'Versandinformationen nicht verfügbar'
+    NoAddress: 'Keine Adresse ausgewählt'
   ShippingEstimateForm:
     FormActionTitle: 'Versandkosten berechnen'
     FormActionWarningMessage: 'Für die Adresse wurden keine Versandkosten gefunden'
