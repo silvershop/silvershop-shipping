@@ -62,15 +62,11 @@ class OrderShippingExtension extends DataExtension
     {
         $package = $this->owner->createShippingPackage();
         if (!$package) {
-            return $this->error(
-                _t("OrderShippingExtension.NoPackage", "Shipping package information not available")
-            );
+            throw new Exception(_t("OrderShippingExtension.NoPackage", "Shipping package information not available"));
         }
         $address = $this->owner->getShippingAddress();
         if (!$address || !$address->exists()) {
-            return $this->error(
-                _t("OrderShippingExtension.NoAddress", "No address has been set")
-            );
+            throw new Exception(_t("OrderShippingExtension.NoAddress", "No address has been set"));
         }
         $this->owner->ShippingTotal = $option->calculateRate($package, $address);
         $this->owner->ShippingMethodID = $option->ID;
