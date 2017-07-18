@@ -77,6 +77,14 @@ class DistanceShippingMethod extends ShippingMethod
                 ->sort("Cost", "DESC")
                 ->first();
     }
+
+    /**
+     * @return bool
+     */
+    public function requiresAddress()
+    {
+        return true;
+    }
 }
 
 class DistanceShippingFare extends DataObject

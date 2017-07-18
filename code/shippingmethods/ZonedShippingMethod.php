@@ -97,6 +97,14 @@ class ZonedShippingMethod extends ShippingMethod
         }
         return $fields;
     }
+
+    /**
+     * @return bool
+     */
+    public function requiresAddress()
+    {
+        return true;
+    }
 }
 
 class ZonedShippingRate extends DataObject

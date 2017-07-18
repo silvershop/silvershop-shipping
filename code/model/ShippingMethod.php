@@ -43,6 +43,16 @@ class ShippingMethod extends DataObject
         $this->extend('updateTitle', $title);
         return $title;
     }
+
+    /**
+     * Some shipping methods might require an address present on the order.
+     *
+     * @return bool
+     */
+    public function requiresAddress()
+    {
+        return false;
+    }
 }
 
 /**
