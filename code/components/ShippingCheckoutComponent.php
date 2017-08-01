@@ -9,15 +9,16 @@ class ShippingCheckoutComponent extends CheckoutComponent
     {
         $fields = new FieldList();
         $estimates = $order->getShippingEstimates();
-
-        $fields->push(
-            OptionsetField::create(
-                "ShippingMethodID",
-                _t('ShippingCheckoutComponent.ShippingOptions', 'Shipping Options'),
-                $estimates->map(),
-                $estimates->First()->ID
-            )
-        );
+        if($estimates->exists()){
+            $fields->push(
+                OptionsetField::create(
+                    "ShippingMethodID",
+                    _t('ShippingCheckoutComponent.ShippingOptions', 'Shipping Options'),
+                    $estimates->map(),
+                    $estimates->First()->ID
+                )
+            );
+        }
 
         return $fields;
     }
