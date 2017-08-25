@@ -20,6 +20,9 @@ class ShippingFrameworkModifier extends ShippingModifier
         if ($this->Order() && $this->Order()->ShippingMethod()->exists()) {
             $title .= " (".$this->Order()->ShippingMethod()->Name.")";
         }
+        
+        $this->extend('updateTitle', $title);
+        
         return $title;
     }
 }
