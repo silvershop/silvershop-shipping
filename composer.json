@@ -11,6 +11,6 @@
         "silvershop/core": "~1.0 || ~2.0",
 		"silvershop/geocoding": "~2.0",
 		"silverstripe-australia/gridfieldextensions": "~1.0",
-		"burnbright/silverstripe-hasonefield": "dev-master"
+		"silvershop/silverstripe-hasonefield": "~1.0"
 	}
 }
