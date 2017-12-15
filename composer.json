@@ -10,7 +10,7 @@
 	"require": {
         "silvershop/core": "~1.0 || ~2.0",
 		"silvershop/geocoding": "~2.0",
-		"silverstripe-australia/gridfieldextensions": "~1.0",
+		"symbiote/silverstripe-gridfieldextensions": "~1.0",
 		"silvershop/silverstripe-hasonefield": "~1.0"
 	}
 }
