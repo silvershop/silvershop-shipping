@@ -32,5 +32,7 @@
             "SilverShop\\Shipping\\": "src/",
             "SilverShop\\Shipping\\Tests\\": "tests/"
         }
-    }
+    },
+    "prefer-stable": false,
+    "minimum-stability": "dev"
 }
