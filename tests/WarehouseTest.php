@@ -1,9 +1,15 @@
 <?php
 
-class WarehouseTest extends SapphireTest{
+namespace SilverShop\Shipping\Tests;
 
-    protected static $fixture_file = 'silvershop-shipping/tests/fixtures/Warehouses.yml';
-    
+use SilverStripe\Dev\SapphireTest;
+use SilverShop\Shipping\Model\Warehouse;
+
+
+class WarehouseTest extends SapphireTest
+{
+    protected static $fixture_file = 'Warehouses.yml';
+
     function testClosestWarehouse() {
 
         $warehouse = Warehouse::closest_to(

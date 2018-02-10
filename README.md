@@ -22,10 +22,10 @@ composer require silvershop/shipping:master
 Add the ShippingFrameWorkModifier to your modifiers config, eg:
 
 ```yaml
-Order:
+SilverShop\Model\Order:
     modifiers:
-        - ShippingFrameworkModifier
-        - FlatTaxModifier
+        - SilverShop\Shipping\ShippingFrameworkModifier
+        - SilverShop\ShippingFlatTaxModifier
 ```
 
 You need to use the new SteppedCheckout system to allow customers to set their

@@ -1,22 +1,31 @@
 <?php
 
-class ShippingEstimateFormTest extends FunctionalTest{
+namespace SilverShop\Shipping\Tests;
 
-    static $fixture_file = array(
-        "silvershop-shipping/tests/fixtures/TableShippingMethod.yml",
-        "silvershop/tests/fixtures/shop.yml",
-        "silvershop/tests/fixtures/Pages.yml"
-    );
+use SilverStripe\Dev\FunctionalTest;
+use SilverShop\Tests\ShopTest;
+use SilverShop\Cart\ShoppingCart;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Core\Config\Config;
+
+class ShippingEstimateFormTest extends FunctionalTest
+{
+
+    protected static $fixture_file = [
+        "TableShippingMethod.yml",
+        "silvershop/core:tests/fixtures/shop.yml",
+        "silvershop/core:tests/fixtures/Pages.yml"
+    ];
+
     protected static $use_draft_site = true;
 
     function setUp() {
-        if(method_exists('SapphireTest', 'useTestTheme')){
-            $this->useTestTheme($themeBaseDir = dirname(__FILE__), 'testtheme', function(){});
-        } else {
-            $this->useTheme('testtheme');
-        }
+        $this->useTheme('testtheme');
+
         parent::setUp();
+
         ShopTest::setConfiguration();
+
         // add product to the cart
         $this->socks = $this->objFromFixture('Product', 'socks');
         $this->socks->publish('Stage','Live');
@@ -32,24 +41,24 @@ class ShippingEstimateFormTest extends FunctionalTest{
     function testGetEstimates() {
 
         //good data for Shipping Estimate Form
-        $data = array(
+        $data = [
             'Country' => 'NZ',
             'State' => 'Auckland',
             'City' => 'Auckland',
             'PostalCode' => 1010
-        );
+        ];
         $page1 = $this->post('/cart/ShippingEstimateForm', $data);
         $this->assertEquals(200, $page1->getStatusCode(), "a page should load");
         $this->assertContains("Quantity-based shipping", $page1->getBody(), "ShippingEstimates presented in a table");
 
 
         //un-escaped data for Shipping Estimate Form
-        $data = array(
+        $data = [
             'Country' => 'NZ',
             'State' => 'Hawke\'s Bay',
             'City' => 'SELECT * FROM \" \' WHERE AND EVIL',
             'PostalCode' => 1234
-        );
+        ];
         $page2 = $this->post('/cart/ShippingEstimateForm', $data);
         $this->assertEquals(200, $page2->getStatusCode(), "a page should load");
         $this->assertContains("Quantity-based shipping", $page2->getBody(), "ShippingEstimates can be successfully presented with un-escaped data in the form");
@@ -68,11 +77,11 @@ class ShippingEstimateFormTest extends FunctionalTest{
         $this->assertNotContains("<option value=\"NZ\">New Zealand</option>", $page->getBody(), "Dropdown field is not shown");
 
         // The Shipping Estimate Form can post with a Country readonly field
-        $data = array(
+        $data = [
             'State' => 'Waikato',
             'City' => 'Hamilton',
             'PostalCode' => 3210
-        );
+        ];
         $page3 = $this->post('/cart/ShippingEstimateForm', $data);
         $this->assertEquals(200, $page3->getStatusCode(), "a page should load");
         $this->assertContains("Quantity-based shipping", $page3->getBody(), "ShippingEstimates can be successfully presented with a Country readonly field");
@@ -91,17 +100,7 @@ class ShippingEstimateFormTest extends FunctionalTest{
     protected function useTheme($theme) {
         global $project;
 
-        $themeBaseDir = dirname(__FILE__);
-        $manifest = new SS_TemplateManifest($themeBaseDir, $project, true, true);
-
-        SS_TemplateLoader::instance()->pushManifest($manifest);
-
-        $origTheme = Config::inst()->get('SSViewer', 'theme');
-        Config::inst()->update('SSViewer', 'theme', $theme);
-
-        // Remove all the test themes we created
-        SS_TemplateLoader::instance()->popManifest();
-        Config::inst()->update('SSViewer', 'theme', $origTheme);
+        // @todo v4
     }
 
 }

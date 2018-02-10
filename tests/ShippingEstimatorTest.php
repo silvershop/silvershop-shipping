@@ -1,11 +1,18 @@
-<?php 
+<?php
 
-class ShippingEstimatorTest extends SapphireTest{
-    
-    protected static $fixture_file = array(
-        'silvershop-shipping/tests/fixtures/TableShippingMethod.yml'
-    );
-    
+namespace SilverShop\Shipping\Tests;
+
+use SilverStripe\Dev\SapphireTest;
+use SilverShop\Model\Order;
+use SilverShop\Model\Address;
+use SilverShop\Shipping\ShippingPackage;
+use SilverShop\Shipping\ShippingEstimator;
+
+
+class ShippingEstimatorTest extends SapphireTest
+{
+    protected static $fixture_file = 'TableShippingMethod.yml';
+
     function testGetEstimates() {
         $order = new Order();
         $address = new Address();
@@ -14,9 +21,9 @@ class ShippingEstimatorTest extends SapphireTest{
 
         $options = $estimator->getShippingMethods();
         $this->assertNotNull($options, "options found");
-        
+
         $estimates = $estimator->getEstimates();
         $this->assertNotNull($estimates, "estimates found");
     }
-    
+
 }

@@ -3,12 +3,12 @@ Name: silvershop-shipping
 After: silvershop/*
 ---
 
-PopulateShopTask:
+SilverShop\Tasks\PopulateShopTask:
   extensions:
-    - PopulateShopTableShippingTask
-Order:
+    - SilverShop\Shipping\Extension\PopulateShopTableShippingTask
+SilverShop\Model\Order:
   extensions:
-    - OrderShippingExtension
-CartPage_Controller:
+    - SilverShop\Shipping\Extension\OrderShippingExtension
+SilverShop\Page\CartPageController:
   extensions:
-    - CartPageShippingExtension
+    - SilverShop\Shipping\Extension\CartPageShippingExtension

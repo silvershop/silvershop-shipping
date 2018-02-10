@@ -1,0 +1,27 @@
+mappings:
+  ShippingMethodAdmin: SilverShop\Shipping\Admin\ShippingMethodAdmin
+  OrderShippingExtension: SilverShop\Shipping\Extension\OrderShippingExtension
+  CartPageShippingExtension: SilverShop\Shipping\Extension\CartPageShippingExtension
+  ShippingEstimateForm: SilverShop\Shipping\Forms\ShippingEstimateForm
+  ZonedShippingMethod: SilverShop\Shipping\Model\ZonedShippingMethod
+  ZonedShippingRate: SilverShop\Shipping\Model\ZonedShippingRate
+  ShippingMethod: SilverShop\Shipping\Model\ShippingMethod
+  ShippingCalculator: SilverShop\Shipping\Model\ShippingCalculator
+  TableShippingMethod: SilverShop\Shipping\Model\TableShippingMethod
+  TableShippingRate: SilverShop\Shipping\Model\TableShippingRate
+  Warehouse: SilverShop\Shipping\Model\Warehouse
+  DistanceShippingMethod: SilverShop\Shipping\Model\DistanceShippingMethod
+  DistanceShippingFare: SilverShop\Shipping\Model\DistanceShippingFare
+  PopulateTableShippingTask: SilverShop\Shipping\Tasks\PopulateTableShippingTask
+  PopulateShopTableShippingTask: SilverShop\Shipping\Tasks\PopulateShopTableShippingTask
+  PopulateZonedShippingTask: SilverShop\Shipping\Tasks\PopulateZonedShippingTask
+  PopulateShopZonedShippingTask: SilverShop\Shipping\Tasks\PopulateShopZonedShippingTask
+  ShippingEstimateFormTest: SilverShop\Shipping\Tests\ShippingEstimateFormTest
+  DistanceShippingMethodTest: SilverShop\Shipping\Tests\DistanceShippingMethodTest
+  WarehouseTest: SilverShop\Shipping\Tests\WarehouseTest
+  TableShippingMethodTest: SilverShop\Shipping\Tests\TableShippingMethodTest
+  ZonedShippingMethodTest: SilverShop\Shipping\Tests\ZonedShippingMethodTest
+  ShippingEstimatorTest: SilverShop\Shipping\Tests\ShippingEstimatorTest
+  ShippingPackageTest: SilverShop\Shipping\Tests\ShippingPackageTest
+  CheckoutStepShippingMethod: SilverShop\Shipping\Checkout\Step\CheckoutStepShippingMethod
+  ShippingCheckoutComponent: SilverShop\Shipping\Checkout\Component\ShippingCheckoutComponent
