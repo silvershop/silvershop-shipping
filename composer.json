@@ -8,7 +8,7 @@
         "silvershop/core": "^3",
 		"silvershop/geocoding": "~2.0",
 		"symbiote/silverstripe-gridfieldextensions": "*",
-		"silvershop/silverstripe-hasonefield": "~1.0"
+		"silvershop/silverstripe-hasonefield": "^2"
 	},
     "authors": [{
       "name": "SilverShop Contributors",
