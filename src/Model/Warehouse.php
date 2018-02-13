@@ -16,7 +16,8 @@ class Warehouse extends DataObject
     ];
 
     private static $summary_fields = [
-        'Title', 'Address'
+        'Title',
+        'Address'
     ];
 
     private static $table_name = 'SilverShop_Warehouse';

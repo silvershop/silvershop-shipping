@@ -22,7 +22,7 @@ class TableShippingMethod extends ShippingMethod
     ];
 
     private static $has_many = [
-        "Rates" => "TableShippingRate"
+        "Rates" => TableShippingRate::class
     ];
 
     private static $table_name = 'SilverShop_TableShippingMethod';

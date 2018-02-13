@@ -22,7 +22,7 @@ class ZonedShippingMethod extends ShippingMethod
     ];
 
     private static $has_many = [
-        "Rates" => "ZonedShippingRate"
+        "Rates" => ZonedShippingRate::class
     ];
 
     private static $table_name = 'SilverShop_ZonedShippingMethod';

@@ -19,7 +19,7 @@ class ZonedShippingRate extends DataObject
     ];
 
     private static $has_one = [
-        'Zone' => 'Zone',
+        'Zone' => Zone::class,
         'ZonedShippingMethod' => ZonedShippingMethod::class
     ];
 

@@ -3,14 +3,16 @@
 namespace SilverShop\Shipping\Model;
 
 use SilverStripe\Forms\GridField\GridField;
-use GridFieldConfig_RecordEditor;
-use GridFieldEditableColumns;
-use GridFieldDeleteAction;
-use GridFieldAddNewInlineButton;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
 use SilverStripe\Forms\LiteralField;
 use SilverShop\Shipping\ShippingPackage;
+use SilverShop\Shipping\Model\Warehouse;
 use SilverShop\Model\Address;
 use SilverStripe\ORM\DataObject;
+use SilverShop\Shipping\Model\DistanceShippingFare;
 
 class DistanceShippingMethod extends ShippingMethod
 {
@@ -20,7 +22,7 @@ class DistanceShippingMethod extends ShippingMethod
     ];
 
     private static $has_many = [
-        "DistanceFares" => "DistanceShippingFare"
+        "DistanceFares" => DistanceShippingFare::class
     ];
 
     private static $table_name = 'SilverShop_DistanceShippingMethod';
@@ -95,49 +97,5 @@ class DistanceShippingMethod extends ShippingMethod
     public function requiresAddress()
     {
         return true;
-    }
-}
-
-class DistanceShippingFare extends DataObject
-{
-    private static $db = [
-        'Distance' => 'Float',
-        'Cost' => 'Currency'
-    ];
-
-    private static $has_one = [
-        'ShippingMethod' => 'DistanceShippingMethod'
-    ];
-
-    private static $summary_fields = [
-        'MinDistance',
-        'Distance',
-        'Cost'
-    ];
-
-    private static $field_labels = [
-        'MinDistance' => 'Min Distance (km)',
-        'Distance' => 'Max Distance (km)',
-        'Cost' => 'Cost'
-    ];
-
-    private static $singular_name = "Fare";
-
-    private static $default_sort = "\"Distance\" ASC";
-
-    public function getMinDistance()
-    {
-        $dist = 0;
-        if (
-            $dfare = self::get()
-            ->filter("Distance:LessThan", $this->Distance)
-            ->filter("ShippingMethodID", $this->ShippingMethodID)
-            ->sort("Distance", "DESC")
-            ->first()
-        ) {
-            $dist = $dfare->Distance;
-        }
-
-        return $dist;
     }
 }
