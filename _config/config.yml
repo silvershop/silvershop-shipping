@@ -1,6 +1,5 @@
 ---
 Name: silvershop-shipping
-After: silvershop/*
 ---
 
 SilverShop\Tasks\PopulateShopTask:

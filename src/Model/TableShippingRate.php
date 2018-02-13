@@ -1,8 +1,9 @@
 <?php
 
-namespace SilverShop\Model;
+namespace SilverShop\Shipping\Model;
 
 use SilverShop\Shipping\Model\TableShippingMethod;
+use SilverShop\Shipping\Model\RegionRestriction;
 
 /**
  * Adds extra metric ranges to restrict with, rather than just region.
@@ -10,7 +11,6 @@ use SilverShop\Shipping\Model\TableShippingMethod;
 class TableShippingRate extends RegionRestriction
 {
     private static $db = [
-        //constraint values
         "WeightMin"   => "Decimal",
         "WeightMax"   => "Decimal",
         "VolumeMin"   => "Decimal",
@@ -19,7 +19,6 @@ class TableShippingRate extends RegionRestriction
         "ValueMax"    => "Currency",
         "QuantityMin" => "Int",
         "QuantityMax" => "Int",
-
         "Rate" => "Currency"
     ];
 
