@@ -7,19 +7,21 @@ use SilverShop\Tests\ShopTest;
 use SilverShop\Cart\ShoppingCart;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Core\Config\Config;
+use SilverShop\Model\Order;
+use SilverShop\Page\Product;
+use SilverShop\Page\CartPage;
+use SilverStripe\SiteConfig\SiteConfig;
 
 class ShippingEstimateFormTest extends FunctionalTest
 {
-
     protected static $fixture_file = [
         "TableShippingMethod.yml",
-        "silvershop/core:tests/fixtures/shop.yml",
-        "silvershop/core:tests/fixtures/Pages.yml"
+        "Shop.yml"
     ];
 
     protected static $use_draft_site = true;
 
-    function setUp() {
+    protected function setUp() {
         $this->useTheme('testtheme');
 
         parent::setUp();
@@ -27,12 +29,12 @@ class ShippingEstimateFormTest extends FunctionalTest
         ShopTest::setConfiguration();
 
         // add product to the cart
-        $this->socks = $this->objFromFixture('Product', 'socks');
+        $this->socks = $this->objFromFixture(Product::class, 'socks');
         $this->socks->publish('Stage','Live');
 
-        $this->cartpage = $this->objFromFixture("CartPage", "cart");
+        $this->cartpage = $this->objFromFixture(CartPage::class, "cart");
         $this->cartpage->publish('Stage','Live');
-        ShoppingCart::singleton()->setCurrent($this->objFromFixture("Order", "cart")); //set the current cart
+        ShoppingCart::singleton()->setCurrent($this->objFromFixture(Order::class, "cart")); //set the current cart
 
         // Open cart page
         $page = $this->get('/cart');
@@ -67,7 +69,7 @@ class ShippingEstimateFormTest extends FunctionalTest
 
     function testShippingEstimateWithReadonlyFieldForCountry() {
         // setup a single-country site
-        $siteconfig = DataObject::get_one('SiteConfig');
+        $siteconfig = SiteConfig::get()->first();
         $siteconfig->AllowedCountries = "NZ";
         $siteconfig->write();
 

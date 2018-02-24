@@ -6,6 +6,7 @@ use SilverShop\Forms\RestrictionRegionCountryDropdownField;
 use SilverStripe\Core\Convert;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
+use SilverShop\Model\Address;
 
 class RegionRestriction extends DataObject
 {

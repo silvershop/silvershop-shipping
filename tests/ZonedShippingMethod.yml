@@ -112,49 +112,49 @@ SilverShop\Shipping\Model\ZonedShippingRate:
         Rate: 58.00
     #volume-based rates
     int_vo4:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
         VolumeMin: 0
         VolumeMax: 4
         Rate: 2.00
     int_vo10:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
         VolumeMin: 4
         VolumeMax: 10
         Rate: 6.00
     int_vo50:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
         VolumeMin: 10
         VolumeMax: 50
         Rate: 30.00
     int_vo1000:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
         VolumeMin: 50
         VolumeMax: 1000
         Rate: 100.00
     int_vol10000:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
         VolumeMin: 1000
         VolumeMax: 10000
         Rate: 300.00
     int_vol100000:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
         VolumeMin: 10000
         VolumeMax: 100000
         Rate: 520.00
     loc_vo4:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.loc'
         VolumeMin: 0
         VolumeMax: 4
         Rate: 1.00
     loc_vo10:
-        ZonedShippingMethod: =>ZonedShippingMethod.volume
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
         Zone: '=>SilverShop\Shipping\Model\Zone.loc'
         VolumeMin: 4
         VolumeMax: 10

@@ -2,17 +2,26 @@
 
 namespace SilverShop\Shipping;
 
+use SilverStripe\Core\Injector\Injectable;
+use SilverShop\Shipping\Model\ShippingMethod;
+use SilverShop\Model\Order;
+use SilverShop\Model\Address;
+use SilverStripe\ORM\ArrayList;
+
 /**
  * Helper class for calculating rates for available shipping options.
  * Provides a little caching, so estimates aren't calculated more than once.
- *
- * @package silvershop-shipping
  */
 class ShippingEstimator
 {
+    use Injectable;
+
     protected $order;
+
     protected $address;
+
     protected $estimates = null;
+
     protected $calculated = false;
 
     public function __construct(Order $order, Address $address = null)
@@ -26,6 +35,7 @@ class ShippingEstimator
         if ($this->calculated) {
             return $this->estimates;
         }
+
         $output = new ArrayList();
         if ($options = $this->getShippingMethods()) {
             foreach ($options as $option) {
@@ -36,6 +46,7 @@ class ShippingEstimator
                 }
             }
         }
+
         $output->sort("CalculatedRate", "ASC"); //sort by rate, lowest to highest
         // cache estimates
         $this->estimates = $output;
@@ -45,11 +56,10 @@ class ShippingEstimator
     }
 
     /**
-     * get options that apply to package and location
+     * Get options that apply to package and location,
      */
     public function getShippingMethods()
     {
-        //TODO: restrict options to region / package specs
         return ShippingMethod::get()->filter("Enabled", 1);
     }
 }

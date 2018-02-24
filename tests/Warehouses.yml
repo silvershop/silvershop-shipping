@@ -52,13 +52,13 @@ SilverShop\Model\Address:
 SilverShop\Shipping\Model\Warehouse:
     warehouse1:
         Title: Main warehouse
-        Address: =>Address.warehouse1
+        Address: '=>SilverShop\Model\Address.warehouse1'
     warehouse2:
         Title: NSW depot
-        Address: =>Address.warehouse2
+        Address: '=>SilverShop\Model\Address.warehouse2'
     warehouse3:
         Title: Western Australia
-        Address: =>Address.warehouse3
+        Address: '=>SilverShop\Model\Address.warehouse3'
     warehouse4:
         Title: Abandoned Warehouse
-        Address: =>Address.warehouse4
+        Address: '=>SilverShop\Model\Address.warehouse4'

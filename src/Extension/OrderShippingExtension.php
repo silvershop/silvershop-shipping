@@ -5,7 +5,9 @@ namespace SilverShop\Shipping\Extension;
 use SilverStripe\ORM\DataExtension;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Shipping\ShippingEstimator;
-use SilverShop\Shipping\ShippingMethod;
+use SilverShop\Shipping\Model\ShippingMethod;
+use SilverShop\Shipping\Model\Zone;
+
 use Exception;
 
 class OrderShippingExtension extends DataExtension
@@ -13,8 +15,9 @@ class OrderShippingExtension extends DataExtension
     private static $db = [
         'ShippingTotal' => 'Currency'
     ];
+
     private static $has_one = [
-        'ShippingMethod' => 'ShippingMethod'
+        'ShippingMethod' => ShippingMethod::class
     ];
 
     public function createShippingPackage()
@@ -23,8 +26,9 @@ class OrderShippingExtension extends DataExtension
         $weight = $width = $height = $depth = $value = $quantity = 0;
 
         $items = $this->owner->Items();
+
         if (!$items->exists()) {
-            return new ShippingPackage();
+            return ShippingPackage::create();
         }
 
         $weight = $items->Sum('Weight', true); //Sum is found on OrdItemList (Component Extension)
@@ -35,13 +39,15 @@ class OrderShippingExtension extends DataExtension
         $value = $this->owner->SubTotal();
         $quantity = $items->Quantity();
 
-        $package = new ShippingPackage($weight,
+        $package = ShippingPackage::create(
+            $weight,
             [$height,$width,$depth],
             [
                 'value' => $value,
                 'quantity' => $quantity
             ]
         );
+
         return $package;
     }
 
@@ -53,7 +59,7 @@ class OrderShippingExtension extends DataExtension
     {
         //$package = $this->order->createShippingPackage();
         $address = $this->owner->getShippingAddress();
-        $estimator = new ShippingEstimator($this->owner, $address);
+        $estimator = ShippingEstimator::create($this->owner, $address);
         $estimates = $estimator->getEstimates();
         return $estimates;
     }

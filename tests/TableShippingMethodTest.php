@@ -6,17 +6,18 @@ use SilverStripe\Dev\SapphireTest;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Shipping\Model\TableShippingRate;
-
+use SilverShop\Shipping\Model\TableShippingMethod;
 
 class TableShippingMethodTest extends SapphireTest
 {
-
     protected static $fixture_file = 'TableShippingMethod.yml';
 
-    protected $fixtureclass = "TableShippingMethod";
+    protected $fixtureclass = TableShippingMethod::class;
 
-    public function setUp(){
+    public function setUp()
+    {
         parent::setUp();
+
         $this->addressshipping = $this->objFromFixture($this->fixtureclass, "address");
         $this->weightshipping = $this->objFromFixture($this->fixtureclass, "weight");
         $this->volumeshipping = $this->objFromFixture($this->fixtureclass, "volume");
@@ -47,7 +48,8 @@ class TableShippingMethodTest extends SapphireTest
         $this->p4 = new ShippingPackage(1000, [100,200,300], ['value' => 1000000, 'quantity' => 12412]);
     }
 
-    public function testAddressTable() {
+    public function testAddressTable()
+    {
         $type = "address";
 
         $address = new Address([
@@ -74,7 +76,8 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p4, $address, 0);
     }
 
-    public function testDefaultRate() {
+    public function testDefaultRate()
+    {
         $type = "address";
         $address = $this->internationaladdress;
         $defaultrate = new TableShippingRate([
@@ -88,7 +91,8 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p4, $address, 100);
     }
 
-    public function testInternationalRates(){
+    public function testInternationalRates()
+    {
         $address_int = $this->internationaladdress;
 
         //weight based
@@ -124,7 +128,8 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertNoMatch($type, $this->p4, $address_int); //quantity = 12412
     }
 
-    public function testLocalRates(){
+    public function testLocalRates()
+    {
         $address_loc = $this->nzaddress;
 
         //weight based
@@ -161,13 +166,17 @@ class TableShippingMethodTest extends SapphireTest
 
     }
 
-    protected function assertMatch($type = "weight", $package, $address, $amount){
+    protected function assertMatch($type = "weight", $package, $address, $amount)
+    {
         $rate = $this->{$type."shipping"}->calculateRate($package, $address);
+
         $this->assertEquals($amount, $rate, "Check rate for package $package is $amount");
     }
 
-    protected function assertNoMatch($type = "weight", $package, $address){
+    protected function assertNoMatch($type = "weight", $package, $address)
+    {
         $rate = $this->{$type."shipping"}->calculateRate($package,$address);
+
         $this->assertNull($rate,"Check rate for package $package is not found");
     }
 

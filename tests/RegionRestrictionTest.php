@@ -5,23 +5,24 @@ namespace SilverShop\Shipping\Tests;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\RegionRestriction;
 use SilverStripe\Dev\SapphireTest;
+use SilverShop\Shipping\Tests\RegionRestrictionRate;
 
 class RegionRestrictionTest extends SapphireTest
 {
-    public static $fixture_file = array(
+    protected static $fixture_file = array(
         'RegionRestriction.yml',
         'Addresses.yml',
     );
 
     protected static $extra_dataobjects = [
-        RegionRestrictionRateTest::class
+        RegionRestrictionRate::class
     ];
 
     public function testMatchLocal()
     {
         $address = $this->objFromFixture(Address::class, "wnz6012");
         $rate = $this->getRate($address);
-        $this->assertTrue((boolean)$rate);
+        $this->assertTrue((boolean) $rate);
         $this->assertEquals(2, $rate->Rate);
     }
 
@@ -44,7 +45,7 @@ class RegionRestrictionTest extends SapphireTest
     public function testMatchDefault()
     {
         //add default rate
-        $default = new RegionRestriction_RateTest(
+        $default = new RegionRestriction(
             array(
                 'Rate' => 100,
             )
@@ -87,8 +88,6 @@ class RegionRestrictionTest extends SapphireTest
 
     public function getRate(Address $address)
     {
-        return RegionRestriction_RateTest::filteredByAddress($address)->sort('Rate', 'ASC')->first();
+        return RegionRestrictionRate::filteredByAddress($address)->sort('Rate', 'ASC')->first();
     }
 }
-
-

@@ -8,6 +8,7 @@ use SilverShop\Shipping\Model\Zone;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
 
 /**
  * Zoned shipping is a variant of TableShipping that regionalizes using zones,
@@ -75,7 +76,8 @@ class ZonedShippingMethod extends ShippingMethod
             $orderby .= "ELSE $count END ASC,";
         }
         $orderby .= "\"ZonedShippingRate\".\"Rate\" ASC";
-        if ($sr = DataObject::get_one("ZonedShippingRate", $filter, true, $orderby)) {
+
+        if ($sr = ZonedShippingRate::get()->where($filter)->sort($orderby)) {
             $rate = $sr->Rate;
         }
         $this->CalculatedRate = $rate;
@@ -101,10 +103,20 @@ class ZonedShippingMethod extends ShippingMethod
 
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
-            $gridField = new GridField("Rates", "ZonedShippingRate", $this->Rates(), new GridFieldConfig_RelationEditor());
-            $gridField->getConfig()->getComponentByType('GridFieldDataColumns')->setDisplayFields($displayFieldsList);
+            $config = new GridFieldConfig_RelationEditor();
+            $gridField = new GridField(
+                "Rates",
+                "ZonedShippingRate",
+                $this->Rates(),
+                $config
+            );
+
+            $config->getComponentByType(GridFieldDataColumns::class)
+                ->setDisplayFields($displayFieldsList);
+
             $fields->addFieldToTab("Root.Main", $gridField);
         }
+
         return $fields;
     }
 

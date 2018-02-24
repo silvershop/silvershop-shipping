@@ -10,10 +10,10 @@ use SilverStripe\Dev\SapphireTest;
 
 class ZoneTest extends SapphireTest
 {
-    public static $fixture_file = array(
-        __DIR__ . '/../Fixtures/Zones.yml',
-        __DIR__ . '/../Fixtures/Addresses.yml',
-    );
+    public static $fixture_file = [
+        'ZonedShippingMethod.yml',
+        'Addresses.yml',
+    ];
 
     public function testMatchingZones()
     {

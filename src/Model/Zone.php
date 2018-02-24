@@ -7,6 +7,7 @@ use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\HasManyList;
+use SilverShop\Model\Address;
 
 /**
  * A zone is a collection of regions. Zones can cross over each other.
@@ -91,5 +92,3 @@ class Zone extends DataObject
         return $fields;
     }
 }
-
-

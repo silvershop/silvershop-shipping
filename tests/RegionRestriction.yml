@@ -1,5 +1,4 @@
-#Note that Country, State, City, and PostalCode default to '*', if not entered
-SilverShop\Tests\Model\RegionRestriction_RateTest:
+SilverShop\Shipping\Tests\RegionRestrictionRate:
   newzealand:
     Country:    NZ
     Rate:       50

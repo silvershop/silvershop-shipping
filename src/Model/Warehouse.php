@@ -42,8 +42,10 @@ class Warehouse extends DataObject
             ->where("\"AddressID\" IS NOT NULL");
         $closestwarehouse = null;
         $shortestdistance = null;
+
         foreach ($warehouses as $warehouse) {
             $dist = $warehouse->Address()->distanceTo($address);
+
             if ($dist && ($shortestdistance === null || $dist < $shortestdistance)) {
                 $closestwarehouse = $warehouse;
                 $shortestdistance = $dist;

@@ -2,15 +2,16 @@
 
 namespace SilverShop\Shipping;
 
+use SilverStripe\Core\Injector\Injectable;
+
 /**
  * Encapsulation of shipping package data
- *
- * @todo: unit conversion support
- * @todo: different shape support (eg cylinder) ...with ability to roll back to 'box' if need be
  *
  */
 class ShippingPackage
 {
+    use Injectable;
+
     protected $weight;
 
     protected $height;

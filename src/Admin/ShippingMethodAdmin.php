@@ -26,7 +26,7 @@ class ShippingMethodAdmin extends ModelAdmin
     public function getEditForm($id = null, $fields = null)
     {
         $form = parent::getEditForm($id, $fields);
-        if ($this->modelClass === "ShippingMethod") {
+        if ($this->modelClass === ShippingMethod::class) {
             $gridfield = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
             $config = $gridfield->getConfig();
             $config->removeComponentsByType("GridFieldAddNewButton");

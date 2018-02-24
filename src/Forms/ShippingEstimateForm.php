@@ -9,21 +9,17 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\SiteConfig\SiteConfig;
-use ShoppingCart;
-use ShippingEstimator;
-use Convert;
-use Session;
-use Director;
+use SilverShop\Cart\ShoppingCart;
+use SilverShop\Shipping\ShippingEstimator;
+use SilverStripe\Core\Convert;
+use SilverStripe\Control\Session;
+use SilverStripe\Control\Director;
 
-
-/**
- * @package silvershop-shipping
- */
 class ShippingEstimateForm extends Form
 {
     public function __construct($controller, $name = "ShippingEstimateForm")
     {
-        $address = new Address();  // get address to access it's getCountryField method
+        $address = Address::create();  // get address to access it's getCountryField method
         $fields = new FieldList(
             $address->getCountryField(),
             TextField::create('State', _t('Address.db_State', 'State')),

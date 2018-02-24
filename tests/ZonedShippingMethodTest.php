@@ -3,22 +3,24 @@
 namespace SilverShop\Shipping\Tests;
 
 use SilverShop\Shipping\Model\ZonedShippingRate;
+use SilverShop\Shipping\Model\ZonedShippingMethod;
+use SilverShop\Shipping\Model\Zone;
 
 class ZonedShippingMethodTest extends TableShippingMethodTest
 {
-    public static $fixture_file = 'ZonedShippingMethod.yml';
+    protected static $fixture_file = 'ZonedShippingMethod.yml';
 
-    protected $fixtureclass = "ZonedShippingMethod";
-
-    //This test suite shares tests with TableShippingMethod
+    protected $fixtureclass = ZonedShippingMethod::class;
 
     public function testDefaultRate() {
-        $type = "address";
+        $type = Address::class;
         $address = $this->internationaladdress;
+
         $defaultrate = new ZonedShippingRate([
             "Rate" => 100,
-            "ZoneID" => $this->objFromFixture("Zone", "int")->ID
+            "ZoneID" => $this->objFromFixture(Zone::class, "int")->ID
         ]);
+
         $defaultrate->write();
         $this->addressshipping->Rates()->add($defaultrate);
 

@@ -49,7 +49,13 @@ class TableShippingMethod extends ShippingMethod
 
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
-            $tablefield = new GridField("Rates", "TableShippingRate", $this->Rates(), new GridFieldConfig_RecordEditor());
+            $tablefield = new GridField(
+                "Rates",
+                "TableShippingRate",
+                $this->Rates(),
+                new GridFieldConfig_RecordEditor()
+            );
+
             $fields->addFieldToTab("Root.Main", $tablefield);
         }
 
@@ -71,8 +77,8 @@ class TableShippingMethod extends ShippingMethod
         $constraintfilters = [];
         $emptyconstraint = [];
         foreach ($packageconstraints as $db => $pakval) {
-            $mincol = "\"TableShippingRate\".\"{$db}Min\"";
-            $maxcol = "\"TableShippingRate\".\"{$db}Max\"";
+            $mincol = "\"SilverShop_TableShippingRate\".\"{$db}Min\"";
+            $maxcol = "\"SilverShop_TableShippingRate\".\"{$db}Max\"";
             //constrain to rates with valid constraints
             $constraintfilters[] =
                 "(" .
@@ -89,10 +95,11 @@ class TableShippingMethod extends ShippingMethod
 
         $filter = "(" . implode(") AND (", [
                 "\"ShippingMethodID\" = " . $this->ID,
-                RegionRestriction::address_filter($address), //address restriction
+                RegionRestriction::filteredByAddress($address), //address restriction
                 implode(" OR ", $constraintfilters) //metrics restriction
             ]) . ")";
-        if ($tr = DataObject::get_one("TableShippingRate", $filter, true, "LENGTH(\"RegionRestriction\".\"PostalCode\") DESC, Rate ASC")) {
+
+        if ($tr = TableShippingRate::get()->where($filter)->sort("LENGTH(\"RegionRestriction\".\"PostalCode\") DESC, Rate ASC")) {
             $rate = $tr->Rate;
         }
         $this->CalculatedRate = $rate;

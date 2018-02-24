@@ -1,36 +1,36 @@
-DistanceShippingMethod:
+SilverShop\Shipping\Model\DistanceShippingMethod:
     ds:
         Enabled: 1
 
-DistanceShippingFare:
+SilverShop\Shipping\Model\DistanceShippingFare:
     distanceshipping_1:
         Distance: 1
         Cost: 0
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_10:
         Distance: 10
         Cost: 0
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_100:
         Distance: 100
         Cost: 123
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_200:
         Distance: 200
         Cost: 234
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_500:
         Distance: 500
         Cost: 345
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_1000:
         Distance: 1000
         Cost: 456
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_2000:
         Distance: 2000
         Cost: 567
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
     distanceshipping_unlimited:
         Cost: 678
-        ShippingMethod: =>DistanceShippingMethod.ds
+        ShippingMethod: '=>SilverShop\Shipping\Model\DistanceShippingMethod.ds'
