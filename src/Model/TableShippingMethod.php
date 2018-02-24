@@ -74,8 +74,10 @@ class TableShippingMethod extends ShippingMethod
             "Value"    => 'value',
             "Quantity" => 'quantity'
         ];
+
         $constraintfilters = [];
         $emptyconstraint = [];
+
         foreach ($packageconstraints as $db => $pakval) {
             $mincol = "\"SilverShop_TableShippingRate\".\"{$db}Min\"";
             $maxcol = "\"SilverShop_TableShippingRate\".\"{$db}Max\"";
@@ -88,9 +90,11 @@ class TableShippingMethod extends ShippingMethod
                 " AND $maxcol >= " . $package->{$pakval}() .
                 " AND $mincol < $maxcol" . //sanity check
                 ")";
-            //also include a special case where all constraints are empty
+
+            // also include a special case where all constraints are empty
             $emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
         }
+
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
         $filter = "(" . implode(") AND (", [
@@ -99,9 +103,10 @@ class TableShippingMethod extends ShippingMethod
                 implode(" OR ", $constraintfilters) //metrics restriction
             ]) . ")";
 
-        if ($tr = TableShippingRate::get()->where($filter)->sort("LENGTH(\"RegionRestriction\".\"PostalCode\") DESC, Rate ASC")) {
+        if ($tr = TableShippingRate::get()->where($filter)->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")->first()) {
             $rate = $tr->Rate;
         }
+
         $this->CalculatedRate = $rate;
 
         return $rate;

@@ -51,11 +51,11 @@ class TableShippingMethodTest extends SapphireTest
     public function testAddressTable()
     {
         $type = "address";
-
         $address = new Address([
             'Country' => 'NZ',
             'State' => 'Wellington'
         ]);
+
         $this->assertMatch($type, $this->p0, $address, 30);
         $this->assertMatch($type, $this->p2, $address, 30);
         $this->assertMatch($type, $this->p4, $address, 30);
@@ -132,7 +132,7 @@ class TableShippingMethodTest extends SapphireTest
     {
         $address_loc = $this->nzaddress;
 
-        //weight based
+        // weight based
         $type = "weight";
         $this->assertMatch($type, $this->p0, $address_loc, 4); //weight = 0kg
         $this->assertMatch($type, $this->p1, $address_loc, 4); //weight = 2.34kg
