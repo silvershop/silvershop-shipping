@@ -4,7 +4,7 @@ Name: silvershop-shipping
 
 SilverShop\Tasks\PopulateShopTask:
   extensions:
-    - SilverShop\Shipping\Extension\PopulateShopTableShippingTask
+    - SilverShop\Shipping\Tasks\PopulateShopTableShippingTask
 SilverShop\Model\Order:
   extensions:
     - SilverShop\Shipping\Extension\OrderShippingExtension
