@@ -25,6 +25,11 @@ class ShippingMethod extends DataObject
 
     private static $table_name = 'SilverShop_ShippingMethod';
 
+    /**
+     * @var array Checked in ShippingMethodAdmin when adding methods
+     */
+    private static $disable_methods = [];
+
     public function getCalculator(Order $order)
     {
         return new ShippingCalculator($this, $order);
