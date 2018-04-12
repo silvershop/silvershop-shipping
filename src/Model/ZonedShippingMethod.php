@@ -28,6 +28,10 @@ class ZonedShippingMethod extends ShippingMethod
 
     private static $table_name = 'SilverShop_ZonedShippingMethod';
 
+    private static $singular_name = 'Zoned shipping method';
+
+    private static $plural_name = 'Zoned shipping methods';
+
     public function calculateRate(ShippingPackage $package, Address $address)
     {
         $rate = null;
