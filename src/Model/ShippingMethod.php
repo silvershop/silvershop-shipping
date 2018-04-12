@@ -6,6 +6,7 @@ use SilverStripe\ORM\DataObject;
 use SilverShop\Model\Order;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
+use SilverShop\Shipping\ShippingCalculator;
 
 /**
  * ShippingMethod is a base class for providing shipping options to customers.
@@ -59,28 +60,5 @@ class ShippingMethod extends DataObject
     public function requiresAddress()
     {
         return false;
-    }
-}
-
-/**
- * Helper class for encapsulating shipping calculation logic.
- */
-class ShippingCalculator
-{
-    protected $method;
-    protected $order;
-
-    public function __construct(ShippingMethod $method, Order $order)
-    {
-        $this->method = $method;
-        $this->order = $order;
-    }
-
-    public function calculate($address = null)
-    {
-        return $this->method->calculateRate(
-            $this->order->createShippingPackage(),
-            $address ? $address : $this->order->getShippingAddress()
-        );
     }
 }
