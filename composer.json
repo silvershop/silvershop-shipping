@@ -6,7 +6,7 @@
 	"license": "BSD-3-Clause",
 	"require": {
         "silvershop/core": "^3",
-		"silvershop/geocoding": "~2.0",
+		"silvershop/geocoding": "2.x-dev",
 		"symbiote/silverstripe-gridfieldextensions": "*",
 		"silvershop/silverstripe-hasonefield": "^2"
 	},

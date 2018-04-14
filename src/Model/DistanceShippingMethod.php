@@ -4,8 +4,11 @@ namespace SilverShop\Shipping\Model;
 
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldEditButton;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
 use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
 use SilverStripe\Forms\LiteralField;
 use SilverShop\Shipping\ShippingPackage;
@@ -27,6 +30,10 @@ class DistanceShippingMethod extends ShippingMethod
 
     private static $table_name = 'SilverShop_DistanceShippingMethod';
 
+    private static $singular_name = 'Distance shipping method';
+
+    private static $plural_name = 'Distance shipping methods';
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -36,10 +43,10 @@ class DistanceShippingMethod extends ShippingMethod
                 "DistanceFares", "Fares",
                 $this->DistanceFares(), $config = new GridFieldConfig_RecordEditor()
             ));
-            $config->removeComponentsByType("GridFieldDataColumns");
-            $config->removeComponentsByType("GridFieldEditButton");
-            $config->removeComponentsByType("GridFieldDeleteAction");
-            $config->removeComponentsByType("GridFieldAddNewButton");
+            $config->removeComponentsByType(GridFieldDataColumns::class);
+            $config->removeComponentsByType(GridFieldEditButton::class);
+            $config->removeComponentsByType(GridFieldDeleteAction::class);
+            $config->removeComponentsByType(GridFieldAddNewButton::class);
             $config->addComponent($cols = new GridFieldEditableColumns());
             $config->addComponent(new GridFieldDeleteAction());
             $config->addComponent($addnew = new GridFieldAddNewInlineButton());

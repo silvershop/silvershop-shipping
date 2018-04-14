@@ -27,6 +27,10 @@ class TableShippingMethod extends ShippingMethod
 
     private static $table_name = 'SilverShop_TableShippingMethod';
 
+    private static $singular_name = 'Table shipping method';
+
+    private static $plural_name = 'Table shipping methods';
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
