@@ -2,7 +2,10 @@
 
 namespace SilverShop\Shipping\Tasks;
 
+use SilverShop\Shipping\Model\TableShippingMethod;
+use SilverStripe\Core\Manifest\ModuleResourceLoader;
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\Dev\FixtureFactory;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\YamlFixture;
@@ -21,9 +24,12 @@ class PopulateTableShippingTask extends BuildTask
 
     public function run($request = null)
     {
-        if (!DataObject::get_one('TableShippingMethod')) {
-            $factory = Injector::inst()->create('FixtureFactory');
-            $fixture = new YamlFixture('silvershop-shipping/tests/fixtures/TableShippingMethod.yml');
+        if (!DataObject::get_one(TableShippingMethod::class)) {
+            $factory = Injector::inst()->create(FixtureFactory::class);
+            $fixture = new YamlFixture(
+                ModuleResourceLoader::singleton()
+                    ->resolvePath('silvershop/shipping:tests/TableShippingMethod.yml')
+            );
             $fixture->writeInto($factory);
             DB::alteration_message('Created table shipping methods', 'created');
         } else {
