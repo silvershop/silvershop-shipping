@@ -103,11 +103,13 @@ class TableShippingMethod extends ShippingMethod
 
         $filter = "(" . implode(") AND (", [
                 "\"ShippingMethodID\" = " . $this->ID,
-                RegionRestriction::filteredByAddress($address), //address restriction
+                RegionRestriction::getAddressFilters(),
                 implode(" OR ", $constraintfilters) //metrics restriction
             ]) . ")";
 
-        if ($tr = TableShippingRate::get()->where($filter)->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")->first()) {
+        $tr = TableShippingRate::get()->where($filter)->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")->first();
+
+        if ($tr) {
             $rate = $tr->Rate;
         }
 

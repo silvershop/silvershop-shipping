@@ -45,11 +45,9 @@ class RegionRestrictionTest extends SapphireTest
     public function testMatchDefault()
     {
         //add default rate
-        $default = new RegionRestriction(
-            array(
-                'Rate' => 100,
-            )
-        );
+        $default = new RegionRestriction(array(
+            'Rate' => 100,
+        ));
         $default->write();
         $address = $this->objFromFixture(Address::class, "bukhp193eq");
         $rate = $this->getRate($address);

@@ -41,22 +41,31 @@ class ShippingEstimateForm extends Form
 
     public function submit($data, $form)
     {
-        if ($country = SiteConfig::current_site_config()->getSingleCountry()) {  // Add Country if missing due to ReadonlyField in form
+        if ($country = SiteConfig::current_site_config()->getSingleCountry()) {
+            // Add Country if missing due to ReadonlyField in form
             $data['Country'] = $country;
         }
+
         if ($order = ShoppingCart::singleton()->current()) {
             $estimator = new ShippingEstimator(
                 $order,
                 new Address(Convert::raw2sql($data))
             );
+
             $estimates = $estimator->getEstimates();
+
             if (!$estimates->exists()) {
                 $form->sessionMessage(
                     _t('ShippingEstimateForm.FormActionWarningMessage', 'No estimates could be found for that location.'),
                     _t('ShippingEstimateForm.FormActionWarningCode', "warning")
                 );
             }
-            Session::set("ShippingEstimates", $estimates);
+
+            $this->controller->getSession()->set(
+                "ShippingEstimates",
+                $estimates
+            );
+
             if (Director::is_ajax()) {
                 //TODO: replace with an AJAXResponse class that can output to different formats
                 return json_encode($estimates->toNestedArray());

@@ -84,41 +84,58 @@ class RegionRestriction extends DataObject
      * Produce a SQL filter to get matching RegionRestrictions to a given address
      *
      * @param Address $address
+     *
      */
     public static function filteredByAddress(Address $address)
     {
+        $set = static::get()->filter(self::getAddressFilters($address));
+
+        return $set;
+    }
+
+    /**
+     * @param Address $address
+     *
+     * @return array
+     */
+    public static function getAddressFilters(Address $address = null)
+    {
+        if (!$address) {
+            // no filters if no address.
+            return [];
+        }
+
         $restrictables = [
             'Country',
             'State',
             'City'
         ];
 
-        $set = static::get();
+        $where = [];
 
         foreach ($restrictables as $field) {
-            $set = $set->filter($field . ':nocase', [trim($address->$field), '*', '']);
+            $where[$field . ':nocase'] = [trim($address->$field), '*', ''];
         }
 
         if ($address->Country == 'GB') {
             // will check for partial postcodes (eg. NE, NE17, NE177AH)
             $postcode = self::parse_uk_postcode($address->PostalCode);
+
             if (isset($postcode['validate']) && $postcode['validate']) {
                 $region = preg_replace('/[^a-z]+/i', '', substr($postcode['prefix'], 0, 2));
 
-                $set = $set->filter(
-                    'PostalCode:nocase', [
-                        $region,
-                        $postcode['prefix'],
-                        $postcode['prefix'] . $postcode['suffix'],
-                        '*', ''
-                    ]
-                );
+                $where['PostalCode:nocase'] = [
+                    $region,
+                    $postcode['prefix'],
+                    $postcode['prefix'] . $postcode['suffix'],
+                    '*', ''
+                ];
             }
         } else {
-            $set = $set->filter('PostalCode:nocase', [trim($address->PostalCode), '*', '']);
+            $where['PostalCode:nocase'] = [trim($address->PostalCode), '*', ''];
         }
 
-        return $set;
+        return $where;
     }
 
     public static function get_table_field_types()

@@ -27,20 +27,22 @@ class ShippingEstimateFormTest extends FunctionalTest
         parent::setUp();
 
         ShopTest::setConfiguration();
+        $this->logInWithPermission('ADMIN');
 
         // add product to the cart
         $this->socks = $this->objFromFixture(Product::class, 'socks');
-        $this->socks->publish('Stage','Live');
+        $this->socks->publishRecursive();
 
         $this->cartpage = $this->objFromFixture(CartPage::class, "cart");
-        $this->cartpage->publish('Stage','Live');
+        $this->cartpage->publishRecursive();
+
         ShoppingCart::singleton()->setCurrent($this->objFromFixture(Order::class, "cart")); //set the current cart
 
         // Open cart page
-        $page = $this->get('/cart');
+        $page = $this->get($this->cartpage->Link());
     }
 
-    function testGetEstimates() {
+    public function testGetEstimates() {
 
         //good data for Shipping Estimate Form
         $data = [
@@ -67,7 +69,7 @@ class ShippingEstimateFormTest extends FunctionalTest
 
     }
 
-    function testShippingEstimateWithReadonlyFieldForCountry() {
+    public function testShippingEstimateWithReadonlyFieldForCountry() {
         // setup a single-country site
         $siteconfig = SiteConfig::get()->first();
         $siteconfig->AllowedCountries = "NZ";
@@ -87,8 +89,6 @@ class ShippingEstimateFormTest extends FunctionalTest
         $page3 = $this->post('/cart/ShippingEstimateForm', $data);
         $this->assertEquals(200, $page3->getStatusCode(), "a page should load");
         $this->assertContains("Quantity-based shipping", $page3->getBody(), "ShippingEstimates can be successfully presented with a Country readonly field");
-
-
     }
 
 
