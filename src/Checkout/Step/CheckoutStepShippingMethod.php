@@ -9,7 +9,7 @@ use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\Form;
-use ShippingMethod;
+use SilverShop\Shipping\Model\ShippingMethod;
 
 /**
  * Gives methods to ship by, based on previously given address and order items.
