@@ -28,25 +28,28 @@ class OrderShippingExtension extends DataExtension
         $items = $this->owner->Items();
 
         if (!$items->exists()) {
-            return ShippingPackage::create();
+            $package = ShippingPackage::create();
+        } else {
+
+            $weight = $items->Sum('Weight', true); //Sum is found on OrdItemList (Component Extension)
+            $width = $items->Sum('Width', true);
+            $height = $items->Sum('Height', true);
+            $depth = $items->Sum('Depth', true);
+
+            $value = $this->owner->SubTotal();
+            $quantity = $items->Quantity();
+
+            $package = ShippingPackage::create(
+                $weight,
+                [$height,$width,$depth],
+                [
+                    'value' => $value,
+                    'quantity' => $quantity
+                ]
+            );
         }
 
-        $weight = $items->Sum('Weight', true); //Sum is found on OrdItemList (Component Extension)
-        $width = $items->Sum('Width', true);
-        $height = $items->Sum('Height', true);
-        $depth = $items->Sum('Depth', true);
-
-        $value = $this->owner->SubTotal();
-        $quantity = $items->Quantity();
-
-        $package = ShippingPackage::create(
-            $weight,
-            [$height,$width,$depth],
-            [
-                'value' => $value,
-                'quantity' => $quantity
-            ]
-        );
+        $this->owner->extend('updateShippingPackage', $package);
 
         return $package;
     }
