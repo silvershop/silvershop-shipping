@@ -50,6 +50,11 @@ class CheckoutStepShippingMethod extends CheckoutStep
         $fields = new FieldList();
 
         if ($estimates->exists()) {
+            // if there is only one option then automatically select the option
+            if ($estimates->count() === 1) {
+                $order->setShippingMethod($estimates->First());
+            }
+
             $fields->push(
                 OptionsetField::create(
                     "ShippingMethodID",
@@ -83,14 +88,15 @@ class CheckoutStepShippingMethod extends CheckoutStep
     {
         $order = $this->owner->Cart();
         $option = null;
+
         if (isset($data['ShippingMethodID'])) {
-            $option = ShippingMethod::get()
-                        ->byID((int)$data['ShippingMethodID']);
+            $option = ShippingMethod::get()->byID($data['ShippingMethodID']);
+
+            if ($option) {
+                $order->setShippingMethod($option);
+            }
         }
-        //assign option to order / modifier
-        if ($option) {
-            $order->setShippingMethod($option);
-        }
-        $this->owner->redirect($this->NextStepLink());
+
+        return $this->owner->redirect($this->NextStepLink());
     }
 }
