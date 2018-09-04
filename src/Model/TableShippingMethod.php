@@ -101,13 +101,17 @@ class TableShippingMethod extends ShippingMethod
 
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
-        $filter = "(" . implode(") AND (", [
-                "\"ShippingMethodID\" = " . $this->ID,
-                RegionRestriction::getAddressFilters(),
-                implode(" OR ", $constraintfilters) //metrics restriction
-            ]) . ")";
+        $filters = array_merge([
+            "\"ShippingMethodID\" = " . $this->ID,
+            implode(" OR ", $constraintfilters)
+        ], RegionRestriction::getAddressFilters());
 
-        $tr = TableShippingRate::get()->where($filter)->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")->first();
+        $filter = sprintf("(%s)", implode(") AND (", $filters));
+
+        $tr = TableShippingRate::get()
+            ->where($filter)
+            ->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")
+            ->first();
 
         if ($tr) {
             $rate = $tr->Rate;
