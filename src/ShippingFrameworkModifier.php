@@ -6,6 +6,8 @@ use SilverShop\Model\Modifiers\OrderModifier;
 
 class ShippingFrameworkModifier extends OrderModifier
 {
+    private static $singular_name = 'Shipping';
+
     public function value($incoming)
     {
         $order = $this->Order();

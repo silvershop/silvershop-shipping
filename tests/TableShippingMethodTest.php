@@ -53,7 +53,8 @@ class TableShippingMethodTest extends SapphireTest
         $type = "address";
         $address = new Address([
             'Country' => 'NZ',
-            'State' => 'Wellington'
+            'State' => 'Wellington',
+            'PostalCode' => '6004'
         ]);
 
         $this->assertMatch($type, $this->p0, $address, 30);

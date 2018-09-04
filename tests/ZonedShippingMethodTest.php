@@ -22,6 +22,7 @@ class ZonedShippingMethodTest extends TableShippingMethodTest
         ]);
 
         $defaultrate->write();
+
         $this->addressshipping->Rates()->add($defaultrate);
 
         $this->assertMatch($type, $this->p0, $address, 100);

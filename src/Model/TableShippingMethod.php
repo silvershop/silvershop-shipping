@@ -67,7 +67,10 @@ class TableShippingMethod extends ShippingMethod
     }
 
     /**
-     * Find the appropriate shipping rate from stored table range metrics
+     * Find the appropriate shipping rate from stored table range metrics.
+     *
+     * @param ShippingPackage $package
+     * @param Address $address
      */
     public function calculateRate(ShippingPackage $package, Address $address)
     {
@@ -101,16 +104,19 @@ class TableShippingMethod extends ShippingMethod
 
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
-        $filters = array_merge([
+        $filter = sprintf("(%s)", implode(") AND (", [
             "\"ShippingMethodID\" = " . $this->ID,
             implode(" OR ", $constraintfilters)
-        ], RegionRestriction::getAddressFilters());
-
-        $filter = sprintf("(%s)", implode(") AND (", $filters));
+        ]));
 
         $tr = TableShippingRate::get()
-            ->where($filter)
-            ->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")
+            ->where($filter);
+
+        if ($addressFilters = RegionRestriction::getAddressFilters($address)) {
+            $tr = $tr->filter($addressFilters);
+        }
+
+        $tr = $tr->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")
             ->first();
 
         if ($tr) {

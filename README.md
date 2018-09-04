@@ -23,9 +23,8 @@ Add the ShippingFrameWorkModifier to your modifiers config, eg:
 
 ```yaml
 SilverShop\Model\Order:
-    modifiers:
-        - SilverShop\Shipping\ShippingFrameworkModifier
-        - SilverShop\ShippingFlatTaxModifier
+  modifiers:
+    - SilverShop\Shipping\ShippingFrameworkModifier
 ```
 
 You need to use the new SteppedCheckout system to allow customers to set their
@@ -33,9 +32,9 @@ address before they choose their shipping method. To set up steps, including the
 shippingmethod step, add the following to your mysite/_config/config.yml file:
 
 ```yaml
-CheckoutPage:
+SilverShop\Page\CheckoutPage:
     steps:
-		'membership': 'CheckoutStep_Membership'
+        'membership': 'CheckoutStep_Membership'
         'contactdetails': 'CheckoutStep_ContactDetails'
         'shippingaddress': 'CheckoutStep_Address'
         'billingaddress': 'CheckoutStep_Address'

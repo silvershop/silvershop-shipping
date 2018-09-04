@@ -7,7 +7,6 @@ use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Shipping\ShippingEstimator;
 use SilverShop\Shipping\Model\ShippingMethod;
 use SilverShop\Shipping\Model\Zone;
-
 use Exception;
 
 class OrderShippingExtension extends DataExtension
@@ -55,46 +54,61 @@ class OrderShippingExtension extends DataExtension
     }
 
     /**
-     * Get shipping estimates
+     * Get shipping estimates.
+     *
      * @return DataList
      */
     public function getShippingEstimates()
     {
-        //$package = $this->order->createShippingPackage();
         $address = $this->owner->getShippingAddress();
         $estimator = ShippingEstimator::create($this->owner, $address);
         $estimates = $estimator->getEstimates();
+
         return $estimates;
     }
 
-    /*
+    /**
      * Set shipping method and shipping cost
+     *
      * @param $option - shipping option to set, and calculate shipping from
      * @return boolean sucess/failure of setting
      */
     public function setShippingMethod(ShippingMethod $option)
     {
         $package = $this->owner->createShippingPackage();
+
         if (!$package) {
             throw new Exception(_t("OrderShippingExtension.NoPackage", "Shipping package information not available"));
         }
+
         $address = $this->owner->getShippingAddress();
+
         if (!$address || !$address->exists() && $option->requiresAddress()) {
             throw new Exception(_t("OrderShippingExtension.NoAddress", "No address has been set"));
         }
+
         $this->owner->ShippingTotal = $option->calculateRate($package, $address);
         $this->owner->ShippingMethodID = $option->ID;
         $this->owner->write();
+
         return true;
     }
 
     public function onSetBillingAddress($address)
     {
-        Zone::cache_zone_ids($address);
+        if ($address) {
+            Zone::cache_zone_ids($address);
+        }
+
+        return $this;
     }
 
     public function onSetShippingAddress($address)
     {
-        Zone::cache_zone_ids($address);
+        if ($address) {
+            Zone::cache_zone_ids($address);
+        }
+
+        return $this;
     }
 }

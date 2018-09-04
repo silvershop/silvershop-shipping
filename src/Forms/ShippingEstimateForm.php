@@ -61,7 +61,7 @@ class ShippingEstimateForm extends Form
                 );
             }
 
-            $this->controller->getSession()->set(
+            $this->controller->getRequest()->getSession()->set(
                 "ShippingEstimates",
                 $estimates
             );
