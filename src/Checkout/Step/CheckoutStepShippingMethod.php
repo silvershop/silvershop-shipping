@@ -25,19 +25,30 @@ class CheckoutStepShippingMethod extends CheckoutStep
     {
         $form = $this->ShippingMethodForm();
         $cart = ShoppingCart::singleton()->current();
+
         if ($cart->ShippingMethodID) {
             $form->loadDataFrom($cart);
         }
+
         return [
             'OrderForm' => $form
         ];
     }
 
+    /**
+     * @return Form
+     */
     public function ShippingMethodForm()
     {
         $order = $this->owner->Cart();
+
+        if (!$order) {
+            return null;
+        }
+
         $estimates = $order->getShippingEstimates();
         $fields = new FieldList();
+
         if ($estimates->exists()) {
             $fields->push(
                 OptionsetField::create(
@@ -57,12 +68,14 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 )
             );
         }
-        $actions = new FieldList(
 
+        $actions = new FieldList(
             new FormAction("setShippingMethod", _t('CheckoutStep.Continue', 'Continue'))
         );
+
         $form = new Form($this->owner, "ShippingMethodForm", $fields, $actions);
         $this->owner->extend('updateShippingMethodForm', $form);
+
         return $form;
     }
 
