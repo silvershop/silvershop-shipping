@@ -74,8 +74,8 @@ class CheckoutStepShippingMethod extends CheckoutStep
             );
         }
 
-        $actions = new FieldList(
-            new FormAction("setShippingMethod", _t('CheckoutStep.Continue', 'Continue'))
+        $actions = new FieldList(            
+            new FormAction("setShippingMethod",  _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue'))
         );
 
         $form = new Form($this->owner, "ShippingMethodForm", $fields, $actions);
