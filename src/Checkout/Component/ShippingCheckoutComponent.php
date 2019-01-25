@@ -4,18 +4,18 @@ namespace SilverShop\Shipping\Checkout\Component;
 
 use SilverShop\Checkout\Component\CheckoutComponent;
 use SilverShop\Model\Order;
+use SilverShop\Shipping\Model\ShippingMethod;
+use SilverShop\ShopTools;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\OptionsetField;
-use ValidationResult;
-use ValidationException;
-use ShippingMethod;
-use Session;
+use SilverStripe\ORM\ValidationResult;
+use SilverStripe\ORM\ValidationException;
 
 class ShippingCheckoutComponent extends CheckoutComponent
 {
     public function getFormFields(Order $order)
     {
-        $fields = new FieldList();
+        $fields = FieldList::create();
         $estimates = $order->getShippingEstimates();
         if($estimates->exists()){
             $fields->push(
@@ -38,7 +38,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
 
     public function validateData(Order $order, array $data)
     {
-        $result = new ValidationResult();
+        $result = ValidationResult::create();
         if (!isset($data['ShippingMethodID'])) {
             $result->error(
                 _t('ShippingCheckoutComponent.ShippingMethodNotProvidedMessage', "Shipping method not provided"),
@@ -59,7 +59,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
     public function getData(Order $order)
     {
         $estimates = $order->getShippingEstimates();
-        $method = count($estimates) === 1 ? $estimates->First() : Session::get("Checkout.ShippingMethod");
+        $method = count($estimates) === 1 ? $estimates->First() : ShopTools::getSession()->get("Checkout.ShippingMethod");
 
         return [
             'ShippingMethod' => $method
@@ -76,7 +76,8 @@ class ShippingCheckoutComponent extends CheckoutComponent
         //assign option to order / modifier
         if ($option) {
             $order->setShippingMethod($option);
-            Session::set("Checkout.ShippingMethod", $option);
+            ShopTools::getSession()->set("Checkout.ShippingMethod", $option);
         }
     }
+
 }
