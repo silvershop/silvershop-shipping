@@ -63,10 +63,10 @@ you can run the task: `yoursite.tld/dev/tasks/PopulateTableShippingTask`
 `ShippingMethod` is the base class for different types of shipping calculation.
 These could either be flat rates, table based rates, or a
 
-`TableShippingMethod` has many `TableShippingRate`, where `TableShppingRate extends RegionRestriction`.
+`TableShippingMethod` has many `TableShippingRate`, where `TableShippingRate extends RegionRestriction`.
 Table shipping rates also have optional weight, volume, value, and quantity constraint fields.
 
-`DistanceShippingMethod` has  many `DistanceShippingFare`, and requires the [shop_geocoding](https://github.com/burnbright/silverstripe-shop-geocoding) module to be present.
+`DistanceShippingMethod` has  many `DistanceShippingFare`, and requires the [shop_geocoding](https://github.com/silvershop/silvershop-geocoding) module to be present.
 
 ### Region Restrictions
 
