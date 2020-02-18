@@ -35,7 +35,7 @@ class OrderShippingExtension extends DataExtension
             $height = $items->Sum('Height', true);
             $depth = $items->Sum('Depth', true);
 
-            $value = $this->owner->SubTotal();
+            $value = $this->owner->Total();
             $quantity = $items->Quantity();
 
             $package = ShippingPackage::create(
