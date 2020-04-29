@@ -12,7 +12,10 @@ class ShippingFrameworkModifier extends OrderModifier
     {
         $order = $this->Order();
         if ($order && $order->exists() && $shipping = $order->ShippingMethod()) {
-            return $shipping->getCalculator($order)->calculate(null,$incoming);
+            $value = $shipping->getCalculator($order)->calculate(null,$incoming);
+            $order->ShippingTotal = $value;
+            $order->write();
+            return $value;
         }
         return 0;
     }
@@ -29,4 +32,5 @@ class ShippingFrameworkModifier extends OrderModifier
 
         return $title;
     }
+
 }

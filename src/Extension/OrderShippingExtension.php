@@ -19,6 +19,14 @@ class OrderShippingExtension extends DataExtension
         'ShippingMethod' => ShippingMethod::class
     ];
 
+    private static $casting = [
+        'TotalWithoutShipping' => 'Currency'
+    ];
+
+    public function TotalWithoutShipping(){
+        return $this->owner->Total() - $this->owner->ShippingTotal;
+    }
+
     public function createShippingPackage($value=0)
     {
         //create package, with total weight, dimensions, value, etc
