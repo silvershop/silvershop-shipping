@@ -74,7 +74,7 @@ class CheckoutStepShippingMethod extends CheckoutStep
             );
         }
 
-        $actions = new FieldList(            
+        $actions = new FieldList(
             new FormAction("setShippingMethod",  _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue'))
         );
 
@@ -96,6 +96,10 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 $order->setShippingMethod($option);
             }
         }
+
+        // perform write to store changes
+        $order->calculate();
+        $order->write();
 
         return $this->owner->redirect($this->NextStepLink());
     }
