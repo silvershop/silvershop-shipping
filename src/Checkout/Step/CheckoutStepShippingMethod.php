@@ -96,6 +96,8 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 $order->setShippingMethod($option);
             }
         }
+        
+        $this->owner->extend('onSetShippingMethod', $order, $data, $form);
 
         // perform write to store changes
         $order->calculate();
