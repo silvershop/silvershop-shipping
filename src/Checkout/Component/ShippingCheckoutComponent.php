@@ -38,9 +38,11 @@ class ShippingCheckoutComponent extends CheckoutComponent
 
     public function validateData(Order $order, array $data)
     {
+    	// We fixed the wrong call of ValdiationResult::error() which doesn't exist by using addError()
+		//in $result->addError()
         $result = ValidationResult::create();
         if (!isset($data['ShippingMethodID'])) {
-            $result->error(
+            $result->addError(
                 _t('ShippingCheckoutComponent.ShippingMethodNotProvidedMessage', "Shipping method not provided"),
                 _t('ShippingCheckoutComponent.ShippingMethodErrorCode', "ShippingMethod")
             );
@@ -48,7 +50,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
         }
 
         if (!ShippingMethod::get()->byID($data['ShippingMethodID'])) {
-            $result->error(
+            $result->addError(
                 _t('ShippingCheckoutComponent.ShippingMethodDoesNotExistMessage', "Shipping Method does not exist"),
                 _t('ShippingCheckoutComponent.ShippingMethodErrorCode', "ShippingMethod")
             );
