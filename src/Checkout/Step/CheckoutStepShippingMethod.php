@@ -55,11 +55,17 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 $order->setShippingMethod($estimates->First());
             }
 
+            // style label
+            $labels = [];
+            foreach ($estimates as $estimate) {
+                $labels[$estimate->ID] = $estimate->getTitle();
+            }
+            
             $fields->push(
                 OptionsetField::create(
                     "ShippingMethodID",
                     _t('CheckoutStep_ShippingMethod.ShippingOptions', 'Shipping Options'),
-                    $estimates->map(),
+                    $labels,
                     $estimates->First()->ID
                 )
             );
