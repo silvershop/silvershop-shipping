@@ -59,7 +59,7 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 OptionsetField::create(
                     "ShippingMethodID",
                     _t('CheckoutStep_ShippingMethod.ShippingOptions', 'Shipping Options'),
-                    $estimates->map(),
+                    $estimates->map('ID', 'getTitle'),
                     $estimates->First()->ID
                 )
             );
@@ -96,7 +96,7 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 $order->setShippingMethod($option);
             }
         }
-        
+
         $this->owner->extend('onSetShippingMethod', $order, $data, $form);
 
         // perform write to store changes

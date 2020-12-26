@@ -4,6 +4,7 @@ namespace SilverShop\Shipping\Model;
 
 use SilverStripe\ORM\DataObject;
 use SilverShop\Model\Order;
+use SilverShop\ORM\FieldType\ShopCurrency;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\ShippingCalculator;
@@ -47,8 +48,21 @@ class ShippingMethod extends DataObject
 
     public function getTitle()
     {
-        $title = implode(" - ", array_filter([
+        $rate = number_format(
             $this->Rate,
+            2,
+            ShopCurrency::config()->decimal_delimiter,
+            ShopCurrency::config()->thousand_delimiter
+        );
+
+        if (ShopCurrency::config()->append_symbol) {
+            $rate = $rate . ' ' . ShopCurrency::config()->currency_symbol;
+        } else {
+            $rate = ShopCurrency::config()->currency_symbol . $rate;
+        }
+
+        $title = implode(" - ", array_filter([
+            $rate,
             $this->Name,
             $this->Description
         ]));
