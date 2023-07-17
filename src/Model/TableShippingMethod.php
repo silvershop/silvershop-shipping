@@ -34,23 +34,6 @@ class TableShippingMethod extends ShippingMethod
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-
-        $fieldList = [
-            "Country"     => "Country",
-            "State"       => "State",
-            "City"        => "City",
-            "PostalCode"  => "PostCode",
-            "WeightMin"   => "WeightMin",
-            "WeightMax"   => "WeightMax",
-            "VolumeMin"   => "VolumeMin",
-            "VolumeMax"   => "VolumeMax",
-            "ValueMin"    => "ValueMin",
-            "ValueMax"    => "ValueMax",
-            "QuantityMin" => "QuantityMin",
-            "QuantityMax" => "QuantityMax",
-            "Rate"        => "Rate"
-        ];
-
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
             $tablefield = new GridField(
@@ -62,7 +45,6 @@ class TableShippingMethod extends ShippingMethod
 
             $fields->addFieldToTab("Root.Main", $tablefield);
         }
-
         return $fields;
     }
 

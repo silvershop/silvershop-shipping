@@ -45,7 +45,7 @@ class RegionRestrictionTest extends SapphireTest
     public function testMatchDefault()
     {
         //add default rate
-        $default = new RegionRestriction(array(
+        $default = RegionRestrictionRate::create(array(
             'Rate' => 100,
         ));
         $default->write();

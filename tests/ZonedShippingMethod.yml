@@ -3,25 +3,44 @@ SilverShop\Shipping\Model\Zone:
         Name: International
     loc:
         Name: Local
+    asia:
+        Name: Asia
     nz6000:
         Name: New Zealand 5032
     wellington:
         Name: Wellington NZ
+    transtasman:
+        Name: TransTasman
+    transtasmansouthaustralia:
+        Name: 'South Australia'
 
 SilverShop\Shipping\Model\ZoneRegion:
     int:
         Country: '*'
         Zone: '=>SilverShop\Shipping\Model\Zone.int'
+    transtasmanaustralia:
+        Country: AU
+        Zone: '=>SilverShop\Shipping\Model\Zone.transtasman'
+    transtasmanaustraliasouthaustralia:
+        Country: AU
+        State: 'South Australia'
+        Zone: '=>SilverShop\Shipping\Model\Zone.transtasmansouthaustralia'
+    asiachina:
+        Country: CN
+        Zone: '=>SilverShop\Shipping\Model\Zone.asia'
+    europeswitzerland:
+        Country: CH
+        Zone: '=>SilverShop\Shipping\Model\Zone.int'
     loc:
-        Country: 'NZ'
+        Country: NZ
         Zone: '=>SilverShop\Shipping\Model\Zone.loc'
     nz6000:
-        Country: 'NZ'
+        Country: NZ
         PostalCode: 6000
         Zone: '=>SilverShop\Shipping\Model\Zone.nz6000'
     wellington:
-        Country: 'NZ'
-        State: 'Wellington'
+        Country: NZ
+        State: Wellington
         Zone: '=>SilverShop\Shipping\Model\Zone.wellington'
 
 SilverShop\Shipping\Model\ZonedShippingMethod:
@@ -159,6 +178,30 @@ SilverShop\Shipping\Model\ZonedShippingRate:
         VolumeMin: 4
         VolumeMax: 10
         Rate: 3.00
+    loc_vo50:
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
+        Zone: '=>SilverShop\Shipping\Model\Zone.loc'
+        VolumeMin: 10
+        VolumeMax: 50
+        Rate: 15.00
+    loc_vo1000:
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
+        Zone: '=>SilverShop\Shipping\Model\Zone.loc'
+        VolumeMin: 50
+        VolumeMax: 1000
+        Rate: 50.00
+    loc_vol10000:
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
+        Zone: '=>SilverShop\Shipping\Model\Zone.loc'
+        VolumeMin: 1000
+        VolumeMax: 10000
+        Rate: 150.00
+    loc_vol100000:
+        ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.volume'
+        Zone: '=>SilverShop\Shipping\Model\Zone.loc'
+        VolumeMin: 10000
+        VolumeMax: 100000
+        Rate: 260.00
     #value-based rates
     int_va4:
         ZonedShippingMethod: '=>SilverShop\Shipping\Model\ZonedShippingMethod.value'

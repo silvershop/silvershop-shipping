@@ -73,22 +73,7 @@ class ZonedShippingMethod extends ShippingMethod
             implode(" OR ", $constraintfilters) //metrics restriction
         ]).")";
 
-        // order by zone specificity
-        $orderby = "";
-
-        if (count($ids) > 1) {
-            $orderby = "CASE \"SilverShop_ZonedShippingRate\".\"ZoneID\"";
-            $count = 1;
-            foreach ($ids as $id) {
-                $orderby .= " WHEN $id THEN $count ";
-                $count ++;
-            }
-            $orderby .= "ELSE $count END ASC,";
-        }
-
-        $orderby .= "\"SilverShop_ZonedShippingRate\".\"Rate\" ASC";
-
-        if ($sr = ZonedShippingRate::get()->where($filter)->sort($orderby)->first()) {
+        if ($sr = ZonedShippingRate::get()->where($filter)->sort('Rate')->first()) {
             $rate = $sr->Rate;
         }
 

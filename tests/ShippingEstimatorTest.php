@@ -13,7 +13,7 @@ class ShippingEstimatorTest extends SapphireTest
 {
     protected static $fixture_file = 'TableShippingMethod.yml';
 
-    function testGetEstimates() {
+    public function testGetEstimates() {
         $order = new Order();
         $address = new Address();
         $package = new ShippingPackage(2);

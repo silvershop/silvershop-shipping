@@ -27,11 +27,13 @@ class OrderShippingExtension extends DataExtension
         return $this->owner->Total() - $this->owner->ShippingTotal;
     }
 
-    public function createShippingPackage($value=0)
+    /**
+     * create package, with total weight, dimensions, value, etc.
+     * @param  integer $value
+     * @return ShippingPackage
+     */
+    public function createShippingPackage($value = 0)
     {
-        //create package, with total weight, dimensions, value, etc
-        $weight = $width = $height = $depth = $quantity = 0;
-
         $items = $this->owner->Items();
 
         if (!$items->exists()) {

@@ -51,13 +51,14 @@ class DistanceShippingMethod extends ShippingMethod
             $config->addComponent(new GridFieldDeleteAction());
             $config->addComponent($addnew = new GridFieldAddNewInlineButton());
             $addnew->setTitle($addnew->getTitle()." Fare");
-            if ($greatest = $this->greatestCostDistance()) {
+            if ($this->greatestCostDistance()) {
                 $fields->insertAfter(
+                    "DistanceFares",
                     LiteralField::create("costnote",
                         "<p class=\"message\">Distances beyond the greatest specified distance will be cost ".
                             $this->greatestCostDistance()->dbObject("Cost")->Nice().
                         " (the most expensive fare)</p>"
-                    ), "DistanceFares"
+                    )
                 );
             }
         }

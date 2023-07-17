@@ -31,6 +31,8 @@ class ShippingMethod extends DataObject
      */
     private static $disable_methods = [];
 
+    protected $CalculatedRate;
+
     public function getCalculator(Order $order)
     {
         return new ShippingCalculator($this, $order);

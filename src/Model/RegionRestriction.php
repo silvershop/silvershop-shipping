@@ -114,7 +114,7 @@ class RegionRestriction extends DataObject
         $where = [];
 
         foreach ($restrictables as $field) {
-            $where[$field . ':nocase'] = [trim($address->$field), '*', ''];
+            $where[$field . ':nocase'] = [trim((string) $address->$field), '*', ''];
         }
 
         if ($address->Country == 'GB') {
@@ -132,7 +132,7 @@ class RegionRestriction extends DataObject
                 ];
             }
         } else {
-            $where['PostalCode:nocase'] = [trim($address->PostalCode), '*', ''];
+            $where['PostalCode:nocase'] = [trim((string) $address->PostalCode), '*', ''];
         }
 
         return $where;

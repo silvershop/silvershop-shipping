@@ -2,14 +2,13 @@
 
 namespace SilverShop\Shipping\Tests;
 
-use SilverStripe\Dev\FunctionalTest;
-use SilverShop\Tests\ShopTest;
 use SilverShop\Cart\ShoppingCart;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\Core\Config\Config;
 use SilverShop\Model\Order;
 use SilverShop\Page\Product;
 use SilverShop\Page\CartPage;
+use SilverShop\Tests\ShopTest;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\SiteConfig\SiteConfig;
 
 class ShippingEstimateFormTest extends FunctionalTest
@@ -19,13 +18,14 @@ class ShippingEstimateFormTest extends FunctionalTest
         "Shop.yml"
     ];
 
+    protected static $disable_theme = true;
     protected static $use_draft_site = true;
+    protected $socks;
+    protected $cartpage;
 
-    protected function setUp() {
-        $this->useTheme('testtheme');
-
+    public function setup(): void
+    {
         parent::setUp();
-
         ShopTest::setConfiguration();
         $this->logInWithPermission('ADMIN');
 
@@ -37,72 +37,68 @@ class ShippingEstimateFormTest extends FunctionalTest
         $this->cartpage->publishRecursive();
 
         ShoppingCart::singleton()->setCurrent($this->objFromFixture(Order::class, "cart")); //set the current cart
-
-        // Open cart page
-        $page = $this->get($this->cartpage->Link());
     }
 
-    public function testGetEstimates() {
+    public function testGetEstimates()
+    {
+        $this->useTestTheme(
+            dirname(__FILE__),
+            'testtheme',
+            function() {
+                $page = $this->get('/cart');
 
-        //good data for Shipping Estimate Form
-        $data = [
-            'Country' => 'NZ',
-            'State' => 'Auckland',
-            'City' => 'Auckland',
-            'PostalCode' => 1010
-        ];
-        $page1 = $this->post('/cart/ShippingEstimateForm', $data);
-        $this->assertEquals(200, $page1->getStatusCode(), "a page should load");
-        $this->assertContains("Quantity-based shipping", $page1->getBody(), "ShippingEstimates presented in a table");
+                //good data for Shipping Estimate Form
+                $data = [
+                    'Country' => 'NZ',
+                    'State' => 'Auckland',
+                    'City' => 'Auckland',
+                    'PostalCode' => 1010
+                ];
+                $page1 = $this->post('/cart/ShippingEstimateForm', $data);
+                $this->assertEquals(200, $page1->getStatusCode(), "a page should load");
+                $this->assertStringContainsString("Quantity-based shipping", $page1->getBody(), "ShippingEstimates presented in a table");
 
 
-        //un-escaped data for Shipping Estimate Form
-        $data = [
-            'Country' => 'NZ',
-            'State' => 'Hawke\'s Bay',
-            'City' => 'SELECT * FROM \" \' WHERE AND EVIL',
-            'PostalCode' => 1234
-        ];
-        $page2 = $this->post('/cart/ShippingEstimateForm', $data);
-        $this->assertEquals(200, $page2->getStatusCode(), "a page should load");
-        $this->assertContains("Quantity-based shipping", $page2->getBody(), "ShippingEstimates can be successfully presented with un-escaped data in the form");
-
+                //un-escaped data for Shipping Estimate Form
+                $data = [
+                    'Country' => 'NZ',
+                    'State' => 'Hawke\'s Bay',
+                    'City' => 'SELECT * FROM \" \' WHERE AND EVIL',
+                    'PostalCode' => 1234
+                ];
+                $page2 = $this->post('/cart/ShippingEstimateForm', $data);
+                $this->assertEquals(200, $page2->getStatusCode(), "a page should load");
+                $this->assertStringContainsString("Quantity-based shipping", $page2->getBody(), "ShippingEstimates can be successfully presented with un-escaped data in the form");
+            }
+        );
     }
 
-    public function testShippingEstimateWithReadonlyFieldForCountry() {
-        // setup a single-country site
+    public function testShippingEstimateWithReadonlyFieldForCountry()
+    {
         $siteconfig = SiteConfig::get()->first();
-        $siteconfig->AllowedCountries = "NZ";
+        $siteconfig->setField('AllowedCountries', '["NZ"]'); // setup a single-country site
         $siteconfig->write();
 
-        // Open cart page where Country field is readonly
-        $page = $this->get('/cart');
-        $this->assertContains("Country_readonly", $page->getBody(), "The Country field is readonly");
-        $this->assertNotContains("<option value=\"NZ\">New Zealand</option>", $page->getBody(), "Dropdown field is not shown");
+        $this->useTestTheme(
+            dirname(__FILE__),
+            'testtheme',
+            function() {
+                // Open cart page where Country field is readonly
+                $page = $this->get('/cart');
 
-        // The Shipping Estimate Form can post with a Country readonly field
-        $data = [
-            'State' => 'Waikato',
-            'City' => 'Hamilton',
-            'PostalCode' => 3210
-        ];
-        $page3 = $this->post('/cart/ShippingEstimateForm', $data);
-        $this->assertEquals(200, $page3->getStatusCode(), "a page should load");
-        $this->assertContains("Quantity-based shipping", $page3->getBody(), "ShippingEstimates can be successfully presented with a Country readonly field");
+                $this->assertStringContainsString("Country_readonly", $page->getBody(), "The Country field is readonly");
+                $this->assertStringNotContainsString("<option value=\"NZ\">New Zealand</option>", $page->getBody(), "Dropdown field is not shown");
+
+                // The Shipping Estimate Form can post with a Country readonly field
+                $data = [
+                    'State' => 'Waikato',
+                    'City' => 'Hamilton',
+                    'PostalCode' => 3210
+                ];
+                $page3 = $this->post('/cart/ShippingEstimateForm', $data);
+                $this->assertEquals(200, $page3->getStatusCode(), "a page should load");
+                $this->assertStringContainsString("Quantity-based shipping", $page3->getBody(), "ShippingEstimates can be successfully presented with a Country readonly field");
+            }
+        );
     }
-
-
-    /**
-    * Test against a SS Shop Shipping theme
-    *
-    * Template CartPage.ss contains <% include ShippingEstimator %>
-    * Function adapted from SSViewerTest.php in SSv3.1
-    * @param $theme string - theme name
-    */
-    protected function useTheme($theme) {
-        global $project;
-
-        // @todo v4
-    }
-
 }
