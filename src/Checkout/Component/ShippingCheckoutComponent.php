@@ -17,7 +17,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
     {
         $fields = FieldList::create();
         $estimates = $order->getShippingEstimates();
-        if($estimates->exists()){
+        if ($estimates->exists()) {
             $fields->push(
                 OptionsetField::create(
                     "ShippingMethodID",
@@ -38,8 +38,8 @@ class ShippingCheckoutComponent extends CheckoutComponent
 
     public function validateData(Order $order, array $data)
     {
-    	// We fixed the wrong call of ValdiationResult::error() which doesn't exist by using addError()
-		//in $result->addError()
+        // We fixed the wrong call of ValdiationResult::error() which doesn't exist by using addError()
+        //in $result->addError()
         $result = ValidationResult::create();
         if (!isset($data['ShippingMethodID'])) {
             $result->addError(
@@ -51,8 +51,14 @@ class ShippingCheckoutComponent extends CheckoutComponent
 
         if (!ShippingMethod::get()->byID($data['ShippingMethodID'])) {
             $result->addError(
-                _t('ShippingCheckoutComponent.ShippingMethodDoesNotExistMessage', "Shipping Method does not exist"),
-                _t('ShippingCheckoutComponent.ShippingMethodErrorCode', "ShippingMethod")
+                _t(
+                    'ShippingCheckoutComponent.ShippingMethodDoesNotExistMessage',
+                    "Shipping Method does not exist"
+                ),
+                _t(
+                    'ShippingCheckoutComponent.ShippingMethodErrorCode',
+                    "ShippingMethod"
+                )
             );
             throw new ValidationException($result);
         }
@@ -81,5 +87,4 @@ class ShippingCheckoutComponent extends CheckoutComponent
             ShopTools::getSession()->set("Checkout.ShippingMethod", $option);
         }
     }
-
 }

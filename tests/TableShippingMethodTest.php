@@ -177,21 +177,19 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p2, $address_loc, 9.3); //quantity = 10
         $this->assertNoMatch($type, $this->p3, $address_loc); //quantity = 155
         $this->assertNoMatch($type, $this->p4, $address_loc); //quantity = 12412
-
     }
 
-    protected function assertMatch($type = "weight", $package, $address, $amount)
+    protected function assertMatch($type, $package, $address, $amount)
     {
-        $rate = $this->{$type."shipping"}->calculateRate($package, $address);
+        $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
         $this->assertEquals($amount, $rate, "Check rate for package $package is $amount");
     }
 
-    protected function assertNoMatch($type = "weight", $package, $address)
+    protected function assertNoMatch($type, $package, $address)
     {
-        $rate = $this->{$type."shipping"}->calculateRate($package,$address);
+        $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
-        $this->assertNull($rate,"Check rate for package $package is not found");
+        $this->assertNull($rate, "Check rate for package $package is not found");
     }
-
 }

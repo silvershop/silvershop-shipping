@@ -9,7 +9,6 @@ use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\RegionRestriction;
 use SilverStripe\ORM\DataObject;
 
-
 /**
  * Work out shipping rate from a pre-defined table of regions - to - weights
  * and dimensions.
@@ -111,7 +110,8 @@ class TableShippingMethod extends ShippingMethod
     }
 
     /**
-     * If this shipping method has any @TableShippingRate with any @RegionRestriction where either Country, State, City or PostalCode are submitted, this method returns true
+     * If this shipping method has any @TableShippingRate with any @RegionRestriction
+     * where either Country, State, City or PostalCode are submitted, this method returns true
      * Else it returns false (@ShippingMethod::requiresAddress());
      *
      * @return bool
@@ -121,11 +121,11 @@ class TableShippingMethod extends ShippingMethod
         if ($this->Rates()->exists()) {
             $defaults = RegionRestriction::config()->get('defaults');
             $filter = [];
-            foreach($defaults as $field => $val){
+            foreach ($defaults as $field => $val) {
                 $filter[$field . ':not'] = $val;
             }
             $rates = $this->Rates()->filterAny($filter);
-            if($rates->exists()){
+            if ($rates->exists()) {
                 return true;
             }
         }

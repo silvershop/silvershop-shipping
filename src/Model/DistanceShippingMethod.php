@@ -40,8 +40,10 @@ class DistanceShippingMethod extends ShippingMethod
         $fields->fieldByName('Root')->removeByName("DistanceFares");
         if ($this->isInDB()) {
             $fields->addFieldToTab("Root.Main", $gridfield = GridField::create(
-                "DistanceFares", "Fares",
-                $this->DistanceFares(), $config = new GridFieldConfig_RecordEditor()
+                "DistanceFares",
+                "Fares",
+                $this->DistanceFares(),
+                $config = new GridFieldConfig_RecordEditor()
             ));
             $config->removeComponentsByType(GridFieldDataColumns::class);
             $config->removeComponentsByType(GridFieldEditButton::class);
@@ -50,13 +52,14 @@ class DistanceShippingMethod extends ShippingMethod
             $config->addComponent($cols = new GridFieldEditableColumns());
             $config->addComponent(new GridFieldDeleteAction());
             $config->addComponent($addnew = new GridFieldAddNewInlineButton());
-            $addnew->setTitle($addnew->getTitle()." Fare");
+            $addnew->setTitle($addnew->getTitle() . " Fare");
             if ($this->greatestCostDistance()) {
                 $fields->insertAfter(
                     "DistanceFares",
-                    LiteralField::create("costnote",
-                        "<p class=\"message\">Distances beyond the greatest specified distance will be cost ".
-                            $this->greatestCostDistance()->dbObject("Cost")->Nice().
+                    LiteralField::create(
+                        "costnote",
+                        "<p class=\"message\">Distances beyond the greatest specified distance will be cost " .
+                            $this->greatestCostDistance()->dbObject("Cost")->Nice() .
                         " (the most expensive fare)</p>"
                     )
                 );

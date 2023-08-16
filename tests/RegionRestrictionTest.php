@@ -9,10 +9,10 @@ use SilverShop\Shipping\Tests\RegionRestrictionRate;
 
 class RegionRestrictionTest extends SapphireTest
 {
-    protected static $fixture_file = array(
+    protected static $fixture_file = [
         'RegionRestriction.yml',
         'Addresses.yml',
-    );
+    ];
 
     protected static $extra_dataobjects = [
         RegionRestrictionRate::class
@@ -45,9 +45,9 @@ class RegionRestrictionTest extends SapphireTest
     public function testMatchDefault()
     {
         //add default rate
-        $default = RegionRestrictionRate::create(array(
+        $default = RegionRestrictionRate::create([
             'Rate' => 100,
-        ));
+        ]);
         $default->write();
         $address = $this->objFromFixture(Address::class, "bukhp193eq");
         $rate = $this->getRate($address);

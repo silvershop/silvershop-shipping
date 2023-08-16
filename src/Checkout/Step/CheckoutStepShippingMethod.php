@@ -67,7 +67,8 @@ class CheckoutStepShippingMethod extends CheckoutStep
             $fields->push(
                 LiteralField::create(
                     "NoShippingMethods",
-                    _t('CheckoutStep_ShippingMethod.NoShippingMethods',
+                    _t(
+                        'CheckoutStep_ShippingMethod.NoShippingMethods',
                         '<p class=\"message warning\">There are no shipping methods available</p>'
                     )
                 )
@@ -75,7 +76,7 @@ class CheckoutStepShippingMethod extends CheckoutStep
         }
 
         $actions = new FieldList(
-            new FormAction("setShippingMethod",  _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue'))
+            new FormAction("setShippingMethod", _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue'))
         );
 
         $form = new Form($this->owner, "ShippingMethodForm", $fields, $actions);

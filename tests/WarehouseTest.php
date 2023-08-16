@@ -32,5 +32,4 @@ class WarehouseTest extends SapphireTest
 
         $this->assertEquals("NSW depot", $warehouse->Title);
     }
-
 }

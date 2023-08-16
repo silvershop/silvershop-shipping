@@ -8,12 +8,12 @@ use SilverShop\Model\Address;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Shipping\ShippingEstimator;
 
-
 class ShippingEstimatorTest extends SapphireTest
 {
     protected static $fixture_file = 'TableShippingMethod.yml';
 
-    public function testGetEstimates() {
+    public function testGetEstimates()
+    {
         $order = new Order();
         $address = new Address();
         $package = new ShippingPackage(2);
@@ -25,5 +25,4 @@ class ShippingEstimatorTest extends SapphireTest
         $estimates = $estimator->getEstimates();
         $this->assertNotNull($estimates, "estimates found");
     }
-
 }

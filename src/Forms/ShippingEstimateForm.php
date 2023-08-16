@@ -56,8 +56,14 @@ class ShippingEstimateForm extends Form
 
             if (!$estimates->exists()) {
                 $form->sessionMessage(
-                    _t('ShippingEstimateForm.FormActionWarningMessage', 'No estimates could be found for that location.'),
-                    _t('ShippingEstimateForm.FormActionWarningCode', "warning")
+                    _t(
+                        'ShippingEstimateForm.FormActionWarningMessage',
+                        'No estimates could be found for that location.'
+                    ),
+                    _t(
+                        'ShippingEstimateForm.FormActionWarningCode',
+                        "warning"
+                    )
                 );
             }
 

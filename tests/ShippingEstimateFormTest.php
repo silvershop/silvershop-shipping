@@ -44,7 +44,7 @@ class ShippingEstimateFormTest extends FunctionalTest
         $this->useTestTheme(
             dirname(__FILE__),
             'testtheme',
-            function() {
+            function () {
                 $page = $this->get('/cart');
 
                 //good data for Shipping Estimate Form
@@ -56,8 +56,11 @@ class ShippingEstimateFormTest extends FunctionalTest
                 ];
                 $page1 = $this->post('/cart/ShippingEstimateForm', $data);
                 $this->assertEquals(200, $page1->getStatusCode(), "a page should load");
-                $this->assertStringContainsString("Quantity-based shipping", $page1->getBody(), "ShippingEstimates presented in a table");
-
+                $this->assertStringContainsString(
+                    "Quantity-based shipping",
+                    $page1->getBody(),
+                    "ShippingEstimates presented in a table"
+                );
 
                 //un-escaped data for Shipping Estimate Form
                 $data = [
@@ -68,7 +71,11 @@ class ShippingEstimateFormTest extends FunctionalTest
                 ];
                 $page2 = $this->post('/cart/ShippingEstimateForm', $data);
                 $this->assertEquals(200, $page2->getStatusCode(), "a page should load");
-                $this->assertStringContainsString("Quantity-based shipping", $page2->getBody(), "ShippingEstimates can be successfully presented with un-escaped data in the form");
+                $this->assertStringContainsString(
+                    "Quantity-based shipping",
+                    $page2->getBody(),
+                    "ShippingEstimates can be successfully presented with un-escaped data in the form"
+                );
             }
         );
     }
@@ -82,12 +89,20 @@ class ShippingEstimateFormTest extends FunctionalTest
         $this->useTestTheme(
             dirname(__FILE__),
             'testtheme',
-            function() {
+            function () {
                 // Open cart page where Country field is readonly
                 $page = $this->get('/cart');
 
-                $this->assertStringContainsString("Country_readonly", $page->getBody(), "The Country field is readonly");
-                $this->assertStringNotContainsString("<option value=\"NZ\">New Zealand</option>", $page->getBody(), "Dropdown field is not shown");
+                $this->assertStringContainsString(
+                    "Country_readonly",
+                    $page->getBody(),
+                    "The Country field is readonly"
+                );
+                $this->assertStringNotContainsString(
+                    "<option value=\"NZ\">New Zealand</option>",
+                    $page->getBody(),
+                    "Dropdown field is not shown"
+                );
 
                 // The Shipping Estimate Form can post with a Country readonly field
                 $data = [
@@ -97,7 +112,11 @@ class ShippingEstimateFormTest extends FunctionalTest
                 ];
                 $page3 = $this->post('/cart/ShippingEstimateForm', $data);
                 $this->assertEquals(200, $page3->getStatusCode(), "a page should load");
-                $this->assertStringContainsString("Quantity-based shipping", $page3->getBody(), "ShippingEstimates can be successfully presented with a Country readonly field");
+                $this->assertStringContainsString(
+                    "Quantity-based shipping",
+                    $page3->getBody(),
+                    "ShippingEstimates can be successfully presented with a Country readonly field"
+                );
             }
         );
     }

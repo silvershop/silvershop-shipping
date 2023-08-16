@@ -2,11 +2,9 @@
 
 namespace SilverShop\Tests\Model;
 
-
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\Zone;
 use SilverStripe\Dev\SapphireTest;
-
 
 class ZoneTest extends SapphireTest
 {
@@ -30,9 +28,9 @@ class ZoneTest extends SapphireTest
         $zones = Zone::get_zones_for_address($address);
         $this->assertNotNull($zones);
         $this->assertListContains(
-            array(
-                array('Name' => $zonename),
-            ),
+            [
+                ['Name' => $zonename],
+            ],
             $zones
         );
     }
