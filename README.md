@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/silvershop/shipping/v/stable.png)](https://packagist.org/packages/silvershop/shipping)
 [![Latest Unstable Version](https://poser.pugx.org/silvershop/shipping/v/unstable.png)](https://packagist.org/packages/silvershop/shipping)
-[![CI](https://github.com/silvershop/shipping/actions/workflows/ci.yml/badge.svg)](https://github.com/silvershop/shipping/actions/workflows/ci.yml)
+[![CI](https://github.com/silvershop/silvershop-shipping/actions/workflows/ci.yml/badge.svg)](https://github.com/silvershop/silvershop-shipping/actions/workflows/ci.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/coverage.png?s=cae0140f6d9a99c35b20c23b8bbe88711d526246)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/quality-score.png?s=802731e23565b5a7051b5622a56fccb7b764662a)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
 [![Total Downloads](https://poser.pugx.org/silvershop/shipping/downloads.png)](https://packagist.org/packages/silvershop/shipping)
