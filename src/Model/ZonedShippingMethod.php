@@ -53,42 +53,27 @@ class ZonedShippingMethod extends ShippingMethod
         $emptyconstraint = [];
 
         foreach ($packageconstraints as $db => $pakval) {
-            $mincol = "\"SilverShop_ZonedShippingRate\".\"{$db}Min\"";
-            $maxcol = "\"SilverShop_ZonedShippingRate\".\"{$db}Max\"";
-            $constraintfilters[] = "(".
+            $mincol = "\"SilverShop_ZonedShippingRate\" . \"{$db}Min\"";
+            $maxcol = "\"SilverShop_ZonedShippingRate\" . \"{$db}Max\"";
+            $constraintfilters[] = "(" .
                 "$mincol >= 0" .
                 " AND $mincol <= " . $package->{$pakval}() .
-                " AND $maxcol > 0". //ignore constraints with maxvalue = 0
+                " AND $maxcol > 0" . //ignore constraints with maxvalue = 0
                 " AND $maxcol >= " . $package->{$pakval}() .
                 " AND $mincol < $maxcol" . //sanity check
             ")";
             //also include a special case where all constraints are empty
             $emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
         }
-        $constraintfilters[] = "(".implode(" AND ", $emptyconstraint).")";
+        $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
-        $filter = "(".implode(") AND (", [
-            "\"ZonedShippingMethodID\" = ".$this->ID,
-            "\"ZoneID\" IN(".implode(",", $ids).")", //zone restriction
+        $filter = "(" . implode(") AND (", [
+            "\"ZonedShippingMethodID\" = " . $this->ID,
+            "\"ZoneID\" IN(" . implode(",", $ids) . ")", //zone restriction
             implode(" OR ", $constraintfilters) //metrics restriction
-        ]).")";
+        ]) . ")";
 
-        // order by zone specificity
-        $orderby = "";
-
-        if (count($ids) > 1) {
-            $orderby = "CASE \"SilverShop_ZonedShippingRate\".\"ZoneID\"";
-            $count = 1;
-            foreach ($ids as $id) {
-                $orderby .= " WHEN $id THEN $count ";
-                $count ++;
-            }
-            $orderby .= "ELSE $count END ASC,";
-        }
-
-        $orderby .= "\"SilverShop_ZonedShippingRate\".\"Rate\" ASC";
-
-        if ($sr = ZonedShippingRate::get()->where($filter)->sort($orderby)->first()) {
+        if ($sr = ZonedShippingRate::get()->where($filter)->sort('Rate')->first()) {
             $rate = $sr->Rate;
         }
 

@@ -11,7 +11,7 @@ class WarehouseTest extends SapphireTest
 {
     protected static $fixture_file = 'Warehouses.yml';
 
-    protected function setUp()
+    public function setup(): void
     {
         Config::inst()->update(Address::class, 'enable_geocoding', false);
 
@@ -32,5 +32,4 @@ class WarehouseTest extends SapphireTest
 
         $this->assertEquals("NSW depot", $warehouse->Title);
     }
-
 }

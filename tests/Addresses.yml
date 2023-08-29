@@ -29,6 +29,7 @@ SilverShop\Model\Address:
     Address:    '201-203 BROADWAY AVE'
     District:   'WEST BEACH'
     Territory:  SA
+    State: 'South Australia'
     PostCode:   5024
     Country:    AU
   scn266033:

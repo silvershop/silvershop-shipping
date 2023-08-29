@@ -105,7 +105,7 @@ class ShippingPackage
     {
         $out = "";
         foreach ($this->toArray() as $key => $value) {
-            $out .= strtoupper($key).$value;
+            $out .= strtoupper($key) . $value;
         }
         return $out;
     }

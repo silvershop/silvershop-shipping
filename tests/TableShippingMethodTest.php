@@ -14,7 +14,20 @@ class TableShippingMethodTest extends SapphireTest
 
     protected $fixtureclass = TableShippingMethod::class;
 
-    public function setUp()
+    protected $addressshipping;
+    protected $weightshipping;
+    protected $volumeshipping;
+    protected $valueshipping;
+    protected $quantityshipping;
+    protected $nzaddress;
+    protected $internationaladdress;
+    protected $p0;
+    protected $p1;
+    protected $p2;
+    protected $p3;
+    protected $p4;
+
+    public function setup(): void
     {
         parent::setUp();
 
@@ -51,7 +64,7 @@ class TableShippingMethodTest extends SapphireTest
     public function testAddressTable()
     {
         $type = "address";
-        $address = new Address([
+        $address = Address::create([
             'Country' => 'NZ',
             'State' => 'Wellington',
             'PostalCode' => '6004'
@@ -146,7 +159,7 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p0, $address_loc, 1); //volume = 0cm3
         $this->assertMatch($type, $this->p1, $address_loc, 1); //volume = 1cm3
         $this->assertMatch($type, $this->p2, $address_loc, 3); //volume = 6cm3
-        $this->assertMatch($type, $this->p3, $address_loc, 520); //volume = 18927.783cm3
+        $this->assertMatch($type, $this->p3, $address_loc, 260); //volume = 18927.783cm3
         $this->assertNoMatch($type, $this->p4, $address_loc); //volume = 2000000cm3
 
         //value based
@@ -164,21 +177,19 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p2, $address_loc, 9.3); //quantity = 10
         $this->assertNoMatch($type, $this->p3, $address_loc); //quantity = 155
         $this->assertNoMatch($type, $this->p4, $address_loc); //quantity = 12412
-
     }
 
-    protected function assertMatch($type = "weight", $package, $address, $amount)
+    protected function assertMatch($type, $package, $address, $amount)
     {
-        $rate = $this->{$type."shipping"}->calculateRate($package, $address);
+        $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
         $this->assertEquals($amount, $rate, "Check rate for package $package is $amount");
     }
 
-    protected function assertNoMatch($type = "weight", $package, $address)
+    protected function assertNoMatch($type, $package, $address)
     {
-        $rate = $this->{$type."shipping"}->calculateRate($package,$address);
+        $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
-        $this->assertNull($rate,"Check rate for package $package is not found");
+        $this->assertNull($rate, "Check rate for package $package is not found");
     }
-
 }

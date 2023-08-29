@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/silvershop/shipping/v/stable.png)](https://packagist.org/packages/silvershop/shipping)
 [![Latest Unstable Version](https://poser.pugx.org/silvershop/shipping/v/unstable.png)](https://packagist.org/packages/silvershop/shipping)
-[![Build Status](https://secure.travis-ci.org/silvershop/silvershop-shipping.png)](http://travis-ci.org/silvershop/silvershop-shipping)
+[![CI](https://github.com/silvershop/shipping/actions/workflows/ci.yml/badge.svg)](https://github.com/silvershop/shipping/actions/workflows/ci.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/coverage.png?s=cae0140f6d9a99c35b20c23b8bbe88711d526246)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/badges/quality-score.png?s=802731e23565b5a7051b5622a56fccb7b764662a)](https://scrutinizer-ci.com/g/silvershop/silvershop-shipping/)
 [![Total Downloads](https://poser.pugx.org/silvershop/shipping/downloads.png)](https://packagist.org/packages/silvershop/shipping)
@@ -72,7 +72,7 @@ Table shipping rates also have optional weight, volume, value, and quantity cons
 
 The `RegionRestriction` class serves as a base class for providing regionalised restrictions.
 Restrictions are specified by Country, State, and PostalCode. A value/rate can be given to each
-restriction. To work the appropriate rate, query for all the matchign restrictions, and sort
+restriction. To work the appropriate rate, query for all the matching restrictions, and sort
 by cheapest.
 
 The wildcard '*' means the restriction will match any region.

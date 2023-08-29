@@ -23,27 +23,29 @@ class OrderShippingExtension extends DataExtension
         'TotalWithoutShipping' => 'Currency'
     ];
 
-    public function TotalWithoutShipping(){
+    public function TotalWithoutShipping()
+    {
         return $this->owner->Total() - $this->owner->ShippingTotal;
     }
 
-    public function createShippingPackage($value=0)
+    /**
+     * create package, with total weight, dimensions, value, etc.
+     * @param  integer $value
+     * @return ShippingPackage
+     */
+    public function createShippingPackage($value = 0)
     {
-        //create package, with total weight, dimensions, value, etc
-        $weight = $width = $height = $depth = $quantity = 0;
-
         $items = $this->owner->Items();
 
         if (!$items->exists()) {
             $package = ShippingPackage::create();
         } else {
-
             $weight = $items->Sum('Weight', true); //Sum is found on OrdItemList (Component Extension)
             $width = $items->Sum('Width', true);
             $height = $items->Sum('Height', true);
             $depth = $items->Sum('Depth', true);
 
-            if( !$value ) {
+            if (!$value) {
                 $value = $this->owner->SubTotal();
             }
             $quantity = $items->Quantity();

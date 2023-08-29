@@ -9,7 +9,6 @@ use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\RegionRestriction;
 use SilverStripe\ORM\DataObject;
 
-
 /**
  * Work out shipping rate from a pre-defined table of regions - to - weights
  * and dimensions.
@@ -34,23 +33,6 @@ class TableShippingMethod extends ShippingMethod
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-
-        $fieldList = [
-            "Country"     => "Country",
-            "State"       => "State",
-            "City"        => "City",
-            "PostalCode"  => "PostCode",
-            "WeightMin"   => "WeightMin",
-            "WeightMax"   => "WeightMax",
-            "VolumeMin"   => "VolumeMin",
-            "VolumeMax"   => "VolumeMax",
-            "ValueMin"    => "ValueMin",
-            "ValueMax"    => "ValueMax",
-            "QuantityMin" => "QuantityMin",
-            "QuantityMax" => "QuantityMax",
-            "Rate"        => "Rate"
-        ];
-
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
             $tablefield = new GridField(
@@ -62,7 +44,6 @@ class TableShippingMethod extends ShippingMethod
 
             $fields->addFieldToTab("Root.Main", $tablefield);
         }
-
         return $fields;
     }
 
@@ -129,7 +110,8 @@ class TableShippingMethod extends ShippingMethod
     }
 
     /**
-     * If this shipping method has any @TableShippingRate with any @RegionRestriction where either Country, State, City or PostalCode are submitted, this method returns true
+     * If this shipping method has any @TableShippingRate with any @RegionRestriction
+     * where either Country, State, City or PostalCode are submitted, this method returns true
      * Else it returns false (@ShippingMethod::requiresAddress());
      *
      * @return bool
@@ -139,11 +121,11 @@ class TableShippingMethod extends ShippingMethod
         if ($this->Rates()->exists()) {
             $defaults = RegionRestriction::config()->get('defaults');
             $filter = [];
-            foreach($defaults as $field => $val){
+            foreach ($defaults as $field => $val) {
                 $filter[$field . ':not'] = $val;
             }
             $rates = $this->Rates()->filterAny($filter);
-            if($rates->exists()){
+            if ($rates->exists()) {
                 return true;
             }
         }

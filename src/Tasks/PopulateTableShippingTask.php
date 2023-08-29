@@ -12,7 +12,6 @@ use SilverStripe\Dev\YamlFixture;
 use SilverStripe\ORM\DB;
 use SilverStripe\Core\Extension;
 
-
 /**
  * @package silvershop-shipping
  */
@@ -35,19 +34,5 @@ class PopulateTableShippingTask extends BuildTask
         } else {
             DB::alteration_message('Some table shipping methods already exist. None were created.');
         }
-    }
-}
-
-/**
- * Makes PopulateTableShippingTask get run before PopulateShopTask is run
- *
- * @package silvershop-shipping
- */
-class PopulateShopTableShippingTask extends Extension
-{
-    public function beforePopulate()
-    {
-        $task = new PopulateTableShippingTask();
-        $task->run();
     }
 }

@@ -56,31 +56,31 @@ SilverShop\Shipping\Model\TableShippingRate:
         Rate: 116.00
     loc_w4:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.weight'
-        Country: 'NZ'
+        Country: NZ
         WeightMin: 0
         WeightMax: 4
         Rate: 4.00
     loc_w6:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.weight'
-        Country: 'NZ'
+        Country: NZ
         WeightMin: 4
         WeightMax: 6
         Rate: 6.00
     loc_w15:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.weight'
-        Country: 'NZ'
+        Country: NZ
         WeightMin: 6
         WeightMax: 15
         Rate: 13.50
     loc_w70:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.weight'
-        Country: 'NZ'
+        Country: NZ
         WeightMin: 15
         WeightMax: 70
         Rate: 48.00
     loc_w100:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.weight'
-        Country: 'NZ'
+        Country: NZ
         WeightMin: 70
         WeightMax: 100
         Rate: 58.00
@@ -123,16 +123,40 @@ SilverShop\Shipping\Model\TableShippingRate:
         Rate: 520.00
     loc_vo4:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.volume'
-        Country: 'NZ'
+        Country: NZ
         VolumeMin: 0
         VolumeMax: 4
         Rate: 1.00
     loc_vo10:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.volume'
-        Country: 'NZ'
+        Country: NZ
         VolumeMin: 4
         VolumeMax: 10
         Rate: 3.00
+    loc_vo50:
+        ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.volume'
+        Country: NZ
+        VolumeMin: 10
+        VolumeMax: 50
+        Rate: 15.00
+    loc_vo1000:
+        ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.volume'
+        Country: NZ
+        VolumeMin: 50
+        VolumeMax: 1000
+        Rate: 50.00
+    loc_vol10000:
+        ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.volume'
+        Country: NZ
+        VolumeMin: 1000
+        VolumeMax: 10000
+        Rate: 150.00
+    loc_vol100000:
+        ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.volume'
+        Country: NZ
+        VolumeMin: 10000
+        VolumeMax: 100000
+        Rate: 260.00
     #value-based rates
     int_va4:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.value'
@@ -160,13 +184,13 @@ SilverShop\Shipping\Model\TableShippingRate:
         Rate: 50.00
     loc_va4:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.value'
-        Country: 'NZ'
+        Country: NZ
         ValueMin: 0
         ValueMax: 4
         Rate: 1.00
     loc_va10:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.value'
-        Country: 'NZ'
+        Country: NZ
         ValueMin: 4
         ValueMax: 10
         Rate: 3.00
@@ -185,28 +209,28 @@ SilverShop\Shipping\Model\TableShippingRate:
         Rate: 18.60
     loc_q4:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.quantity'
-        Country: 'NZ'
+        Country: NZ
         QuantityMin: 1
         QuantityMax: 4
         Rate: 5.50
     loc_q10:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.quantity'
-        Country: 'NZ'
+        Country: NZ
         QuantityMin: 4
         QuantityMax: 10
         Rate: 9.30
     #address-based rates
     nz:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.address'
-        Country: 'NZ'
+        Country: NZ
         Rate: 50
     postcode6000:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.address'
-        Country: 'NZ'
+        Country: NZ
         PostalCode: 6000
         Rate: 45
     wellington:
         ShippingMethod: '=>SilverShop\Shipping\Model\TableShippingMethod.address'
-        Country: 'NZ'
+        Country: NZ
         State: 'Wellington'
         Rate: 30
