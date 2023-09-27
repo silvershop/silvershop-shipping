@@ -9,14 +9,10 @@
 
 Introduce shipping options to SilverShop
 
-## Requirements
-
- * [Shop module](https://github.com/silvershop/silvershop-core)
-
 ## Installation
 
 ```sh
-composer require silvershop/shipping:master
+composer require silvershop/shipping
 ```
 
 Add the ShippingFrameWorkModifier to your modifiers config, eg:
