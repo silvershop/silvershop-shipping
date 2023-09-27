@@ -5,11 +5,9 @@
 	"keywords": ["silverstripe", "ecommerce", "shop", "shipping", "freight", "silvershop"],
 	"license": "BSD-3-Clause",
 	"require": {
-        "silvershop/core": "^3",
-		"silvershop/geocoding": "2.x-dev",
-		"symbiote/silverstripe-gridfieldextensions": "^3.6.3",
-        "silverstripe/cms": "^4.11",
-		"silvershop/silverstripe-hasonefield": "^3"
+        "silvershop/core": "^4",
+		"silvershop/geocoding": "^3",
+		"silvershop/silverstripe-hasonefield": "^4"
 	},
     "authors": [{
       "name": "SilverShop Contributors",
@@ -21,7 +19,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-master": "3.x-dev"
         },
         "expose": [
             "css",
