@@ -37,3 +37,8 @@ dwsync.xml
 intermediate
 publish
 *.php_cs.cache
+
+/vendor
+/composer.lock
+/app
+/public
