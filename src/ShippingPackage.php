@@ -28,6 +28,12 @@ class ShippingPackage
 
     protected $quantity;
 
+    protected $shape;
+
+    protected $weightunit;
+
+    protected $widthunit;
+
     protected $defaultdimensions = [
         'height' => 0,
         'width' => 0,
@@ -78,6 +84,7 @@ class ShippingPackage
             $this->defaultdimensions,
             ['value' => null, 'quantity' => null]
         );
+
         foreach ($zerochecks as $dimension => $value) {
             if ($this->$dimension < 0) {
                 $this->$dimension = 0;
@@ -98,8 +105,10 @@ class ShippingPackage
             "currency" => $this->currency,
             "quantity" => $this->quantity
         ];
+
         return array_filter($data);
     }
+
 
     public function __toString()
     {
@@ -146,5 +155,30 @@ class ShippingPackage
     public function quantity()
     {
         return $this->quantity;
+    }
+
+    public function shape()
+    {
+        return $this->shape;
+    }
+
+    public function weightunit()
+    {
+        return $this->weightunit;
+    }
+
+    public function widthunit()
+    {
+        return $this->widthunit;
+    }
+
+    public function diameter()
+    {
+        return $this->diameter;
+    }
+
+    public function currency()
+    {
+        return $this->currency;
     }
 }
