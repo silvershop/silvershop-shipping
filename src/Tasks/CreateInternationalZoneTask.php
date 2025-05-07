@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverShop\Tasks;
+namespace SilverShop\Shipping\Tasks;
 
 use SilverShop\Extension\ShopConfigExtension;
 use SilverShop\Shipping\Model\Zone;

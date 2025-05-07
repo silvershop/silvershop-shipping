@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverShop\Tests\Model;
+namespace SilverShop\Shipping\Tests;
 
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\Zone;
