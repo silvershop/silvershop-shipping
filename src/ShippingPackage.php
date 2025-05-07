@@ -6,27 +6,22 @@ use SilverStripe\Core\Injector\Injectable;
 
 /**
  * Encapsulation of shipping package data
- *
  */
 class ShippingPackage
 {
     use Injectable;
 
-    protected $weight;
-
-    protected $height;
-
-    protected $width;
-
-    protected $depth;
-
-    protected $diameter;
-
-    protected $value;
-
     protected $currency;
-
+    protected $depth;
+    protected $diameter;
+    protected $height;
     protected $quantity;
+    protected $shape;
+    protected $value;
+    protected $weight;
+    protected $weightunit;
+    protected $width;
+    protected $widthunit;
 
     protected $shape;
 
