@@ -61,7 +61,7 @@ class TableShippingMethodTest extends SapphireTest
         $this->p4 = new ShippingPackage(1000, [100,200,300], ['value' => 1000000, 'quantity' => 12412]);
     }
 
-    public function testAddressTable()
+    public function testAddressTable(): void
     {
         $type = "address";
         $address = Address::create([
@@ -90,7 +90,7 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p4, $address, 0);
     }
 
-    public function testDefaultRate()
+    public function testDefaultRate(): void
     {
         $type = "address";
         $address = $this->internationaladdress;
@@ -105,7 +105,7 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p4, $address, 100);
     }
 
-    public function testInternationalRates()
+    public function testInternationalRates(): void
     {
         $address_int = $this->internationaladdress;
 
@@ -142,7 +142,7 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertNoMatch($type, $this->p4, $address_int); //quantity = 12412
     }
 
-    public function testLocalRates()
+    public function testLocalRates(): void
     {
         $address_loc = $this->nzaddress;
 
@@ -179,14 +179,14 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertNoMatch($type, $this->p4, $address_loc); //quantity = 12412
     }
 
-    protected function assertMatch($type, $package, $address, $amount)
+    protected function assertMatch(string $type, $package, $address, $amount)
     {
         $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
         $this->assertEquals($amount, $rate, "Check rate for package $package is $amount");
     }
 
-    protected function assertNoMatch($type, $package, $address)
+    protected function assertNoMatch(string $type, $package, $address)
     {
         $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 

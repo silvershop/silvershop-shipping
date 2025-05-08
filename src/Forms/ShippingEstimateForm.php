@@ -2,6 +2,7 @@
 
 namespace SilverShop\Shipping\Forms;
 
+use SilverStripe\Control\RequestHandler;
 use SilverStripe\Forms\Form;
 use SilverShop\Model\Address;
 use SilverStripe\Forms\FieldList;
@@ -12,12 +13,11 @@ use SilverStripe\SiteConfig\SiteConfig;
 use SilverShop\Cart\ShoppingCart;
 use SilverShop\Shipping\ShippingEstimator;
 use SilverStripe\Core\Convert;
-use SilverStripe\Control\Session;
 use SilverStripe\Control\Director;
 
 class ShippingEstimateForm extends Form
 {
-    public function __construct($controller, $name = "ShippingEstimateForm")
+    public function __construct(RequestHandler $controller, $name = "ShippingEstimateForm")
     {
         $address = Address::create();  // get address to access it's getCountryField method
         $fields = new FieldList(
@@ -39,7 +39,7 @@ class ShippingEstimateForm extends Form
         $this->extend('updateForm');
     }
 
-    public function submit($data, $form)
+    public function submit(array $data, $form)
     {
         if ($country = SiteConfig::current_site_config()->getSingleCountry()) {
             // Add Country if missing due to ReadonlyField in form

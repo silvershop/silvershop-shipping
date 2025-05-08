@@ -6,9 +6,9 @@ use SilverShop\Model\Modifiers\OrderModifier;
 
 class ShippingFrameworkModifier extends OrderModifier
 {
-    private static $singular_name = 'Shipping';
+    private static string $singular_name = 'Shipping';
 
-    public function value($incoming)
+    public function value($incoming): int|float
     {
         $order = $this->Order();
         if ($order && $order->exists() && ($shipping = $order->ShippingMethod()) && $shipping->exists()) {
@@ -20,7 +20,7 @@ class ShippingFrameworkModifier extends OrderModifier
         return 0;
     }
 
-    public function TableTitle()
+    public function TableTitle(): string
     {
         $title = $this->i18n_singular_name();
 

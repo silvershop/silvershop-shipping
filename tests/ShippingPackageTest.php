@@ -8,7 +8,7 @@ use SilverShop\Shipping\ShippingPackage;
 class ShippingPackageTest extends SapphireTest
 {
 
-    public function testPackages()
+    public function testPackages(): void
     {
 
         $p = new ShippingPackage(25, ['depth' => 4, 'height' => 23,'width' => 12]);

@@ -7,7 +7,6 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\YamlFixture;
 use SilverStripe\ORM\DB;
-use SilverStripe\Core\Extension;
 
 /**
  * @package silvershop-shipping
@@ -18,7 +17,7 @@ class PopulateZonedShippingTask extends BuildTask
 
     protected $description = 'If no zoned shipping methods exist, it creates some.';
 
-    public function run($request = null)
+    public function run($request = null): void
     {
         if (!DataObject::get_one('ZonedShippingMethod')) {
             $factory = Injector::inst()->create('FixtureFactory');

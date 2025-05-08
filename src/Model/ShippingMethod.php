@@ -14,31 +14,31 @@ use SilverShop\Shipping\ShippingCalculator;
  */
 class ShippingMethod extends DataObject
 {
-    private static $db = [
+    private static array $db = [
         "Name" => "Varchar",
         "Description" => "Text",
         "Enabled" => "Boolean"
     ];
 
-    private static $casting = [
+    private static array $casting = [
         'Rate' => 'Currency'
     ];
 
-    private static $table_name = 'SilverShop_ShippingMethod';
+    private static string $table_name = 'SilverShop_ShippingMethod';
 
     /**
      * @var array Checked in ShippingMethodAdmin when adding methods
      */
-    private static $disable_methods = [];
+    private static array $disable_methods = [];
 
     protected $CalculatedRate;
 
-    public function getCalculator(Order $order)
+    public function getCalculator(Order $order): ShippingCalculator
     {
         return new ShippingCalculator($this, $order);
     }
 
-    public function calculateRate(ShippingPackage $package, Address $address)
+    public function calculateRate(ShippingPackage $package, Address $address): null
     {
         return null;
     }
@@ -48,7 +48,7 @@ class ShippingMethod extends DataObject
         return $this->CalculatedRate;
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         $rate = number_format(
             $this->Rate ?? 0,
@@ -63,11 +63,15 @@ class ShippingMethod extends DataObject
             $rate = ShopCurrency::config()->currency_symbol . $rate;
         }
 
-        $title = implode(" - ", array_filter([
-            $rate,
-            $this->Name,
-            $this->Description
-        ]));
+        $title = implode(
+            " - ", array_filter(
+                [
+                $rate,
+                $this->Name,
+                $this->Description
+                ]
+            )
+        );
 
         $this->extend('updateTitle', $title);
         return $title;
@@ -75,10 +79,8 @@ class ShippingMethod extends DataObject
 
     /**
      * Some shipping methods might require an address present on the order.
-     *
-     * @return bool
      */
-    public function requiresAddress()
+    public function requiresAddress(): bool
     {
         return false;
     }

@@ -12,7 +12,7 @@ class ZonedShippingMethodTest extends TableShippingMethodTest
 
     protected $fixtureclass = ZonedShippingMethod::class;
 
-    public function testDefaultRate()
+    public function testDefaultRate(): void
     {
         $type = 'address';
         $address = $this->internationaladdress;

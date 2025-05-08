@@ -8,11 +8,11 @@ use SilverStripe\Control\Controller;
 
 class CartPageShippingExtension extends Extension
 {
-    private static $allowed_actions = [
+    private static array $allowed_actions = [
         'ShippingEstimateForm'
     ];
 
-    public function ShippingEstimateForm()
+    public function ShippingEstimateForm(): ShippingEstimateForm
     {
         return new ShippingEstimateForm($this->owner);
     }

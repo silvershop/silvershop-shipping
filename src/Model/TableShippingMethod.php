@@ -7,7 +7,7 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\RegionRestriction;
-use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\FieldList;
 
 /**
  * Work out shipping rate from a pre-defined table of regions - to - weights
@@ -15,22 +15,22 @@ use SilverStripe\ORM\DataObject;
  */
 class TableShippingMethod extends ShippingMethod
 {
-    private static $defaults = [
+    private static array $defaults = [
         'Name'        => 'Table Shipping',
         'Description' => 'Works out shipping from a pre-defined table'
     ];
 
-    private static $has_many = [
+    private static array $has_many = [
         "Rates" => TableShippingRate::class
     ];
 
-    private static $table_name = 'SilverShop_TableShippingMethod';
+    private static string $table_name = 'SilverShop_TableShippingMethod';
 
-    private static $singular_name = 'Table shipping method';
+    private static string $singular_name = 'Table shipping method';
 
-    private static $plural_name = 'Table shipping methods';
+    private static string $plural_name = 'Table shipping methods';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
         $fields->fieldByName('Root')->removeByName("Rates");
@@ -49,11 +49,8 @@ class TableShippingMethod extends ShippingMethod
 
     /**
      * Find the appropriate shipping rate from stored table range metrics.
-     *
-     * @param ShippingPackage $package
-     * @param Address $address
      */
-    public function calculateRate(ShippingPackage $package, Address $address)
+    public function calculateRate(ShippingPackage $package, Address $address): null
     {
         $rate = null;
         $packageconstraints = [
@@ -85,10 +82,14 @@ class TableShippingMethod extends ShippingMethod
 
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
-        $filter = sprintf("(%s)", implode(") AND (", [
-            "\"ShippingMethodID\" = " . $this->ID,
-            implode(" OR ", $constraintfilters)
-        ]));
+        $filter = sprintf(
+            "(%s)", implode(
+                ") AND (", [
+                "\"ShippingMethodID\" = " . $this->ID,
+                implode(" OR ", $constraintfilters)
+                ]
+            )
+        );
 
         $tr = TableShippingRate::get()
             ->where($filter);
@@ -113,10 +114,8 @@ class TableShippingMethod extends ShippingMethod
      * If this shipping method has any @TableShippingRate with any @RegionRestriction
      * where either Country, State, City or PostalCode are submitted, this method returns true
      * Else it returns false (@ShippingMethod::requiresAddress());
-     *
-     * @return bool
      */
-    public function requiresAddress()
+    public function requiresAddress(): bool
     {
         if ($this->Rates()->exists()) {
             $defaults = RegionRestriction::config()->get('defaults');

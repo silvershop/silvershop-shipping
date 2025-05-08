@@ -8,6 +8,7 @@ use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\HasManyList;
 use SilverShop\Model\Address;
+use SilverStripe\Forms\FieldList;
 
 /**
  * A zone is a collection of regions. Zones can cross over each other.
@@ -20,21 +21,21 @@ use SilverShop\Model\Address;
  */
 class Zone extends DataObject
 {
-    private static $db = [
+    private static array $db = [
         'Name' => 'Varchar',
         'Description' => 'Varchar',
     ];
 
-    private static $has_many = [
+    private static array $has_many = [
         'Regions' => ZoneRegion::class,
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Name',
         'Description',
     ];
 
-    private static $table_name = 'SilverShop_Zone';
+    private static string $table_name = 'SilverShop_Zone';
 
     /*
      * Returns a DataSet of matching zones
@@ -52,7 +53,7 @@ class Zone extends DataObject
     /*
      * Get ids of zones, and store in session
      */
-    public static function cache_zone_ids(Address $address)
+    public static function cache_zone_ids(Address $address): ?array
     {
         $session = ShopTools::getSession();
         if ($zones = self::get_zones_for_address($address)) {
@@ -76,7 +77,7 @@ class Zone extends DataObject
         return null;
     }
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
         $fields->fieldByName('Root')->removeByName('Regions');

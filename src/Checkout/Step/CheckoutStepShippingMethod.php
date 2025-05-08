@@ -16,12 +16,12 @@ use SilverShop\Shipping\Model\ShippingMethod;
  */
 class CheckoutStepShippingMethod extends CheckoutStep
 {
-    private static $allowed_actions = [
+    private static array $allowed_actions = [
         'shippingmethod',
         'ShippingMethodForm'
     ];
 
-    public function shippingmethod()
+    public function shippingmethod(): array
     {
         $form = $this->ShippingMethodForm();
         $cart = ShoppingCart::singleton()->current();
@@ -35,10 +35,7 @@ class CheckoutStepShippingMethod extends CheckoutStep
         ];
     }
 
-    /**
-     * @return Form
-     */
-    public function ShippingMethodForm()
+    public function ShippingMethodForm(): ?Form
     {
         $order = $this->owner->Cart();
 

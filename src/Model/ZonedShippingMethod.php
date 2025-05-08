@@ -5,7 +5,7 @@ namespace SilverShop\Shipping\Model;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\Zone;
-use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
@@ -17,22 +17,22 @@ use SilverStripe\Forms\GridField\GridFieldDataColumns;
  */
 class ZonedShippingMethod extends ShippingMethod
 {
-    private static $defaults = [
+    private static array $defaults = [
         'Name' => 'Zoned Shipping',
         'Description' => 'Works out shipping from a pre-defined zone rates'
     ];
 
-    private static $has_many = [
+    private static array $has_many = [
         "Rates" => ZonedShippingRate::class
     ];
 
-    private static $table_name = 'SilverShop_ZonedShippingMethod';
+    private static string $table_name = 'SilverShop_ZonedShippingMethod';
 
-    private static $singular_name = 'Zoned shipping method';
+    private static string $singular_name = 'Zoned shipping method';
 
-    private static $plural_name = 'Zoned shipping methods';
+    private static string $plural_name = 'Zoned shipping methods';
 
-    public function calculateRate(ShippingPackage $package, Address $address)
+    public function calculateRate(ShippingPackage $package, Address $address): null
     {
         $rate = null;
         $ids = Zone::get_zones_for_address($address);
@@ -67,11 +67,13 @@ class ZonedShippingMethod extends ShippingMethod
         }
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
-        $filter = "(" . implode(") AND (", [
+        $filter = "(" . implode(
+            ") AND (", [
             "\"ZonedShippingMethodID\" = " . $this->ID,
             "\"ZoneID\" IN(" . implode(",", $ids) . ")", //zone restriction
             implode(" OR ", $constraintfilters) //metrics restriction
-        ]) . ")";
+            ]
+        ) . ")";
 
         if ($sr = ZonedShippingRate::get()->where($filter)->sort('Rate')->first()) {
             $rate = $sr->Rate;
@@ -82,7 +84,7 @@ class ZonedShippingMethod extends ShippingMethod
         return $rate;
     }
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
 
@@ -121,7 +123,7 @@ class ZonedShippingMethod extends ShippingMethod
     /**
      * @return bool
      */
-    public function requiresAddress()
+    public function requiresAddress(): bool
     {
         return true;
     }

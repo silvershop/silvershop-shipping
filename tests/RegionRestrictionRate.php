@@ -7,7 +7,7 @@ use SilverStripe\Dev\TestOnly;
 
 class RegionRestrictionRate extends RegionRestriction implements TestOnly
 {
-    private static $db = [
+    private static array $db = [
         'Rate' => 'Currency',
     ];
 }

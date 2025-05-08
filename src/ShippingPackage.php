@@ -23,12 +23,6 @@ class ShippingPackage
     protected $width;
     protected $widthunit;
 
-    protected $shape;
-
-    protected $weightunit;
-
-    protected $widthunit;
-
     protected $defaultdimensions = [
         'height' => 0,
         'width' => 0,
@@ -53,7 +47,7 @@ class ShippingPackage
         'd' => 'depth'
     ];
 
-    public function __construct($weight = 0, $dimensions = [], $options = [])
+    public function __construct($weight = 0, array $dimensions = [], $options = [])
     {
         $this->weight = $weight;
         //set via aliases
@@ -79,7 +73,6 @@ class ShippingPackage
             $this->defaultdimensions,
             ['value' => null, 'quantity' => null]
         );
-
         foreach ($zerochecks as $dimension => $value) {
             if ($this->$dimension < 0) {
                 $this->$dimension = 0;
@@ -87,7 +80,7 @@ class ShippingPackage
         }
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         $data = [
             "weight" => $this->weight,
@@ -100,12 +93,10 @@ class ShippingPackage
             "currency" => $this->currency,
             "quantity" => $this->quantity
         ];
-
         return array_filter($data);
     }
 
-
-    public function __toString()
+    public function __toString(): string
     {
         $out = "";
         foreach ($this->toArray() as $key => $value) {
@@ -117,7 +108,7 @@ class ShippingPackage
     /**
      * Calculate total volume, based on given dimensions
      */
-    public function volume()
+    public function volume(): int|float
     {
         return $this->height * $this->width * $this->depth;
     }
@@ -150,30 +141,5 @@ class ShippingPackage
     public function quantity()
     {
         return $this->quantity;
-    }
-
-    public function shape()
-    {
-        return $this->shape;
-    }
-
-    public function weightunit()
-    {
-        return $this->weightunit;
-    }
-
-    public function widthunit()
-    {
-        return $this->widthunit;
-    }
-
-    public function diameter()
-    {
-        return $this->diameter;
-    }
-
-    public function currency()
-    {
-        return $this->currency;
     }
 }

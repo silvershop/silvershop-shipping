@@ -13,7 +13,7 @@ use SilverStripe\ORM\ValidationException;
 
 class ShippingCheckoutComponent extends CheckoutComponent
 {
-    public function getFormFields(Order $order)
+    public function getFormFields(Order $order): FieldList
     {
         $fields = FieldList::create();
         $estimates = $order->getShippingEstimates();
@@ -27,16 +27,15 @@ class ShippingCheckoutComponent extends CheckoutComponent
                 )
             );
         }
-
         return $fields;
     }
 
-    public function getRequiredFields(Order $order)
+    public function getRequiredFields(Order $order): array
     {
         return [];
     }
 
-    public function validateData(Order $order, array $data)
+    public function validateData(Order $order, array $data): bool
     {
         // We fixed the wrong call of ValdiationResult::error() which doesn't exist by using addError()
         //in $result->addError()
@@ -62,9 +61,10 @@ class ShippingCheckoutComponent extends CheckoutComponent
             );
             throw new ValidationException($result);
         }
+        return true;
     }
 
-    public function getData(Order $order)
+    public function getData(Order $order): array
     {
         $estimates = $order->getShippingEstimates();
         $method = count($estimates) === 1 ? $estimates->First() : ShopTools::getSession()->get("Checkout.ShippingMethod");
@@ -74,7 +74,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
         ];
     }
 
-    public function setData(Order $order, array $data)
+    public function setData(Order $order, array $data): Order
     {
         $option = null;
         if (isset($data['ShippingMethodID'])) {
@@ -86,5 +86,6 @@ class ShippingCheckoutComponent extends CheckoutComponent
             $order->setShippingMethod($option);
             ShopTools::getSession()->set("Checkout.ShippingMethod", $option);
         }
+        return $order;
     }
 }

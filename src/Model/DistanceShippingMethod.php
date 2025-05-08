@@ -14,37 +14,39 @@ use SilverStripe\Forms\LiteralField;
 use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Shipping\Model\Warehouse;
 use SilverShop\Model\Address;
-use SilverStripe\ORM\DataObject;
 use SilverShop\Shipping\Model\DistanceShippingFare;
+use SilverStripe\Forms\FieldList;
 
 class DistanceShippingMethod extends ShippingMethod
 {
-    private static $defaults = [
+    private static array $defaults = [
         'Name' => 'Distance Shipping',
         'Description' => 'Per product shipping'
     ];
 
-    private static $has_many = [
+    private static array $has_many = [
         "DistanceFares" => DistanceShippingFare::class
     ];
 
-    private static $table_name = 'SilverShop_DistanceShippingMethod';
+    private static string $table_name = 'SilverShop_DistanceShippingMethod';
 
-    private static $singular_name = 'Distance shipping method';
+    private static string $singular_name = 'Distance shipping method';
 
-    private static $plural_name = 'Distance shipping methods';
+    private static string $plural_name = 'Distance shipping methods';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
         $fields->fieldByName('Root')->removeByName("DistanceFares");
         if ($this->isInDB()) {
-            $fields->addFieldToTab("Root.Main", $gridfield = GridField::create(
-                "DistanceFares",
-                "Fares",
-                $this->DistanceFares(),
-                $config = new GridFieldConfig_RecordEditor()
-            ));
+            $fields->addFieldToTab(
+                "Root.Main", $gridfield = GridField::create(
+                    "DistanceFares",
+                    "Fares",
+                    $this->DistanceFares(),
+                    $config = new GridFieldConfig_RecordEditor()
+                )
+            );
             $config->removeComponentsByType(GridFieldDataColumns::class);
             $config->removeComponentsByType(GridFieldEditButton::class);
             $config->removeComponentsByType(GridFieldDeleteAction::class);
@@ -69,7 +71,7 @@ class DistanceShippingMethod extends ShippingMethod
         return $fields;
     }
 
-    public function calculateRate(ShippingPackage $package, Address $address)
+    public function calculateRate(ShippingPackage $package, Address $address): null
     {
         $warehouse = Warehouse::closest_to($address);
         $distance = $warehouse->Address()->distanceTo($address);
@@ -98,14 +100,11 @@ class DistanceShippingMethod extends ShippingMethod
     public function greatestCostDistance()
     {
         return $this->DistanceFares()
-                ->sort("Cost", "DESC")
-                ->first();
+            ->sort("Cost", "DESC")
+            ->first();
     }
 
-    /**
-     * @return bool
-     */
-    public function requiresAddress()
+    public function requiresAddress(): bool
     {
         return true;
     }

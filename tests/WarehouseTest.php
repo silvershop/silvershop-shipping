@@ -18,7 +18,7 @@ class WarehouseTest extends SapphireTest
         parent::setUp();
     }
 
-    public function testClosestWarehouse()
+    public function testClosestWarehouse(): void
     {
         $warehouse = Warehouse::closest_to(
             $this->objFromFixture(Address::class, "customeraddress1")

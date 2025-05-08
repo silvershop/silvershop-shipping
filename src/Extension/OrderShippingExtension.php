@@ -8,32 +8,31 @@ use SilverShop\Shipping\ShippingEstimator;
 use SilverShop\Shipping\Model\ShippingMethod;
 use SilverShop\Shipping\Model\Zone;
 use Exception;
+use SilverStripe\ORM\ArrayList;
 
 class OrderShippingExtension extends DataExtension
 {
-    private static $db = [
+    private static array $db = [
         'ShippingTotal' => 'Currency'
     ];
 
-    private static $has_one = [
+    private static array $has_one = [
         'ShippingMethod' => ShippingMethod::class
     ];
 
-    private static $casting = [
+    private static array $casting = [
         'TotalWithoutShipping' => 'Currency'
     ];
 
-    public function TotalWithoutShipping()
+    public function TotalWithoutShipping(): int|float
     {
         return $this->owner->Total() - $this->owner->ShippingTotal;
     }
 
     /**
-     * create package, with total weight, dimensions, value, etc.
-     * @param  integer $value
-     * @return ShippingPackage
+     * Create package, with total weight, dimensions, value, etc.
      */
-    public function createShippingPackage($value = 0)
+    public function createShippingPackage(int $value = 0): ShippingPackage
     {
         $items = $this->owner->Items();
 
@@ -67,25 +66,22 @@ class OrderShippingExtension extends DataExtension
 
     /**
      * Get shipping estimates.
-     *
-     * @return DataList
      */
-    public function getShippingEstimates()
+    public function getShippingEstimates(): ArrayList
     {
         $address = $this->owner->getShippingAddress();
         $estimator = ShippingEstimator::create($this->owner, $address);
         $estimates = $estimator->getEstimates();
-
         return $estimates;
     }
 
     /**
      * Set shipping method and shipping cost
      *
-     * @param $option - shipping option to set, and calculate shipping from
+     * @param  $option ShippingMethod shipping option to set, and calculate shipping from
      * @return boolean sucess/failure of setting
      */
-    public function setShippingMethod(ShippingMethod $option)
+    public function setShippingMethod(ShippingMethod $option): bool
     {
         $package = $this->owner->createShippingPackage();
 
@@ -106,7 +102,7 @@ class OrderShippingExtension extends DataExtension
         return true;
     }
 
-    public function onSetBillingAddress($address)
+    public function onSetBillingAddress($address): static
     {
         if ($address) {
             Zone::cache_zone_ids($address);
@@ -115,7 +111,7 @@ class OrderShippingExtension extends DataExtension
         return $this;
     }
 
-    public function onSetShippingAddress($address)
+    public function onSetShippingAddress($address): static
     {
         if ($address) {
             Zone::cache_zone_ids($address);

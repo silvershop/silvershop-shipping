@@ -2,11 +2,12 @@
 
 namespace SilverShop\Shipping\Model;
 
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 
 class ZonedShippingRate extends DataObject
 {
-    private static $db = [
+    private static array $db = [
         "WeightMin" => "Decimal",
         "WeightMax" => "Decimal",
         "VolumeMin" => "Decimal",
@@ -18,12 +19,12 @@ class ZonedShippingRate extends DataObject
         "Rate" => "Currency"
     ];
 
-    private static $has_one = [
+    private static array $has_one = [
         'Zone' => Zone::class,
         'ZonedShippingMethod' => ZonedShippingMethod::class
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Zone.Name' => 'Zone',
         'WeightMin',
         'WeightMax',
@@ -36,11 +37,11 @@ class ZonedShippingRate extends DataObject
         'Rate'
     ];
 
-    private static $default_sort = "\"Rate\" ASC";
+    private static string $default_sort = "\"Rate\" ASC";
 
-    private static $table_name = 'SilverShop_ZonedShippingRate';
+    private static string $table_name = 'SilverShop_ZonedShippingRate';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
         $fields->removeByName('ZonedShippingMethodID');

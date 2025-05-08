@@ -13,7 +13,7 @@ class CreateInternationalZoneTask extends BuildTask
 
     protected $description = 'Quickly creates an international zone, based on all available countries.';
 
-    public function run($request)
+    public function run($request): void
     {
         $zone = Zone::create();
         $zone->Name = 'International';

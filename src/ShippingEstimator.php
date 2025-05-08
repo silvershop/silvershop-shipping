@@ -16,12 +16,9 @@ class ShippingEstimator
 {
     use Injectable;
 
-    protected $order;
-
-    protected $address;
-
+    protected Order $order;
+    protected ?Address $address;
     protected $estimates = null;
-
     protected $calculated = false;
 
     public function __construct(Order $order, Address $address = null)
@@ -30,7 +27,7 @@ class ShippingEstimator
         $this->address = $address ? $address : $order->getShippingAddress();
     }
 
-    public function getEstimates()
+    public function getEstimates(): ArrayList
     {
         if ($this->calculated) {
             return $this->estimates;

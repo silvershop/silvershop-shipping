@@ -15,7 +15,7 @@ class DistanceShippingMethodTest extends SapphireTest
         'Warehouses.yml'
     ];
 
-    public function testDistanceFare()
+    public function testDistanceFare(): void
     {
         $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
         $this->assertEquals(0, $method->getDistanceFare(9));
@@ -24,7 +24,7 @@ class DistanceShippingMethodTest extends SapphireTest
         $this->assertEquals(678, $method->getDistanceFare(999999));
     }
 
-    public function testCalculateRates()
+    public function testCalculateRates(): void
     {
         $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
         $this->assertEquals(
