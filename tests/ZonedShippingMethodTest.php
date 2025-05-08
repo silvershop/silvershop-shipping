@@ -17,7 +17,7 @@ class ZonedShippingMethodTest extends TableShippingMethodTest
         $type = 'address';
         $address = $this->internationaladdress;
 
-        $defaultrate = new ZonedShippingRate([
+        $defaultrate = ZonedShippingRate::create([
             "Rate" => 100,
             "ZoneID" => $this->objFromFixture(Zone::class, "int")->ID
         ]);

@@ -35,12 +35,7 @@ class TableShippingMethod extends ShippingMethod
         $fields = parent::getCMSFields();
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
-            $tablefield = new GridField(
-                "Rates",
-                "TableShippingRate",
-                $this->Rates(),
-                new GridFieldConfig_RecordEditor()
-            );
+            $tablefield = GridField::create("Rates", "TableShippingRate", $this->Rates(), new GridFieldConfig_RecordEditor());
 
             $fields->addFieldToTab("Root.Main", $tablefield);
         }

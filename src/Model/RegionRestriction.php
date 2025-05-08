@@ -145,7 +145,7 @@ class RegionRestriction extends DataObject
     public function onBeforeWrite(): void
     {
         //prevent empty data - '*' must be used
-        foreach (self::$defaults as $field => $value) {
+        foreach ($this->config()->get('defaults') as $field => $value) {
             if (empty($this->$field)) {
                 $this->$field = $value;
             }

@@ -14,9 +14,9 @@ class ShippingEstimatorTest extends SapphireTest
 
     public function testGetEstimates(): void
     {
-        $order = new Order();
-        $address = new Address();
-        $package = new ShippingPackage(2);
+        $order = Order::create();
+        $address = Address::create();
+        $package = ShippingPackage::create(2);
         $estimator = new ShippingEstimator($order, $address);
 
         $options = $estimator->getShippingMethods();

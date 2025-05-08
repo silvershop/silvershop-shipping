@@ -45,7 +45,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
                 _t('ShippingCheckoutComponent.ShippingMethodNotProvidedMessage', "Shipping method not provided"),
                 _t('ShippingCheckoutComponent.ShippingMethodErrorCode', "ShippingMethod")
             );
-            throw new ValidationException($result);
+            throw ValidationException::create($result);
         }
 
         if (!ShippingMethod::get()->byID($data['ShippingMethodID'])) {
@@ -59,7 +59,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
                     "ShippingMethod"
                 )
             );
-            throw new ValidationException($result);
+            throw ValidationException::create($result);
         }
         return true;
     }

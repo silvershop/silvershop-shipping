@@ -14,7 +14,7 @@ class CartPageShippingExtension extends Extension
 
     public function ShippingEstimateForm(): ShippingEstimateForm
     {
-        return new ShippingEstimateForm($this->owner);
+        return ShippingEstimateForm::create($this->owner);
     }
 
     public function ShippingEstimates()

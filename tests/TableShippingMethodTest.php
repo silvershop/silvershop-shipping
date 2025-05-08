@@ -37,13 +37,13 @@ class TableShippingMethodTest extends SapphireTest
         $this->valueshipping = $this->objFromFixture($this->fixtureclass, "value");
         $this->quantityshipping = $this->objFromFixture($this->fixtureclass, "quantity");
 
-        $this->nzaddress = new Address([
+        $this->nzaddress = Address::create([
             "Country" =>    "NZ",
             "State" =>      "Wellington",
             "PostalCode" => "6022"
         ]);
 
-        $this->internationaladdress = new Address([
+        $this->internationaladdress = Address::create([
             "Company" => 'Nildram Ltd',
             "Address" => 'Ardenham Court',
             "Address2" =>    'Oxford Road',
@@ -54,11 +54,11 @@ class TableShippingMethodTest extends SapphireTest
         ]);
 
         //create some package fixtures
-        $this->p0 = new ShippingPackage();
-        $this->p1 = new ShippingPackage(2.34, [0.5,1,2], ['value' => 2, 'quantity' => 3]);
-        $this->p2 = new ShippingPackage(17, [1,2,3], ['value' => 6, 'quantity' => 10]);
-        $this->p3 = new ShippingPackage(100, [12.33,51,30.1], ['value' => 1000, 'quantity' => 55]);
-        $this->p4 = new ShippingPackage(1000, [100,200,300], ['value' => 1000000, 'quantity' => 12412]);
+        $this->p0 = ShippingPackage::create();
+        $this->p1 = ShippingPackage::create(2.34, [0.5,1,2], ['value' => 2, 'quantity' => 3]);
+        $this->p2 = ShippingPackage::create(17, [1,2,3], ['value' => 6, 'quantity' => 10]);
+        $this->p3 = ShippingPackage::create(100, [12.33,51,30.1], ['value' => 1000, 'quantity' => 55]);
+        $this->p4 = ShippingPackage::create(1000, [100,200,300], ['value' => 1000000, 'quantity' => 12412]);
     }
 
     public function testAddressTable(): void
@@ -74,7 +74,7 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p2, $address, 30);
         $this->assertMatch($type, $this->p4, $address, 30);
 
-        $address = new Address([
+        $address = Address::create([
             'Country' => 'NZ',
             'PostalCode' => '6000'
         ]);
@@ -94,7 +94,7 @@ class TableShippingMethodTest extends SapphireTest
     {
         $type = "address";
         $address = $this->internationaladdress;
-        $defaultrate = new TableShippingRate([
+        $defaultrate = TableShippingRate::create([
             "Rate" => 100
         ]);
         $defaultrate->write();

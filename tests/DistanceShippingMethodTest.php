@@ -30,14 +30,14 @@ class DistanceShippingMethodTest extends SapphireTest
         $this->assertEquals(
             234,
             $method->calculateRate(
-                new ShippingPackage(),
+                ShippingPackage::create(),
                 $this->objFromFixture(Address::class, "customeraddress1")
             )
         );
         $this->assertEquals(
             567,
             $method->calculateRate(
-                new ShippingPackage(),
+                ShippingPackage::create(),
                 $this->objFromFixture(Address::class, "customeraddress2")
             )
         );

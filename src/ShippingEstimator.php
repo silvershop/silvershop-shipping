@@ -35,7 +35,7 @@ class ShippingEstimator
 
         $total = $this->order->TotalWithoutShipping();
 
-        $output = new ArrayList();
+        $output = ArrayList::create();
         if ($options = $this->getShippingMethods()) {
             foreach ($options as $option) {
                 $rate = $option->getCalculator($this->order)->calculate($this->address, $total);

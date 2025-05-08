@@ -44,7 +44,7 @@ class CheckoutStepShippingMethod extends CheckoutStep
         }
 
         $estimates = $order->getShippingEstimates();
-        $fields = new FieldList();
+        $fields = FieldList::create();
 
         if ($estimates->exists()) {
             // if there is only one option then automatically select the option
@@ -72,11 +72,9 @@ class CheckoutStepShippingMethod extends CheckoutStep
             );
         }
 
-        $actions = new FieldList(
-            new FormAction("setShippingMethod", _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue'))
-        );
+        $actions = FieldList::create(FormAction::create("setShippingMethod", _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue')));
 
-        $form = new Form($this->owner, "ShippingMethodForm", $fields, $actions);
+        $form = Form::create($this->owner, "ShippingMethodForm", $fields, $actions);
         $this->owner->extend('updateShippingMethodForm', $form);
 
         return $form;
