@@ -42,16 +42,13 @@ class DistanceShippingFare extends DataObject
 
     public function getMinDistance()
     {
-        $dist = 0;
         if ($dfare = self::get()
             ->filter("Distance:LessThan", $this->Distance)
             ->filter("ShippingMethodID", $this->ShippingMethodID)
             ->sort("Distance", "DESC")
-            ->first()
-        ) {
-            $dist = $dfare->Distance;
+            ->first()) {
+            return $dfare->Distance;
         }
-
-        return $dist;
+        return 0;
     }
 }

@@ -96,7 +96,7 @@ class DistanceShippingMethod extends ShippingMethod
             $fare = $this->greatestCostDistance();
         }
         if ($fare->exists()) {
-            $cost = $fare->Cost;
+            return $fare->Cost;
         }
 
         return $cost;
