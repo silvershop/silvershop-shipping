@@ -2,7 +2,7 @@
 
 namespace SilverShop\Shipping\Forms;
 
-use SilverShop\Shipping\Zone;
+use SilverShop\Shipping\Model\Zone;
 use SilverStripe\Forms\DropdownField;
 
 class ZoneSelectField extends DropdownField

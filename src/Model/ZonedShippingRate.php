@@ -5,6 +5,21 @@ namespace SilverShop\Shipping\Model;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
 
+/**
+ * @property float $WeightMin
+ * @property float $WeightMax
+ * @property float $VolumeMin
+ * @property float $VolumeMax
+ * @property float $ValueMin
+ * @property float $ValueMax
+ * @property int $QuantityMin
+ * @property int $QuantityMax
+ * @property float $Rate
+ * @property int $ZoneID
+ * @property int $ZonedShippingMethodID
+ * @method Zone Zone()
+ * @method ZonedShippingMethod ZonedShippingMethod()
+ */
 class ZonedShippingRate extends DataObject
 {
     private static array $db = [

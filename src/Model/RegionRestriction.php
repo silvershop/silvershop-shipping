@@ -7,6 +7,12 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
 use SilverShop\Model\Address;
 
+/**
+ * @property ?string $Country
+ * @property ?string $State
+ * @property ?string $City
+ * @property ?string $PostalCode
+ */
 class RegionRestriction extends DataObject
 {
     private static array $db = [

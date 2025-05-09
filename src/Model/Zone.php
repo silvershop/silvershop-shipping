@@ -15,9 +15,9 @@ use SilverStripe\Forms\FieldList;
  * Zone matching is prioritised by specificity. For example, a matching post code
  * will take priority over a matching country.
  *
- * @property string $Name
- * @property string $Description
- * @method   ZoneRegion[]|HasManyList Regions()
+ * @property ?string $Name
+ * @property ?string $Description
+ * @method   HasManyList<ZoneRegion> Regions()
  */
 class Zone extends DataObject
 {
@@ -88,7 +88,7 @@ class Zone extends DataObject
                 $this->Regions(),
                 GridFieldConfig_RelationEditor::create()
             );
-            $fields->addFieldsToTab('Root.Main', $regionsTable);
+            $fields->addFieldToTab('Root.Main', $regionsTable);
         }
         return $fields;
     }

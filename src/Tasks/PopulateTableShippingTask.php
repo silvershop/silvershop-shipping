@@ -24,7 +24,7 @@ class PopulateTableShippingTask extends BuildTask
     {
         if (!DataObject::get_one(TableShippingMethod::class)) {
             $factory = Injector::inst()->create(FixtureFactory::class);
-            $fixture = new YamlFixture(
+            $fixture = YamlFixture::create(
                 ModuleResourceLoader::singleton()
                     ->resolvePath('silvershop/shipping:tests/TableShippingMethod.yml')
             );

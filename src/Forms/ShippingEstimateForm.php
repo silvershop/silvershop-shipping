@@ -20,14 +20,19 @@ class ShippingEstimateForm extends Form
     public function __construct(RequestHandler $controller, $name = "ShippingEstimateForm")
     {
         $address = Address::create();  // get address to access it's getCountryField method
-        $fields = FieldList::create($address->getCountryField(), TextField::create('State', _t('Address.db_State', 'State')), TextField::create('City', _t('Address.db_City', 'City')), TextField::create('PostalCode', _t('Address.db_PostalCode', 'Postal Code')));
-        $actions =  FieldList::create(FormAction::create(
-            "submit",
-            _t('ShippingEstimateForm.FormActionTitle', 'Estimate')
-        ));
-        $validator = new RequiredFields([
-            'Country'
-        ]);
+        $fields = FieldList::create(
+            $address->getCountryField(),
+            TextField::create('State', _t('Address.db_State', 'State')),
+            TextField::create('City', _t('Address.db_City', 'City')),
+            TextField::create('PostalCode', _t('Address.db_PostalCode', 'Postal Code'))
+        );
+        $actions =  FieldList::create(
+            FormAction::create(
+                "submit",
+                _t('ShippingEstimateForm.FormActionTitle', 'Estimate')
+            )
+        );
+        $validator = RequiredFields::create(['Country']);
         parent::__construct($controller, $name, $fields, $actions, $validator);
         $this->extend('updateForm');
     }
@@ -40,7 +45,7 @@ class ShippingEstimateForm extends Form
         }
 
         if ($order = ShoppingCart::singleton()->current()) {
-            $estimator = new ShippingEstimator(
+            $estimator = ShippingEstimator::create(
                 $order,
                 Address::create(Convert::raw2sql($data))
             );

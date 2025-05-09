@@ -72,7 +72,12 @@ class CheckoutStepShippingMethod extends CheckoutStep
             );
         }
 
-        $actions = FieldList::create(FormAction::create("setShippingMethod", _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue')));
+        $actions = FieldList::create(
+            FormAction::create(
+                "setShippingMethod",
+                _t('SilverShop\Checkout\Step\CheckoutStep.Continue', 'Continue')
+            )
+        );
 
         $form = Form::create($this->owner, "ShippingMethodForm", $fields, $actions);
         $this->owner->extend('updateShippingMethodForm', $form);

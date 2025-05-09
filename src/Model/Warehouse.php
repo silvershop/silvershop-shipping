@@ -6,6 +6,11 @@ use SilverStripe\ORM\DataObject;
 use SilverShop\Model\Address;
 use SilverStripe\Forms\FieldList;
 
+/**
+ * @property string $Title
+ * @property int $AddressID
+ * @method Address Address()
+ */
 class Warehouse extends DataObject
 {
     private static array $db = [

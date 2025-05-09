@@ -2,16 +2,19 @@
 
 namespace SilverShop\Shipping\Model;
 
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\RegionRestriction;
+use SilverShop\Shipping\ShippingPackage;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\ORM\HasManyList;
 
 /**
  * Work out shipping rate from a pre-defined table of regions - to - weights
  * and dimensions.
+ *
+ * @method HasManyList<TableShippingRate> Rates()
  */
 class TableShippingMethod extends ShippingMethod
 {
@@ -35,8 +38,12 @@ class TableShippingMethod extends ShippingMethod
         $fields = parent::getCMSFields();
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
-            $tablefield = GridField::create("Rates", "TableShippingRate", $this->Rates(), new GridFieldConfig_RecordEditor());
-
+            $tablefield = GridField::create(
+                "Rates",
+                "TableShippingRate",
+                $this->Rates(),
+                GridFieldConfig_RecordEditor::create()
+            );
             $fields->addFieldToTab("Root.Main", $tablefield);
         }
         return $fields;
@@ -78,8 +85,10 @@ class TableShippingMethod extends ShippingMethod
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
         $filter = sprintf(
-            "(%s)", implode(
-                ") AND (", [
+            "(%s)",
+            implode(
+                ") AND (",
+                [
                 "\"ShippingMethodID\" = " . $this->ID,
                 implode(" OR ", $constraintfilters)
                 ]
@@ -93,8 +102,9 @@ class TableShippingMethod extends ShippingMethod
             $tr = $tr->filter($addressFilters);
         }
 
-        $tr = $tr->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")
-            ->first();
+        $tr = $tr->sort(
+            "LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC"
+        )->first();
 
         if ($tr) {
             $rate = $tr->Rate;

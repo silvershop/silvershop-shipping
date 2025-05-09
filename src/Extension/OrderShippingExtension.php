@@ -2,15 +2,22 @@
 
 namespace SilverShop\Shipping\Extension;
 
-use SilverStripe\ORM\DataExtension;
-use SilverShop\Shipping\ShippingPackage;
-use SilverShop\Shipping\ShippingEstimator;
+use Exception;
+use SilverShop\Model\Order;
 use SilverShop\Shipping\Model\ShippingMethod;
 use SilverShop\Shipping\Model\Zone;
-use Exception;
+use SilverShop\Shipping\ShippingEstimator;
+use SilverShop\Shipping\ShippingPackage;
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\ArrayList;
 
-class OrderShippingExtension extends DataExtension
+/**
+ * @property float $ShippingTotal
+ * @property int $ShippingMethodID
+ * @method   ShippingMethod ShippingMethod()
+ * @extends  Extension<Order&static>
+ */
+class OrderShippingExtension extends Extension
 {
     private static array $db = [
         'ShippingTotal' => 'Currency'

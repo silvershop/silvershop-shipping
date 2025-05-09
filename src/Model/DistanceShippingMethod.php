@@ -2,21 +2,25 @@
 
 namespace SilverShop\Shipping\Model;
 
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\Forms\GridField\GridFieldDataColumns;
-use SilverStripe\Forms\GridField\GridFieldEditButton;
-use SilverStripe\Forms\GridField\GridFieldDeleteAction;
-use SilverStripe\Forms\GridField\GridFieldAddNewButton;
-use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
-use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
-use SilverStripe\Forms\LiteralField;
-use SilverShop\Shipping\ShippingPackage;
-use SilverShop\Shipping\Model\Warehouse;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\DistanceShippingFare;
+use SilverShop\Shipping\Model\Warehouse;
+use SilverShop\Shipping\ShippingPackage;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\GridField\GridFieldEditButton;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\ORM\HasManyList;
+use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
+use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
 
+/**
+ * @method HasManyList<DistanceShippingFare> DistanceFares()
+ */
 class DistanceShippingMethod extends ShippingMethod
 {
     private static array $defaults = [
@@ -40,20 +44,21 @@ class DistanceShippingMethod extends ShippingMethod
         $fields->fieldByName('Root')->removeByName("DistanceFares");
         if ($this->isInDB()) {
             $fields->addFieldToTab(
-                "Root.Main", $gridfield = GridField::create(
+                "Root.Main",
+                $gridfield = GridField::create(
                     "DistanceFares",
                     "Fares",
                     $this->DistanceFares(),
-                    $config = new GridFieldConfig_RecordEditor()
+                    $config = GridFieldConfig_RecordEditor::create()
                 )
             );
             $config->removeComponentsByType(GridFieldDataColumns::class);
             $config->removeComponentsByType(GridFieldEditButton::class);
             $config->removeComponentsByType(GridFieldDeleteAction::class);
             $config->removeComponentsByType(GridFieldAddNewButton::class);
-            $config->addComponent($cols = new GridFieldEditableColumns());
-            $config->addComponent(new GridFieldDeleteAction());
-            $config->addComponent($addnew = new GridFieldAddNewInlineButton());
+            $config->addComponent($cols = GridFieldEditableColumns::create());
+            $config->addComponent(GridFieldDeleteAction::create());
+            $config->addComponent($addnew = GridFieldAddNewInlineButton::create());
             $addnew->setTitle($addnew->getTitle() . " Fare");
             if ($this->greatestCostDistance()) {
                 $fields->insertAfter(

@@ -11,6 +11,9 @@ use SilverShop\Shipping\ShippingCalculator;
 
 /**
  * ShippingMethod is a base class for providing shipping options to customers.
+ * @property ?string $Name
+ * @property ?string $Description
+ * @property bool $Enabled
  */
 class ShippingMethod extends DataObject
 {
@@ -64,7 +67,8 @@ class ShippingMethod extends DataObject
         }
 
         $title = implode(
-            " - ", array_filter(
+            " - ",
+            array_filter(
                 [
                 $rate,
                 $this->Name,

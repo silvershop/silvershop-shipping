@@ -5,6 +5,12 @@ namespace SilverShop\Shipping\Model;
 use SilverStripe\ORM\DataObject;
 use SilverShop\Shipping\Model\DistanceShippingMethod;
 
+/**
+ * @property float $Distance
+ * @property float $Cost
+ * @property int $ShippingMethodID
+ * @method DistanceShippingMethod ShippingMethod()
+ */
 class DistanceShippingFare extends DataObject
 {
     private static array $db = [

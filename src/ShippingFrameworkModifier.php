@@ -8,6 +8,8 @@ class ShippingFrameworkModifier extends OrderModifier
 {
     private static string $singular_name = 'Shipping';
 
+    private static string $table_name = 'SilverShop_ShippingFrameworkModifier';
+
     public function value($incoming): int|float
     {
         $order = $this->Order();

@@ -8,6 +8,18 @@ use SilverStripe\Forms\FieldList;
 
 /**
  * Adds extra metric ranges to restrict with, rather than just region.
+ *
+ * @property float $WeightMin
+ * @property float $WeightMax
+ * @property float $VolumeMin
+ * @property float $VolumeMax
+ * @property float $ValueMin
+ * @property float $ValueMax
+ * @property int $QuantityMin
+ * @property int $QuantityMax
+ * @property float $Rate
+ * @property int $ShippingMethodID
+ * @method   TableShippingMethod ShippingMethod()
  */
 class TableShippingRate extends RegionRestriction
 {

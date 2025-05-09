@@ -2,18 +2,21 @@
 
 namespace SilverShop\Shipping\Model;
 
-use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\Zone;
+use SilverShop\Shipping\ShippingPackage;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\ORM\HasManyList;
 
 /**
  * Zoned shipping is a variant of TableShipping that regionalizes using zones,
  * which are collections of regions, rather than regionalising using specific
  * locations / wildcards.
+ *
+ * @method HasManyList<ZonedShippingRate> Rates()
  */
 class ZonedShippingMethod extends ShippingMethod
 {
@@ -68,10 +71,11 @@ class ZonedShippingMethod extends ShippingMethod
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
         $filter = "(" . implode(
-            ") AND (", [
-            "\"ZonedShippingMethodID\" = " . $this->ID,
-            "\"ZoneID\" IN(" . implode(",", $ids) . ")", //zone restriction
-            implode(" OR ", $constraintfilters) //metrics restriction
+            ") AND (",
+            [
+                "\"ZonedShippingMethodID\" = " . $this->ID,
+                "\"ZoneID\" IN(" . implode(",", $ids) . ")", //zone restriction
+                implode(" OR ", $constraintfilters) //metrics restriction
             ]
         ) . ")";
 
@@ -103,7 +107,7 @@ class ZonedShippingMethod extends ShippingMethod
 
         $fields->fieldByName('Root')->removeByName("Rates");
         if ($this->isInDB()) {
-            $config = new GridFieldConfig_RelationEditor();
+            $config = GridFieldConfig_RelationEditor::create();
             $gridField = GridField::create("Rates", "ZonedShippingRate", $this->Rates(), $config);
 
             $config->getComponentByType(GridFieldDataColumns::class)
