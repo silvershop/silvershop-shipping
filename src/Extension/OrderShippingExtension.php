@@ -46,12 +46,12 @@ class OrderShippingExtension extends Extension
         if (!$items->exists()) {
             $package = ShippingPackage::create();
         } else {
-            $weight = $items->Sum('Weight', true); //Sum is found on OrdItemList (Component Extension)
-            $width = $items->Sum('Width', true);
-            $height = $items->Sum('Height', true);
-            $depth = $items->Sum('Depth', true);
+            $weight = $items->Sum('Weight'); //Sum is found on OrdItemList (Component Extension)
+            $width = $items->Sum('Width');
+            $height = $items->Sum('Height');
+            $depth = $items->Sum('Depth');
 
-            if (!$value) {
+            if ($value === 0) {
                 $value = $this->owner->SubTotal();
             }
             $quantity = $items->Quantity();

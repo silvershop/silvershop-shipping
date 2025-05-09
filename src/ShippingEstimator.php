@@ -24,7 +24,7 @@ class ShippingEstimator
     public function __construct(Order $order, Address $address = null)
     {
         $this->order = $order;
-        $this->address = $address ? $address : $order->getShippingAddress();
+        $this->address = $address instanceof Address ? $address : $order->getShippingAddress();
     }
 
     public function getEstimates(): ArrayList

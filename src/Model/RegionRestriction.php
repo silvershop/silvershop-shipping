@@ -94,7 +94,7 @@ class RegionRestriction extends DataObject
 
     public static function getAddressFilters(Address $address = null): array
     {
-        if (!$address) {
+        if (!$address instanceof Address) {
             // no filters if no address.
             return [];
         }

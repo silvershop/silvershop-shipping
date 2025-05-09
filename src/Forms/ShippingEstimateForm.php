@@ -76,5 +76,6 @@ class ShippingEstimateForm extends Form
             }
         }
         $this->controller->redirectBack();
+        return null;
     }
 }

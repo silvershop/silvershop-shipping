@@ -73,7 +73,7 @@ class ShippingPackage
             $this->defaultdimensions,
             ['value' => null, 'quantity' => null]
         );
-        foreach ($zerochecks as $dimension => $value) {
+        foreach (array_keys($zerochecks) as $dimension) {
             if ($this->$dimension < 0) {
                 $this->$dimension = 0;
             }
