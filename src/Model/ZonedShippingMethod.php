@@ -119,9 +119,6 @@ class ZonedShippingMethod extends ShippingMethod
         return $fields;
     }
 
-    /**
-     * @return bool
-     */
     public function requiresAddress(): bool
     {
         return true;

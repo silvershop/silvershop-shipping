@@ -78,8 +78,7 @@ class OrderShippingExtension extends Extension
     {
         $address = $this->owner->getShippingAddress();
         $estimator = ShippingEstimator::create($this->owner, $address);
-        $estimates = $estimator->getEstimates();
-        return $estimates;
+        return $estimator->getEstimates();
     }
 
     /**

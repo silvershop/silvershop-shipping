@@ -11,6 +11,7 @@ use SilverShop\Shipping\ShippingCalculator;
 
 /**
  * ShippingMethod is a base class for providing shipping options to customers.
+ *
  * @property ?string $Name
  * @property ?string $Description
  * @property bool $Enabled

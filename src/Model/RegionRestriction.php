@@ -62,7 +62,6 @@ class RegionRestriction extends DataObject
      * TODO: Very specific functionality. Consider moving this to a separate module
      *
      * @param  string $postcode
-     * @return array
      */
     public static function parse_uk_postcode($postcode): array
     {
