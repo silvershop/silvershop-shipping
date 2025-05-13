@@ -82,6 +82,7 @@ class ShippingEstimateFormTest extends FunctionalTest
     public function testShippingEstimateWithReadonlyFieldForCountry(): void
     {
         $siteconfig = SiteConfig::get()->first();
+        $this->assertInstanceOf(SiteConfig::class, $siteconfig);
         $siteconfig->setField('AllowedCountries', '["NZ"]'); // setup a single-country site
         $siteconfig->write();
 

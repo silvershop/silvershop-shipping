@@ -98,7 +98,7 @@ class TableShippingMethod extends ShippingMethod
         $tr = TableShippingRate::get()
             ->where($filter);
 
-        if ($addressFilters = RegionRestriction::getAddressFilters($address)) {
+        if (($addressFilters = RegionRestriction::getAddressFilters($address)) !== []) {
             $tr = $tr->filter($addressFilters);
         }
 
