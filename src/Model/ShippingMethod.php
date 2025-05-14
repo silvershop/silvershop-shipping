@@ -35,19 +35,19 @@ class ShippingMethod extends DataObject
      */
     private static array $disable_methods = [];
 
-    protected $CalculatedRate;
+    protected float|int|null $CalculatedRate = null;
 
     public function getCalculator(Order $order): ShippingCalculator
     {
         return new ShippingCalculator($this, $order);
     }
 
-    public function calculateRate(ShippingPackage $package, Address $address): null
+    public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
-        return null;
+        return $this->CalculatedRate = null;
     }
 
-    public function getRate()
+    public function getRate(): float|int|null
     {
         return $this->CalculatedRate;
     }

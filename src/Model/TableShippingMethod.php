@@ -52,7 +52,7 @@ class TableShippingMethod extends ShippingMethod
     /**
      * Find the appropriate shipping rate from stored table range metrics.
      */
-    public function calculateRate(ShippingPackage $package, Address $address): null
+    public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
         $rate = null;
         $packageconstraints = [
@@ -110,9 +110,7 @@ class TableShippingMethod extends ShippingMethod
             $rate = $tr->Rate;
         }
 
-        $this->CalculatedRate = $rate;
-
-        return $rate;
+        return $this->CalculatedRate = $rate;
     }
 
     /**

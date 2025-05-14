@@ -76,12 +76,15 @@ class DistanceShippingMethod extends ShippingMethod
         return $fields;
     }
 
-    public function calculateRate(ShippingPackage $package, Address $address): null
+    public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
         $warehouse = Warehouse::closest_to($address);
-        $distance = $warehouse->Address()->distanceTo($address);
-
-        return $this->getDistanceFare($distance);
+        if ($warehouse->Address()->exists()) {
+            return $this->CalculatedRate = $this->getDistanceFare(
+                $warehouse->Address()->distanceTo($address)
+            );
+        }
+        return $this->CalculatedRate = null;
     }
 
     public function getDistanceFare($distance)

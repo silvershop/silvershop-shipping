@@ -35,13 +35,13 @@ class ZonedShippingMethod extends ShippingMethod
 
     private static string $plural_name = 'Zoned shipping methods';
 
-    public function calculateRate(ShippingPackage $package, Address $address): null
+    public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
         $rate = null;
         $ids = Zone::get_zones_for_address($address);
 
         if (!$ids->exists()) {
-            return $rate;
+            return $this->CalculatedRate = $rate;
         }
 
         $ids = $ids->map('ID', 'ID')->toArray();
@@ -83,9 +83,7 @@ class ZonedShippingMethod extends ShippingMethod
             $rate = $sr->Rate;
         }
 
-        $this->CalculatedRate = $rate;
-
-        return $rate;
+        return $this->CalculatedRate = $rate;
     }
 
     public function getCMSFields(): FieldList
