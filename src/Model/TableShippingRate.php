@@ -55,7 +55,7 @@ class TableShippingRate extends RegionRestriction
         'Rate'
     ];
 
-    private static string $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
+    private static string $default_sort = '"Country" ASC, "State" ASC, "City" ASC, "PostalCode" ASC, "Rate" ASC';
 
     private static string $table_name = 'SilverShop_TableShippingRate';
 

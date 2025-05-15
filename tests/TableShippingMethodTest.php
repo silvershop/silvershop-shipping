@@ -27,7 +27,7 @@ class TableShippingMethodTest extends SapphireTest
     protected $p3;
     protected $p4;
 
-    public function setup(): void
+    protected function setup(): void
     {
         parent::setUp();
 
@@ -183,13 +183,13 @@ class TableShippingMethodTest extends SapphireTest
     {
         $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
-        $this->assertEquals($amount, $rate, "Check rate for package $package is $amount");
+        $this->assertEquals($amount, $rate, sprintf('Check rate for package %s is %s', $package, $amount));
     }
 
     protected function assertNoMatch(string $type, $package, $address)
     {
         $rate = $this->{$type . "shipping"}->calculateRate($package, $address);
 
-        $this->assertNull($rate, "Check rate for package $package is not found");
+        $this->assertNull($rate, sprintf('Check rate for package %s is not found', $package));
     }
 }

@@ -11,7 +11,7 @@ class WarehouseTest extends SapphireTest
 {
     protected static $fixture_file = 'Warehouses.yml';
 
-    public function setup(): void
+    protected function setup(): void
     {
         Config::inst()->update(Address::class, 'enable_geocoding', false);
 

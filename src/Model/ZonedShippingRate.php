@@ -52,7 +52,7 @@ class ZonedShippingRate extends DataObject
         'Rate'
     ];
 
-    private static string $default_sort = "\"Rate\" ASC";
+    private static string $default_sort = '"Rate" ASC';
 
     private static string $table_name = 'SilverShop_ZonedShippingRate';
 

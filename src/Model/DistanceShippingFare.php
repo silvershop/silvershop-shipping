@@ -36,7 +36,7 @@ class DistanceShippingFare extends DataObject
 
     private static string $singular_name = "Fare";
 
-    private static string $default_sort = "\"Distance\" ASC";
+    private static string $default_sort = '"Distance" ASC';
 
     private static string $table_name = 'SilverShop_DistanceShippingFare';
 

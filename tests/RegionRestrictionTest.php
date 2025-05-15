@@ -48,6 +48,7 @@ class RegionRestrictionTest extends SapphireTest
             'Rate' => 100,
         ]);
         $default->write();
+
         $address = $this->objFromFixture(Address::class, "bukhp193eq");
         $rate = $this->getRate($address);
         $this->assertTrue((boolean)$rate);

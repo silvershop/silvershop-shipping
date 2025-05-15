@@ -61,12 +61,13 @@ class RegionRestriction extends DataObject
      * Parses a UK postcode to give you the different sections
      * TODO: Very specific functionality. Consider moving this to a separate module
      *
-     * @param  string $postcode
+     * @param string $postcode
      */
     public static function parse_uk_postcode($postcode): array
     {
         $postcode = str_replace(' ', '', $postcode); // remove any spaces;
-        $postcode = strtoupper($postcode); // force to uppercase;
+        $postcode = strtoupper($postcode);
+         // force to uppercase;
         $valid_postcode_exp = '/^(([A-PR-UW-Z]{1}[A-IK-Y]?)([0-9]?[A-HJKS-UW]?[ABEHMNPRVWXY]?|[0-9]?[0-9]?))\s?([0-9]{1}[ABD-HJLNP-UW-Z]{2})$/i';
 
         // set default output results (assuming invalid postcode):
@@ -116,7 +117,11 @@ class RegionRestriction extends DataObject
             $postcode = self::parse_uk_postcode($address->PostalCode);
 
             if (isset($postcode['validate']) && $postcode['validate']) {
-                $region = preg_replace('/[^a-z]+/i', '', substr($postcode['prefix'], 0, 2));
+                $region = preg_replace(
+                    '/[^a-z]+/i',
+                    '',
+                    substr((string) $postcode['prefix'], 0, 2)
+                );
 
                 $where['PostalCode:nocase'] = [
                     $region,
@@ -144,10 +149,10 @@ class RegionRestriction extends DataObject
      */
     public static function wildcard_sort($field, $direction = 'ASC'): string
     {
-        return "CASE \"{$field}\" WHEN '*' THEN 1 ELSE 0 END $direction";
+        return sprintf("CASE \"%s\" WHEN '*' THEN 1 ELSE 0 END %s", $field, $direction);
     }
 
-    public function onBeforeWrite(): void
+    protected function onBeforeWrite(): void
     {
         //prevent empty data - '*' must be used
         foreach ($this->config()->get('defaults') as $field => $value) {

@@ -66,20 +66,20 @@ class TableShippingMethod extends ShippingMethod
         $emptyconstraint = [];
 
         foreach ($packageconstraints as $db => $pakval) {
-            $mincol = "\"SilverShop_TableShippingRate\".\"{$db}Min\"";
-            $maxcol = "\"SilverShop_TableShippingRate\".\"{$db}Max\"";
+            $mincol = sprintf('"SilverShop_TableShippingRate"."%sMin"', $db);
+            $maxcol = sprintf('"SilverShop_TableShippingRate"."%sMax"', $db);
             //constrain to rates with valid constraints
             $constraintfilters[] =
                 "(" .
-                "$mincol >= 0" .
-                " AND $mincol <= " . $package->{$pakval}() .
-                " AND $maxcol > 0" . //ignore constraints with maxvalue = 0
-                " AND $maxcol >= " . $package->{$pakval}() .
-                " AND $mincol < $maxcol" . //sanity check
+                ($mincol . ' >= 0') .
+                sprintf(' AND %s <= ', $mincol) . $package->{$pakval}() .
+                sprintf(' AND %s > 0', $maxcol) . //ignore constraints with maxvalue = 0
+                sprintf(' AND %s >= ', $maxcol) . $package->{$pakval}() .
+                sprintf(' AND %s < %s', $mincol, $maxcol) . //sanity check
                 ")";
 
             // also include a special case where all constraints are empty
-            $emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
+            $emptyconstraint[] = sprintf('(%s = 0 AND %s = 0)', $mincol, $maxcol);
         }
 
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
@@ -89,7 +89,7 @@ class TableShippingMethod extends ShippingMethod
             implode(
                 ") AND (",
                 [
-                "\"ShippingMethodID\" = " . $this->ID,
+                '"ShippingMethodID" = ' . $this->ID,
                 implode(" OR ", $constraintfilters)
                 ]
             )
@@ -103,7 +103,7 @@ class TableShippingMethod extends ShippingMethod
         }
 
         $tr = $tr->sort(
-            "LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC"
+            'LENGTH("SilverShop_RegionRestriction"."PostalCode") DESC, "SilverShop_TableShippingRate"."Rate" ASC'
         )->first();
 
         if ($tr) {

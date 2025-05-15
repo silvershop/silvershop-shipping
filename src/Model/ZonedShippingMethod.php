@@ -56,25 +56,25 @@ class ZonedShippingMethod extends ShippingMethod
         $emptyconstraint = [];
 
         foreach ($packageconstraints as $db => $pakval) {
-            $mincol = "\"SilverShop_ZonedShippingRate\" . \"{$db}Min\"";
-            $maxcol = "\"SilverShop_ZonedShippingRate\" . \"{$db}Max\"";
+            $mincol = sprintf('"SilverShop_ZonedShippingRate" . "%sMin"', $db);
+            $maxcol = sprintf('"SilverShop_ZonedShippingRate" . "%sMax"', $db);
             $constraintfilters[] = "(" .
-                "$mincol >= 0" .
-                " AND $mincol <= " . $package->{$pakval}() .
-                " AND $maxcol > 0" . //ignore constraints with maxvalue = 0
-                " AND $maxcol >= " . $package->{$pakval}() .
-                " AND $mincol < $maxcol" . //sanity check
+                ($mincol . ' >= 0') .
+                sprintf(' AND %s <= ', $mincol) . $package->{$pakval}() .
+                sprintf(' AND %s > 0', $maxcol) . //ignore constraints with maxvalue = 0
+                sprintf(' AND %s >= ', $maxcol) . $package->{$pakval}() .
+                sprintf(' AND %s < %s', $mincol, $maxcol) . //sanity check
             ")";
             //also include a special case where all constraints are empty
-            $emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
+            $emptyconstraint[] = sprintf('(%s = 0 AND %s = 0)', $mincol, $maxcol);
         }
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
         $filter = "(" . implode(
             ") AND (",
             [
-                "\"ZonedShippingMethodID\" = " . $this->ID,
-                "\"ZoneID\" IN(" . implode(",", $ids) . ")", //zone restriction
+                '"ZonedShippingMethodID" = ' . $this->ID,
+                '"ZoneID" IN(' . implode(",", $ids) . ")", //zone restriction
                 implode(" OR ", $constraintfilters) //metrics restriction
             ]
         ) . ")";

@@ -22,7 +22,7 @@ class ShippingEstimateFormTest extends FunctionalTest
     protected $socks;
     protected $cartpage;
 
-    public function setup(): void
+    protected function setup(): void
     {
         parent::setUp();
         ShopTest::setConfiguration();
@@ -64,7 +64,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                 //un-escaped data for Shipping Estimate Form
                 $data = [
                     'Country' => 'NZ',
-                    'State' => 'Hawke\'s Bay',
+                    'State' => "Hawke's Bay",
                     'City' => 'SELECT * FROM \" \' WHERE AND EVIL',
                     'PostalCode' => 1234
                 ];
@@ -99,7 +99,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                     "The Country field is readonly"
                 );
                 $this->assertStringNotContainsString(
-                    "<option value=\"NZ\">New Zealand</option>",
+                    '<option value="NZ">New Zealand</option>',
                     $page->getBody(),
                     "Dropdown field is not shown"
                 );

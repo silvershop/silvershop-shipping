@@ -65,7 +65,7 @@ class DistanceShippingMethod extends ShippingMethod
                     "DistanceFares",
                     LiteralField::create(
                         "costnote",
-                        "<p class=\"message\">Distances beyond the greatest specified distance will be cost " .
+                        '<p class="message">Distances beyond the greatest specified distance will be cost ' .
                             $this->greatestCostDistance()->dbObject("Cost")->Nice() .
                         " (the most expensive fare)</p>"
                     )

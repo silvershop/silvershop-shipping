@@ -41,7 +41,7 @@ class Warehouse extends DataObject
     public static function closest_to(Address $address): Warehouse
     {
         $warehouses = self::get()
-            ->where("\"AddressID\" IS NOT NULL");
+            ->where('"AddressID" IS NOT NULL');
         $closestwarehouse = null;
         $shortestdistance = null;
 
