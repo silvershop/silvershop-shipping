@@ -9,7 +9,7 @@ use SilverStripe\Forms\FieldList;
 /**
  * @property string $Title
  * @property int $AddressID
- * @method Address Address()
+ * @method   Address Address()
  */
 class Warehouse extends DataObject
 {
@@ -38,7 +38,7 @@ class Warehouse extends DataObject
     /**
      * Get the closest warehouse to an address.
      */
-    public static function closest_to(Address $address): Warehouse
+    public static function closest_to(Address $address): ?Warehouse
     {
         $warehouses = self::get()
             ->where('"AddressID" IS NOT NULL');
@@ -46,7 +46,12 @@ class Warehouse extends DataObject
         $shortestdistance = null;
 
         foreach ($warehouses as $warehouse) {
-            $dist = $warehouse->Address()->distanceTo($address);
+            $dist = null;
+            if ($warehouse->Address()->exists()
+                && method_exists(Address::class, 'distanceTo')
+            ) {
+                $dist = $warehouse->Address()->distanceTo($address);
+            }
 
             if ($dist && ($shortestdistance === null || $dist < $shortestdistance)) {
                 $closestwarehouse = $warehouse;

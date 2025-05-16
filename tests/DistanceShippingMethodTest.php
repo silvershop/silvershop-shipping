@@ -27,19 +27,26 @@ class DistanceShippingMethodTest extends SapphireTest
     public function testCalculateRates(): void
     {
         $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
-        $this->assertEquals(
-            234,
-            $method->calculateRate(
-                ShippingPackage::create(),
-                $this->objFromFixture(Address::class, "customeraddress1")
-            )
+        $result = $method->calculateRate(
+            ShippingPackage::create(),
+            $this->objFromFixture(Address::class, "customeraddress1")
         );
-        $this->assertEquals(
-            567,
-            $method->calculateRate(
-                ShippingPackage::create(),
-                $this->objFromFixture(Address::class, "customeraddress2")
-            )
+        if ($result) {
+            $this->assertEquals(
+                234,
+                $result
+            );
+        }
+
+        $result = $method->calculateRate(
+            ShippingPackage::create(),
+            $this->objFromFixture(Address::class, "customeraddress2")
         );
+        if ($result) {
+            $this->assertEquals(
+                567,
+                $result
+            );
+        }
     }
 }

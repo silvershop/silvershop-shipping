@@ -19,7 +19,7 @@ class ShippingCalculator
         $this->order = $order;
     }
 
-    public function calculate($address = null, $value = null): null
+    public function calculate($address = null, $value = null): float|int|null
     {
         return $this->method->calculateRate(
             $this->order->createShippingPackage($value),
