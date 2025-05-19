@@ -51,7 +51,7 @@ class OrderShippingExtension extends Extension
             $height = $items->Sum('Height');
             $depth = $items->Sum('Depth');
 
-            if ($value === 0) {
+            if ($value == 0) {
                 $value = $this->owner->SubTotal();
             }
             $quantity = $items->Quantity();

@@ -22,14 +22,14 @@ class WarehouseTest extends SapphireTest
         $warehouse = Warehouse::closest_to(
             $this->objFromFixture(Address::class, "customeraddress1")
         );
-        if ($warehouse) {
+        if ($warehouse instanceof Warehouse) {
             $this->assertEquals("Main warehouse", $warehouse->Title);
         }
 
         $warehouse =  Warehouse::closest_to(
             $this->objFromFixture(Address::class, "customeraddress2")
         );
-        if ($warehouse) {
+        if ($warehouse instanceof Warehouse) {
             $this->assertEquals("NSW depot", $warehouse->Title);
         }
     }

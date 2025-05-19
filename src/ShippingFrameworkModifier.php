@@ -13,7 +13,8 @@ class ShippingFrameworkModifier extends OrderModifier
     public function value($incoming): int|float
     {
         $order = $this->Order();
-        if ($order && $order->exists() && ($shipping = $order->ShippingMethod()) && $shipping->exists()) {
+        if ($order->exists() && $order->ShippingMethod()->exists()) {
+            $shipping = $order->ShippingMethod();
             $value = $shipping->getCalculator($order)->calculate(null, $incoming);
             $order->ShippingTotal = $value;
             $order->write();

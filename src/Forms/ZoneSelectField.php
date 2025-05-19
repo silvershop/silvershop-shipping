@@ -11,7 +11,7 @@ class ZoneSelectField extends DropdownField
     {
         $zones = Zone::get();
 
-        if ($zones && $zones->exists()) {
+        if ($zones->exists()) {
             return $zones->map('ID', 'Name')
                 ->unshift('', $this->emptyString)
                 ->toArray();

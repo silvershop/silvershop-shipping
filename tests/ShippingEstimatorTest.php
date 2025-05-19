@@ -23,6 +23,6 @@ class ShippingEstimatorTest extends SapphireTest
         $this->assertNotNull($options, "options found");
 
         $estimates = $estimator->getEstimates();
-        $this->assertNotNull($estimates, "estimates found");
+        $this->assertTrue($estimates->exists(), "estimates found");
     }
 }

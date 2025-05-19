@@ -79,7 +79,7 @@ class DistanceShippingMethod extends ShippingMethod
     public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
         $warehouse = Warehouse::closest_to($address);
-        if ($warehouse
+        if ($warehouse instanceof Warehouse
             && $warehouse->Address()->exists()
             && method_exists(Address::class, 'distanceTo')
         ) {
