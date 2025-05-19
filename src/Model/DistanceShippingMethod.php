@@ -41,7 +41,7 @@ class DistanceShippingMethod extends ShippingMethod
     public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
-        $fields->fieldByName('Root')->removeByName("DistanceFares");
+        $fields->removeByName("DistanceFares");
         if ($this->isInDB()) {
             $fields->addFieldToTab(
                 "Root.Main",

@@ -37,21 +37,25 @@ class TableShippingMethodTest extends SapphireTest
         $this->valueshipping = $this->objFromFixture($this->fixtureclass, "value");
         $this->quantityshipping = $this->objFromFixture($this->fixtureclass, "quantity");
 
-        $this->nzaddress = Address::create([
-            "Country" =>    "NZ",
-            "State" =>      "Wellington",
-            "PostalCode" => "6022"
-        ]);
+        $this->nzaddress = Address::create(
+            [
+                "Country" =>    "NZ",
+                "State" =>      "Wellington",
+                "PostalCode" => "6022"
+            ]
+        );
 
-        $this->internationaladdress = Address::create([
-            "Company" => 'Nildram Ltd',
-            "Address" => 'Ardenham Court',
-            "Address2" =>    'Oxford Road',
-            "City" => 'AYLESBURY',
-            "State" => 'BUCKINGHAMSHIRE',
-            "PostalCode" => 'HP19 3EQ',
-            "Country" => 'UK'
-        ]);
+        $this->internationaladdress = Address::create(
+            [
+                "Company" => 'Nildram Ltd',
+                "Address" => 'Ardenham Court',
+                "Address2" =>    'Oxford Road',
+                "City" => 'AYLESBURY',
+                "State" => 'BUCKINGHAMSHIRE',
+                "PostalCode" => 'HP19 3EQ',
+                "Country" => 'UK'
+            ]
+        );
 
         //create some package fixtures
         $this->p0 = ShippingPackage::create();
@@ -64,20 +68,24 @@ class TableShippingMethodTest extends SapphireTest
     public function testAddressTable(): void
     {
         $type = "address";
-        $address = Address::create([
-            'Country' => 'NZ',
-            'State' => 'Wellington',
-            'PostalCode' => '6004'
-        ]);
+        $address = Address::create(
+            [
+                'Country' => 'NZ',
+                'State' => 'Wellington',
+                'PostalCode' => '6004'
+            ]
+        );
 
         $this->assertMatch($type, $this->p0, $address, 30);
         $this->assertMatch($type, $this->p2, $address, 30);
         $this->assertMatch($type, $this->p4, $address, 30);
 
-        $address = Address::create([
-            'Country' => 'NZ',
-            'PostalCode' => '6000'
-        ]);
+        $address = Address::create(
+            [
+                'Country' => 'NZ',
+                'PostalCode' => '6000'
+            ]
+        );
         $this->assertMatch($type, $this->p0, $address, 45);
         $this->assertMatch($type, $this->p2, $address, 45);
         $this->assertMatch($type, $this->p4, $address, 45);

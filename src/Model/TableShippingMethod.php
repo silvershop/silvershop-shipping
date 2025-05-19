@@ -36,7 +36,7 @@ class TableShippingMethod extends ShippingMethod
     public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
-        $fields->fieldByName('Root')->removeByName("Rates");
+        $fields->removeByName("Rates");
         if ($this->isInDB()) {
             $tablefield = GridField::create(
                 "Rates",

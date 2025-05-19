@@ -26,7 +26,9 @@ class ShippingFrameworkModifier extends OrderModifier
     {
         $title = $this->i18n_singular_name();
 
-        if ($this->Order() && $this->Order()->ShippingMethod()->exists()) {
+        if ($this->Order()->exists()
+            && $this->Order()->ShippingMethod()->exists()
+        ) {
             $title .= " (" . $this->Order()->ShippingMethod()->Name . ")";
         }
 

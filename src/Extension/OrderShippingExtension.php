@@ -39,7 +39,7 @@ class OrderShippingExtension extends Extension
     /**
      * Create package, with total weight, dimensions, value, etc.
      */
-    public function createShippingPackage(int $value = 0): ShippingPackage
+    public function createShippingPackage(float $value = 0): ShippingPackage
     {
         $items = $this->owner->Items();
 

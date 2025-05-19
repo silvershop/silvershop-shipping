@@ -80,7 +80,7 @@ class Zone extends DataObject
     public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
-        $fields->fieldByName('Root')->removeByName('Regions');
+        $fields->removeByName('Regions');
         if ($this->isInDB()) {
             $regionsTable = GridField::create(
                 'Regions',

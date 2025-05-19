@@ -17,7 +17,7 @@ class ShippingEstimatorTest extends SapphireTest
         $order = Order::create();
         $address = Address::create();
         ShippingPackage::create(2);
-        $estimator = new ShippingEstimator($order, $address);
+        $estimator = ShippingEstimator::create($order, $address);
 
         $options = $estimator->getShippingMethods();
         $this->assertNotNull($options, "options found");

@@ -103,7 +103,7 @@ class ZonedShippingMethod extends ShippingMethod
             "Rate" => "Rate"
         ];
 
-        $fields->fieldByName('Root')->removeByName("Rates");
+        $fields->removeByName("Rates");
         if ($this->isInDB()) {
             $config = GridFieldConfig_RelationEditor::create();
             $gridField = GridField::create("Rates", "ZonedShippingRate", $this->Rates(), $config);
