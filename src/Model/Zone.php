@@ -9,6 +9,7 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\HasManyList;
 use SilverShop\Model\Address;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\DataList;
 
 /**
  * A zone is a collection of regions. Zones can cross over each other.
@@ -40,7 +41,7 @@ class Zone extends DataObject
     /*
      * Returns a DataSet of matching zones
     */
-    public static function get_zones_for_address(Address $address)
+    public static function get_zones_for_address(Address $address): ?DataList
     {
         $zones = ZoneRegion::filteredByAddress($address);
         $zoneIds = $zones->column('ZoneID');
@@ -68,7 +69,7 @@ class Zone extends DataObject
     /**
      * Get cached ids as array
      */
-    public static function get_zone_ids()
+    public static function get_zone_ids(): ?array
     {
         $session = ShopTools::getSession();
         if ($ids = $session->get('MatchingZoneIDs')) {
