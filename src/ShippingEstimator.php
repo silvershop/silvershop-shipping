@@ -19,7 +19,7 @@ class ShippingEstimator
     protected Order $order;
     protected ?Address $address;
     protected $estimates;
-    protected $calculated = false;
+    protected bool $calculated = false;
 
     public function __construct(Order $order, Address $address = null)
     {
