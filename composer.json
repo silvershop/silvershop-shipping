@@ -12,8 +12,9 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "silvershop/core": "^4",
-        "silvershop/silverstripe-hasonefield": "^4"
+        "silvershop/core": "^3",
+        "silvershop/silverstripe-hasonefield": "^4",
+        "silverstripe/framework": "^5"
     },
     "authors": [
         {
