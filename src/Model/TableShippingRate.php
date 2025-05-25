@@ -4,13 +4,26 @@ namespace SilverShop\Shipping\Model;
 
 use SilverShop\Shipping\Model\TableShippingMethod;
 use SilverShop\Shipping\Model\RegionRestriction;
+use SilverStripe\Forms\FieldList;
 
 /**
  * Adds extra metric ranges to restrict with, rather than just region.
+ *
+ * @property float $WeightMin
+ * @property float $WeightMax
+ * @property float $VolumeMin
+ * @property float $VolumeMax
+ * @property float $ValueMin
+ * @property float $ValueMax
+ * @property int $QuantityMin
+ * @property int $QuantityMax
+ * @property float $Rate
+ * @property int $ShippingMethodID
+ * @method   TableShippingMethod ShippingMethod()
  */
 class TableShippingRate extends RegionRestriction
 {
-    private static $db = [
+    private static array $db = [
         "WeightMin"   => "Decimal",
         "WeightMax"   => "Decimal",
         "VolumeMin"   => "Decimal",
@@ -22,11 +35,11 @@ class TableShippingRate extends RegionRestriction
         "Rate" => "Currency"
     ];
 
-    private static $has_one = [
+    private static array $has_one = [
         "ShippingMethod" => TableShippingMethod::class
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Country',
         'State',
         'City',
@@ -42,15 +55,14 @@ class TableShippingRate extends RegionRestriction
         'Rate'
     ];
 
-    private static $default_sort = "\"Country\" ASC, \"State\" ASC, \"City\" ASC, \"PostalCode\" ASC, \"Rate\" ASC";
+    private static string $default_sort = '"Country" ASC, "State" ASC, "City" ASC, "PostalCode" ASC, "Rate" ASC';
 
-    private static $table_name = 'SilverShop_TableShippingRate';
+    private static string $table_name = 'SilverShop_TableShippingRate';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
         $fields->removeByName('ShippingMethodID');
-
         return $fields;
     }
 }

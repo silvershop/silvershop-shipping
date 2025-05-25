@@ -16,21 +16,18 @@ class ShippingEstimator
 {
     use Injectable;
 
-    protected $order;
-
-    protected $address;
-
-    protected $estimates = null;
-
-    protected $calculated = false;
+    protected Order $order;
+    protected ?Address $address;
+    protected $estimates;
+    protected bool $calculated = false;
 
     public function __construct(Order $order, Address $address = null)
     {
         $this->order = $order;
-        $this->address = $address ? $address : $order->getShippingAddress();
+        $this->address = $address instanceof Address ? $address : $order->getShippingAddress();
     }
 
-    public function getEstimates()
+    public function getEstimates(): ArrayList
     {
         if ($this->calculated) {
             return $this->estimates;
@@ -38,7 +35,7 @@ class ShippingEstimator
 
         $total = $this->order->TotalWithoutShipping();
 
-        $output = new ArrayList();
+        $output = ArrayList::create();
         if ($options = $this->getShippingMethods()) {
             foreach ($options as $option) {
                 $rate = $option->getCalculator($this->order)->calculate($this->address, $total);

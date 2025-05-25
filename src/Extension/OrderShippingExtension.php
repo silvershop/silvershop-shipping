@@ -2,50 +2,56 @@
 
 namespace SilverShop\Shipping\Extension;
 
-use SilverStripe\ORM\DataExtension;
-use SilverShop\Shipping\ShippingPackage;
-use SilverShop\Shipping\ShippingEstimator;
+use Exception;
+use SilverShop\Model\Order;
 use SilverShop\Shipping\Model\ShippingMethod;
 use SilverShop\Shipping\Model\Zone;
-use Exception;
+use SilverShop\Shipping\ShippingEstimator;
+use SilverShop\Shipping\ShippingPackage;
+use SilverStripe\Core\Extension;
+use SilverStripe\ORM\ArrayList;
 
-class OrderShippingExtension extends DataExtension
+/**
+ * @property float $ShippingTotal
+ * @property int $ShippingMethodID
+ * @method   ShippingMethod ShippingMethod()
+ * @extends  Extension<Order&static>
+ */
+class OrderShippingExtension extends Extension
 {
-    private static $db = [
+    private static array $db = [
         'ShippingTotal' => 'Currency'
     ];
 
-    private static $has_one = [
+    private static array $has_one = [
         'ShippingMethod' => ShippingMethod::class
     ];
 
-    private static $casting = [
+    private static array $casting = [
         'TotalWithoutShipping' => 'Currency'
     ];
 
-    public function TotalWithoutShipping()
+    public function TotalWithoutShipping(): int|float
     {
         return $this->owner->Total() - $this->owner->ShippingTotal;
     }
 
     /**
-     * create package, with total weight, dimensions, value, etc.
-     * @param  integer $value
-     * @return ShippingPackage
+     * Create package, with total weight, dimensions, value, etc.
      */
-    public function createShippingPackage($value = 0)
+    public function createShippingPackage(float $value = 0): ShippingPackage
     {
         $items = $this->owner->Items();
 
         if (!$items->exists()) {
             $package = ShippingPackage::create();
         } else {
-            $weight = $items->Sum('Weight', true); //Sum is found on OrdItemList (Component Extension)
-            $width = $items->Sum('Width', true);
-            $height = $items->Sum('Height', true);
-            $depth = $items->Sum('Depth', true);
+            $weight = $items->Sum('Weight'); //Sum is found on OrdItemList (Component Extension)
+            $width = $items->Sum('Width');
+            $height = $items->Sum('Height');
+            $depth = $items->Sum('Depth');
 
-            if (!$value) {
+            if ($value == 0) {
                 $value = $this->owner->SubTotal();
             }
             $quantity = $items->Quantity();
@@ -67,25 +73,21 @@ class OrderShippingExtension extends DataExtension
 
     /**
      * Get shipping estimates.
-     *
-     * @return DataList
      */
-    public function getShippingEstimates()
+    public function getShippingEstimates(): ArrayList
     {
         $address = $this->owner->getShippingAddress();
         $estimator = ShippingEstimator::create($this->owner, $address);
-        $estimates = $estimator->getEstimates();
-
-        return $estimates;
+        return $estimator->getEstimates();
     }
 
     /**
      * Set shipping method and shipping cost
      *
-     * @param $option - shipping option to set, and calculate shipping from
+     * @param  $option ShippingMethod shipping option to set, and calculate shipping from
      * @return boolean sucess/failure of setting
      */
-    public function setShippingMethod(ShippingMethod $option)
+    public function setShippingMethod(ShippingMethod $option): bool
     {
         $package = $this->owner->createShippingPackage();
 
@@ -106,7 +108,7 @@ class OrderShippingExtension extends DataExtension
         return true;
     }
 
-    public function onSetBillingAddress($address)
+    public function onSetBillingAddress($address): static
     {
         if ($address) {
             Zone::cache_zone_ids($address);
@@ -115,7 +117,7 @@ class OrderShippingExtension extends DataExtension
         return $this;
     }
 
-    public function onSetShippingAddress($address)
+    public function onSetShippingAddress($address): static
     {
         if ($address) {
             Zone::cache_zone_ids($address);

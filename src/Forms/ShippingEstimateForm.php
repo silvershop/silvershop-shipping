@@ -2,6 +2,7 @@
 
 namespace SilverShop\Shipping\Forms;
 
+use SilverStripe\Control\RequestHandler;
 use SilverStripe\Forms\Form;
 use SilverShop\Model\Address;
 use SilverStripe\Forms\FieldList;
@@ -12,34 +13,31 @@ use SilverStripe\SiteConfig\SiteConfig;
 use SilverShop\Cart\ShoppingCart;
 use SilverShop\Shipping\ShippingEstimator;
 use SilverStripe\Core\Convert;
-use SilverStripe\Control\Session;
 use SilverStripe\Control\Director;
 
 class ShippingEstimateForm extends Form
 {
-    public function __construct($controller, $name = "ShippingEstimateForm")
+    public function __construct(RequestHandler $controller, $name = "ShippingEstimateForm")
     {
         $address = Address::create();  // get address to access it's getCountryField method
-        $fields = new FieldList(
+        $fields = FieldList::create(
             $address->getCountryField(),
             TextField::create('State', _t('Address.db_State', 'State')),
             TextField::create('City', _t('Address.db_City', 'City')),
             TextField::create('PostalCode', _t('Address.db_PostalCode', 'Postal Code'))
         );
-        $actions =  new FieldList(
+        $actions =  FieldList::create(
             FormAction::create(
                 "submit",
                 _t('ShippingEstimateForm.FormActionTitle', 'Estimate')
             )
         );
-        $validator = new RequiredFields([
-            'Country'
-        ]);
+        $validator = RequiredFields::create(['Country']);
         parent::__construct($controller, $name, $fields, $actions, $validator);
         $this->extend('updateForm');
     }
 
-    public function submit($data, $form)
+    public function submit(array $data, $form)
     {
         if ($country = SiteConfig::current_site_config()->getSingleCountry()) {
             // Add Country if missing due to ReadonlyField in form
@@ -47,9 +45,9 @@ class ShippingEstimateForm extends Form
         }
 
         if ($order = ShoppingCart::singleton()->current()) {
-            $estimator = new ShippingEstimator(
+            $estimator = ShippingEstimator::create(
                 $order,
-                new Address(Convert::raw2sql($data))
+                Address::create(Convert::raw2sql($data))
             );
 
             $estimates = $estimator->getEstimates();
@@ -78,5 +76,6 @@ class ShippingEstimateForm extends Form
             }
         }
         $this->controller->redirectBack();
+        return null;
     }
 }

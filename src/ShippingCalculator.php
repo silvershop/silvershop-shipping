@@ -10,8 +10,8 @@ use SilverShop\Model\Order;
  */
 class ShippingCalculator
 {
-    protected $method;
-    protected $order;
+    protected ShippingMethod $method;
+    protected Order $order;
 
     public function __construct(ShippingMethod $method, Order $order)
     {
@@ -19,7 +19,7 @@ class ShippingCalculator
         $this->order = $order;
     }
 
-    public function calculate($address = null, $value = null)
+    public function calculate($address = null, $value = null): float|int|null
     {
         return $this->method->calculateRate(
             $this->order->createShippingPackage($value),

@@ -10,7 +10,6 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\YamlFixture;
 use SilverStripe\ORM\DB;
-use SilverStripe\Core\Extension;
 
 /**
  * @package silvershop-shipping
@@ -21,11 +20,11 @@ class PopulateTableShippingTask extends BuildTask
 
     protected $description = 'If no table shipping methods exist, it creates multiple different setups of table shipping.';
 
-    public function run($request = null)
+    public function run($request = null): void
     {
         if (!DataObject::get_one(TableShippingMethod::class)) {
             $factory = Injector::inst()->create(FixtureFactory::class);
-            $fixture = new YamlFixture(
+            $fixture = YamlFixture::create(
                 ModuleResourceLoader::singleton()
                     ->resolvePath('silvershop/shipping:tests/TableShippingMethod.yml')
             );

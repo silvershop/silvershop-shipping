@@ -4,47 +4,54 @@ namespace SilverShop\Shipping\Model;
 
 use SilverStripe\ORM\DataObject;
 use SilverShop\Model\Address;
+use SilverStripe\Forms\FieldList;
 
+/**
+ * @property string $Title
+ * @property int $AddressID
+ * @method   Address Address()
+ */
 class Warehouse extends DataObject
 {
-    private static $db = [
+    private static array $db = [
         'Title' => 'Varchar(255)'
     ];
 
-    private static $has_one = [
+    private static array $has_one = [
         'Address' => Address::class
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Title',
         'Address.Title' => 'Address'
     ];
 
-    private static $table_name = 'SilverShop_Warehouse';
+    private static string $table_name = 'SilverShop_Warehouse';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
         $fields->removeByName("AddressID");
-
         return $fields;
     }
 
     /**
      * Get the closest warehouse to an address.
-     *
-     * @param  Address $address
-     * @return Warehouse
      */
-    public static function closest_to(Address $address)
+    public static function closest_to(Address $address): ?Warehouse
     {
         $warehouses = self::get()
-            ->where("\"AddressID\" IS NOT NULL");
+            ->where('"AddressID" IS NOT NULL');
         $closestwarehouse = null;
         $shortestdistance = null;
 
         foreach ($warehouses as $warehouse) {
-            $dist = $warehouse->Address()->distanceTo($address);
+            $dist = null;
+            if ($warehouse->Address()->exists()
+                && method_exists(Address::class, 'distanceTo')
+            ) {
+                $dist = $warehouse->Address()->distanceTo($address);
+            }
 
             if ($dist && ($shortestdistance === null || $dist < $shortestdistance)) {
                 $closestwarehouse = $warehouse;

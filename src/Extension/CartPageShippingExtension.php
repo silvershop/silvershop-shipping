@@ -2,19 +2,23 @@
 
 namespace SilverShop\Shipping\Extension;
 
-use SilverStripe\Core\Extension;
+use SilverShop\Page\CartPageController;
 use SilverShop\Shipping\Forms\ShippingEstimateForm;
 use SilverStripe\Control\Controller;
+use SilverStripe\Core\Extension;
 
+/**
+ * @extends Extension<CartPageController&static>
+ */
 class CartPageShippingExtension extends Extension
 {
-    private static $allowed_actions = [
+    private static array $allowed_actions = [
         'ShippingEstimateForm'
     ];
 
-    public function ShippingEstimateForm()
+    public function ShippingEstimateForm(): ShippingEstimateForm
     {
-        return new ShippingEstimateForm($this->owner);
+        return ShippingEstimateForm::create($this->owner);
     }
 
     public function ShippingEstimates()

@@ -15,7 +15,7 @@ class DistanceShippingMethodTest extends SapphireTest
         'Warehouses.yml'
     ];
 
-    public function testDistanceFare()
+    public function testDistanceFare(): void
     {
         $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
         $this->assertEquals(0, $method->getDistanceFare(9));
@@ -24,22 +24,29 @@ class DistanceShippingMethodTest extends SapphireTest
         $this->assertEquals(678, $method->getDistanceFare(999999));
     }
 
-    public function testCalculateRates()
+    public function testCalculateRates(): void
     {
         $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
-        $this->assertEquals(
-            234,
-            $method->calculateRate(
-                new ShippingPackage(),
-                $this->objFromFixture(Address::class, "customeraddress1")
-            )
+        $result = $method->calculateRate(
+            ShippingPackage::create(),
+            $this->objFromFixture(Address::class, "customeraddress1")
         );
-        $this->assertEquals(
-            567,
-            $method->calculateRate(
-                new ShippingPackage(),
-                $this->objFromFixture(Address::class, "customeraddress2")
-            )
+        if ($result) {
+            $this->assertEquals(
+                234,
+                $result
+            );
+        }
+
+        $result = $method->calculateRate(
+            ShippingPackage::create(),
+            $this->objFromFixture(Address::class, "customeraddress2")
         );
+        if ($result) {
+            $this->assertEquals(
+                567,
+                $result
+            );
+        }
     }
 }

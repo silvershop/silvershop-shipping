@@ -7,7 +7,6 @@ use SilverShop\Model\Order;
 use SilverShop\Page\Product;
 use SilverShop\Page\CartPage;
 use SilverShop\Tests\ShopTest;
-use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\SiteConfig\SiteConfig;
 
@@ -23,7 +22,7 @@ class ShippingEstimateFormTest extends FunctionalTest
     protected $socks;
     protected $cartpage;
 
-    public function setup(): void
+    protected function setup(): void
     {
         parent::setUp();
         ShopTest::setConfiguration();
@@ -39,12 +38,12 @@ class ShippingEstimateFormTest extends FunctionalTest
         ShoppingCart::singleton()->setCurrent($this->objFromFixture(Order::class, "cart")); //set the current cart
     }
 
-    public function testGetEstimates()
+    public function testGetEstimates(): void
     {
         $this->useTestTheme(
             dirname(__FILE__),
             'testtheme',
-            function () {
+            function (): void {
                 $page = $this->get('/cart');
 
                 //good data for Shipping Estimate Form
@@ -65,7 +64,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                 //un-escaped data for Shipping Estimate Form
                 $data = [
                     'Country' => 'NZ',
-                    'State' => 'Hawke\'s Bay',
+                    'State' => "Hawke's Bay",
                     'City' => 'SELECT * FROM \" \' WHERE AND EVIL',
                     'PostalCode' => 1234
                 ];
@@ -80,16 +79,17 @@ class ShippingEstimateFormTest extends FunctionalTest
         );
     }
 
-    public function testShippingEstimateWithReadonlyFieldForCountry()
+    public function testShippingEstimateWithReadonlyFieldForCountry(): void
     {
         $siteconfig = SiteConfig::get()->first();
+        $this->assertInstanceOf(SiteConfig::class, $siteconfig);
         $siteconfig->setField('AllowedCountries', '["NZ"]'); // setup a single-country site
         $siteconfig->write();
 
         $this->useTestTheme(
             dirname(__FILE__),
             'testtheme',
-            function () {
+            function (): void {
                 // Open cart page where Country field is readonly
                 $page = $this->get('/cart');
 
@@ -99,7 +99,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                     "The Country field is readonly"
                 );
                 $this->assertStringNotContainsString(
-                    "<option value=\"NZ\">New Zealand</option>",
+                    '<option value="NZ">New Zealand</option>',
                     $page->getBody(),
                     "Dropdown field is not shown"
                 );

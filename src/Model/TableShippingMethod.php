@@ -2,46 +2,48 @@
 
 namespace SilverShop\Shipping\Model;
 
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverShop\Shipping\ShippingPackage;
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\RegionRestriction;
-use SilverStripe\ORM\DataObject;
+use SilverShop\Shipping\ShippingPackage;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
+use SilverStripe\ORM\HasManyList;
 
 /**
  * Work out shipping rate from a pre-defined table of regions - to - weights
  * and dimensions.
+ *
+ * @method HasManyList<TableShippingRate> Rates()
  */
 class TableShippingMethod extends ShippingMethod
 {
-    private static $defaults = [
+    private static array $defaults = [
         'Name'        => 'Table Shipping',
         'Description' => 'Works out shipping from a pre-defined table'
     ];
 
-    private static $has_many = [
+    private static array $has_many = [
         "Rates" => TableShippingRate::class
     ];
 
-    private static $table_name = 'SilverShop_TableShippingMethod';
+    private static string $table_name = 'SilverShop_TableShippingMethod';
 
-    private static $singular_name = 'Table shipping method';
+    private static string $singular_name = 'Table shipping method';
 
-    private static $plural_name = 'Table shipping methods';
+    private static string $plural_name = 'Table shipping methods';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
-        $fields->fieldByName('Root')->removeByName("Rates");
+        $fields->removeByName("Rates");
         if ($this->isInDB()) {
-            $tablefield = new GridField(
+            $tablefield = GridField::create(
                 "Rates",
                 "TableShippingRate",
                 $this->Rates(),
-                new GridFieldConfig_RecordEditor()
+                GridFieldConfig_RecordEditor::create()
             );
-
             $fields->addFieldToTab("Root.Main", $tablefield);
         }
         return $fields;
@@ -49,11 +51,8 @@ class TableShippingMethod extends ShippingMethod
 
     /**
      * Find the appropriate shipping rate from stored table range metrics.
-     *
-     * @param ShippingPackage $package
-     * @param Address $address
      */
-    public function calculateRate(ShippingPackage $package, Address $address)
+    public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
         $rate = null;
         $packageconstraints = [
@@ -67,56 +66,62 @@ class TableShippingMethod extends ShippingMethod
         $emptyconstraint = [];
 
         foreach ($packageconstraints as $db => $pakval) {
-            $mincol = "\"SilverShop_TableShippingRate\".\"{$db}Min\"";
-            $maxcol = "\"SilverShop_TableShippingRate\".\"{$db}Max\"";
+            $mincol = sprintf('"SilverShop_TableShippingRate"."%sMin"', $db);
+            $maxcol = sprintf('"SilverShop_TableShippingRate"."%sMax"', $db);
             //constrain to rates with valid constraints
             $constraintfilters[] =
                 "(" .
-                "$mincol >= 0" .
-                " AND $mincol <= " . $package->{$pakval}() .
-                " AND $maxcol > 0" . //ignore constraints with maxvalue = 0
-                " AND $maxcol >= " . $package->{$pakval}() .
-                " AND $mincol < $maxcol" . //sanity check
+                ($mincol . ' >= 0') .
+                sprintf(' AND %s <= ', $mincol) . $package->{$pakval}() .
+                sprintf(' AND %s > 0', $maxcol) . //ignore constraints with maxvalue = 0
+                sprintf(' AND %s >= ', $maxcol) . $package->{$pakval}() .
+                sprintf(' AND %s < %s', $mincol, $maxcol) . //sanity check
                 ")";
 
             // also include a special case where all constraints are empty
-            $emptyconstraint[] = "($mincol = 0 AND $maxcol = 0)";
+            $emptyconstraint[] = sprintf('(%s = 0 AND %s = 0)', $mincol, $maxcol);
         }
 
         $constraintfilters[] = "(" . implode(" AND ", $emptyconstraint) . ")";
 
-        $filter = sprintf("(%s)", implode(") AND (", [
-            "\"ShippingMethodID\" = " . $this->ID,
-            implode(" OR ", $constraintfilters)
-        ]));
+        $filter = sprintf(
+            "(%s)",
+            implode(
+                ") AND (",
+                [
+                '"ShippingMethodID" = ' . $this->ID,
+                implode(" OR ", $constraintfilters)
+                ]
+            )
+        );
 
         $tr = TableShippingRate::get()
             ->where($filter);
 
-        if ($addressFilters = RegionRestriction::getAddressFilters($address)) {
+        if (($addressFilters = RegionRestriction::getAddressFilters($address)) !== []) {
             $tr = $tr->filter($addressFilters);
         }
 
-        $tr = $tr->sort("LENGTH(\"SilverShop_RegionRestriction\".\"PostalCode\") DESC, \"SilverShop_TableShippingRate\".\"Rate\" ASC")
-            ->first();
+        $tr = $tr->sort(
+            [
+                'PostalCode' => 'DESC',
+                'Rate' => 'ASC'
+            ]
+        )->first();
 
         if ($tr) {
             $rate = $tr->Rate;
         }
 
-        $this->CalculatedRate = $rate;
-
-        return $rate;
+        return $this->CalculatedRate = $rate;
     }
 
     /**
      * If this shipping method has any @TableShippingRate with any @RegionRestriction
      * where either Country, State, City or PostalCode are submitted, this method returns true
      * Else it returns false (@ShippingMethod::requiresAddress());
-     *
-     * @return bool
      */
-    public function requiresAddress()
+    public function requiresAddress(): bool
     {
         if ($this->Rates()->exists()) {
             $defaults = RegionRestriction::config()->get('defaults');

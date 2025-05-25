@@ -5,47 +5,50 @@ namespace SilverShop\Shipping\Model;
 use SilverStripe\ORM\DataObject;
 use SilverShop\Shipping\Model\DistanceShippingMethod;
 
+/**
+ * @property float $Distance
+ * @property float $Cost
+ * @property int $ShippingMethodID
+ * @method DistanceShippingMethod ShippingMethod()
+ */
 class DistanceShippingFare extends DataObject
 {
-    private static $db = [
+    private static array $db = [
         'Distance' => 'Float',
         'Cost' => 'Currency'
     ];
 
-    private static $has_one = [
+    private static array $has_one = [
         'ShippingMethod' => DistanceShippingMethod::class
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'MinDistance',
         'Distance',
         'Cost'
     ];
 
-    private static $field_labels = [
+    private static array $field_labels = [
         'MinDistance' => 'Min Distance (km)',
         'Distance' => 'Max Distance (km)',
         'Cost' => 'Cost'
     ];
 
-    private static $singular_name = "Fare";
+    private static string $singular_name = "Fare";
 
-    private static $default_sort = "\"Distance\" ASC";
+    private static string $default_sort = '"Distance" ASC';
 
-    private static $table_name = 'SilverShop_DistanceShippingFare';
+    private static string $table_name = 'SilverShop_DistanceShippingFare';
 
     public function getMinDistance()
     {
-        $dist = 0;
         if ($dfare = self::get()
             ->filter("Distance:LessThan", $this->Distance)
             ->filter("ShippingMethodID", $this->ShippingMethodID)
             ->sort("Distance", "DESC")
-            ->first()
-        ) {
-            $dist = $dfare->Distance;
+            ->first()) {
+            return $dfare->Distance;
         }
-
-        return $dist;
+        return 0;
     }
 }

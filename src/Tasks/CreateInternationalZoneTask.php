@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverShop\Tasks;
+namespace SilverShop\Shipping\Tasks;
 
 use SilverShop\Extension\ShopConfigExtension;
 use SilverShop\Shipping\Model\Zone;
@@ -13,7 +13,7 @@ class CreateInternationalZoneTask extends BuildTask
 
     protected $description = 'Quickly creates an international zone, based on all available countries.';
 
-    public function run($request)
+    public function run($request): void
     {
         $zone = Zone::create();
         $zone->Name = 'International';

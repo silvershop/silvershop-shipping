@@ -2,63 +2,70 @@
 
 namespace SilverShop\Shipping\Model;
 
+use SilverShop\Model\Address;
+use SilverShop\Shipping\Model\DistanceShippingFare;
+use SilverShop\Shipping\Model\Warehouse;
+use SilverShop\Shipping\ShippingPackage;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
-use SilverStripe\Forms\GridField\GridFieldEditButton;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
-use SilverStripe\Forms\GridField\GridFieldAddNewButton;
-use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
-use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
+use SilverStripe\Forms\GridField\GridFieldEditButton;
 use SilverStripe\Forms\LiteralField;
-use SilverShop\Shipping\ShippingPackage;
-use SilverShop\Shipping\Model\Warehouse;
-use SilverShop\Model\Address;
-use SilverStripe\ORM\DataObject;
-use SilverShop\Shipping\Model\DistanceShippingFare;
+use SilverStripe\ORM\HasManyList;
+use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
+use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
 
+/**
+ * @method HasManyList<DistanceShippingFare> DistanceFares()
+ */
 class DistanceShippingMethod extends ShippingMethod
 {
-    private static $defaults = [
+    private static array $defaults = [
         'Name' => 'Distance Shipping',
         'Description' => 'Per product shipping'
     ];
 
-    private static $has_many = [
+    private static array $has_many = [
         "DistanceFares" => DistanceShippingFare::class
     ];
 
-    private static $table_name = 'SilverShop_DistanceShippingMethod';
+    private static string $table_name = 'SilverShop_DistanceShippingMethod';
 
-    private static $singular_name = 'Distance shipping method';
+    private static string $singular_name = 'Distance shipping method';
 
-    private static $plural_name = 'Distance shipping methods';
+    private static string $plural_name = 'Distance shipping methods';
 
-    public function getCMSFields()
+    public function getCMSFields(): FieldList
     {
         $fields = parent::getCMSFields();
-        $fields->fieldByName('Root')->removeByName("DistanceFares");
+        $fields->removeByName("DistanceFares");
         if ($this->isInDB()) {
-            $fields->addFieldToTab("Root.Main", $gridfield = GridField::create(
-                "DistanceFares",
-                "Fares",
-                $this->DistanceFares(),
-                $config = new GridFieldConfig_RecordEditor()
-            ));
+            $fields->addFieldToTab(
+                "Root.Main",
+                $gridfield = GridField::create(
+                    "DistanceFares",
+                    "Fares",
+                    $this->DistanceFares(),
+                    $config = GridFieldConfig_RecordEditor::create()
+                )
+            );
             $config->removeComponentsByType(GridFieldDataColumns::class);
             $config->removeComponentsByType(GridFieldEditButton::class);
             $config->removeComponentsByType(GridFieldDeleteAction::class);
             $config->removeComponentsByType(GridFieldAddNewButton::class);
-            $config->addComponent($cols = new GridFieldEditableColumns());
-            $config->addComponent(new GridFieldDeleteAction());
-            $config->addComponent($addnew = new GridFieldAddNewInlineButton());
+            $config->addComponent($cols = GridFieldEditableColumns::create());
+            $config->addComponent(GridFieldDeleteAction::create());
+            $config->addComponent($addnew = GridFieldAddNewInlineButton::create());
             $addnew->setTitle($addnew->getTitle() . " Fare");
             if ($this->greatestCostDistance()) {
                 $fields->insertAfter(
                     "DistanceFares",
                     LiteralField::create(
                         "costnote",
-                        "<p class=\"message\">Distances beyond the greatest specified distance will be cost " .
+                        '<p class="message">Distances beyond the greatest specified distance will be cost ' .
                             $this->greatestCostDistance()->dbObject("Cost")->Nice() .
                         " (the most expensive fare)</p>"
                     )
@@ -69,12 +76,18 @@ class DistanceShippingMethod extends ShippingMethod
         return $fields;
     }
 
-    public function calculateRate(ShippingPackage $package, Address $address)
+    public function calculateRate(ShippingPackage $package, Address $address): float|int|null
     {
         $warehouse = Warehouse::closest_to($address);
-        $distance = $warehouse->Address()->distanceTo($address);
-
-        return $this->getDistanceFare($distance);
+        if ($warehouse instanceof Warehouse
+            && $warehouse->Address()->exists()
+            && method_exists(Address::class, 'distanceTo')
+        ) {
+            return $this->CalculatedRate = $this->getDistanceFare(
+                $warehouse->Address()->distanceTo($address)
+            );
+        }
+        return $this->CalculatedRate = null;
     }
 
     public function getDistanceFare($distance)
@@ -89,7 +102,7 @@ class DistanceShippingMethod extends ShippingMethod
             $fare = $this->greatestCostDistance();
         }
         if ($fare->exists()) {
-            $cost = $fare->Cost;
+            return $fare->Cost;
         }
 
         return $cost;
@@ -98,14 +111,11 @@ class DistanceShippingMethod extends ShippingMethod
     public function greatestCostDistance()
     {
         return $this->DistanceFares()
-                ->sort("Cost", "DESC")
-                ->first();
+            ->sort("Cost", "DESC")
+            ->first();
     }
 
-    /**
-     * @return bool
-     */
-    public function requiresAddress()
+    public function requiresAddress(): bool
     {
         return true;
     }

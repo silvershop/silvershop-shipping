@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverShop\Tests\Model;
+namespace SilverShop\Shipping\Tests;
 
 use SilverShop\Model\Address;
 use SilverShop\Shipping\Model\Zone;
@@ -13,7 +13,7 @@ class ZoneTest extends SapphireTest
         'Addresses.yml',
     ];
 
-    public function testMatchingZones()
+    public function testMatchingZones(): void
     {
         $this->assertZoneMatch($this->objFromFixture(Address::class, "wnz6012"), "Wellington NZ");
         $this->assertZoneMatch($this->objFromFixture(Address::class, "wnz6012"), "Local");
@@ -23,7 +23,7 @@ class ZoneTest extends SapphireTest
         $this->assertZoneMatch($this->objFromFixture(Address::class, "zch1234"), "International");
     }
 
-    public function assertZoneMatch($address, $zonename)
+    public function assertZoneMatch(Address $address, $zonename): void
     {
         $zones = Zone::get_zones_for_address($address);
         $this->assertNotNull($zones);

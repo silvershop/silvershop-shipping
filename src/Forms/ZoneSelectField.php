@@ -2,17 +2,19 @@
 
 namespace SilverShop\Shipping\Forms;
 
-use SilverShop\Shipping\Zone;
+use SilverShop\Shipping\Model\Zone;
 use SilverStripe\Forms\DropdownField;
 
 class ZoneSelectField extends DropdownField
 {
-    public function getSource()
+    public function getSource(): array
     {
         $zones = Zone::get();
 
-        if ($zones && $zones->exists()) {
-            return ['' => $this->emptyString] + $zones->map('ID', 'Name');
+        if ($zones->exists()) {
+            return $zones->map('ID', 'Name')
+                ->unshift('', $this->emptyString)
+                ->toArray();
         }
 
         return [];

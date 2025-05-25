@@ -6,32 +6,21 @@ use SilverStripe\Core\Injector\Injectable;
 
 /**
  * Encapsulation of shipping package data
- *
  */
 class ShippingPackage
 {
     use Injectable;
 
-    protected $weight;
-
-    protected $height;
-
-    protected $width;
-
-    protected $depth;
-
-    protected $diameter;
-
-    protected $value;
-
     protected $currency;
-
+    protected $depth;
+    protected $diameter;
+    protected $height;
     protected $quantity;
-
     protected $shape;
-
+    protected $value;
+    protected $weight;
     protected $weightunit;
-
+    protected $width;
     protected $widthunit;
 
     protected $defaultdimensions = [
@@ -58,7 +47,7 @@ class ShippingPackage
         'd' => 'depth'
     ];
 
-    public function __construct($weight = 0, $dimensions = [], $options = [])
+    public function __construct($weight = 0, array $dimensions = [], $options = [])
     {
         $this->weight = $weight;
         //set via aliases
@@ -84,15 +73,14 @@ class ShippingPackage
             $this->defaultdimensions,
             ['value' => null, 'quantity' => null]
         );
-
-        foreach ($zerochecks as $dimension => $value) {
+        foreach (array_keys($zerochecks) as $dimension) {
             if ($this->$dimension < 0) {
                 $this->$dimension = 0;
             }
         }
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         $data = [
             "weight" => $this->weight,
@@ -105,12 +93,10 @@ class ShippingPackage
             "currency" => $this->currency,
             "quantity" => $this->quantity
         ];
-
         return array_filter($data);
     }
 
-
-    public function __toString()
+    public function __toString(): string
     {
         $out = "";
         foreach ($this->toArray() as $key => $value) {
@@ -122,7 +108,7 @@ class ShippingPackage
     /**
      * Calculate total volume, based on given dimensions
      */
-    public function volume()
+    public function volume(): int|float
     {
         return $this->height * $this->width * $this->depth;
     }
@@ -155,30 +141,5 @@ class ShippingPackage
     public function quantity()
     {
         return $this->quantity;
-    }
-
-    public function shape()
-    {
-        return $this->shape;
-    }
-
-    public function weightunit()
-    {
-        return $this->weightunit;
-    }
-
-    public function widthunit()
-    {
-        return $this->widthunit;
-    }
-
-    public function diameter()
-    {
-        return $this->diameter;
-    }
-
-    public function currency()
-    {
-        return $this->currency;
     }
 }
