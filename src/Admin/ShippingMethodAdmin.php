@@ -11,7 +11,7 @@ use SilverStripe\Forms\Form;
 use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
-use SilverStripe\ORM\ArrayLib;
+use SilverStripe\Core\ArrayLib;
 
 class ShippingMethodAdmin extends ModelAdmin
 {
@@ -21,7 +21,7 @@ class ShippingMethodAdmin extends ModelAdmin
 
     private static int $menu_priority = 3;
 
-    private static $menu_icon_class = 'fas fa-truck';
+    private static $menu_icon_class = 'font-icon-p-package';
 
     private static array $managed_models = [
         ShippingMethod::class,
@@ -33,11 +33,13 @@ class ShippingMethodAdmin extends ModelAdmin
         $form = parent::getEditForm($id, $fields);
 
         if ($this->modelClass === ShippingMethod::class) {
-            $gridfield = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
-            $config = $gridfield->getConfig();
+            $gridField = $form->Fields()->fieldByName($this->sanitiseClassName($this->modelClass));
+
+            $config = $gridField->getConfig();
             $config->removeComponentsByType(GridFieldAddNewButton::class);
             $config->removeComponentsByType(GridFieldPrintButton::class);
             $config->removeComponentsByType(GridFieldExportButton::class);
+
             $addNew = GridFieldAddNewMultiClass::create('toolbar-header-left');
             $classes = ClassInfo::subclassesFor($this->modelClass);
             $classes = ArrayLib::valuekey($classes);
