@@ -31,6 +31,14 @@ class Zone extends DataObject
         'Regions' => ZoneRegion::class,
     ];
 
+    private static array $cascade_deletes = [
+        'Regions',
+    ];
+
+    private static array $cascade_duplicates = [
+        'Regions',
+    ];
+
     private static array $summary_fields = [
         'Name',
         'Description',

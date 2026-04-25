@@ -29,6 +29,14 @@ class ZonedShippingMethod extends ShippingMethod
         "Rates" => ZonedShippingRate::class
     ];
 
+    private static array $cascade_deletes = [
+        'Rates',
+    ];
+
+    private static array $cascade_duplicates = [
+        'Rates',
+    ];
+
     private static string $table_name = 'SilverShop_ZonedShippingMethod';
 
     private static string $singular_name = 'Zoned shipping method';

@@ -27,6 +27,14 @@ class TableShippingMethod extends ShippingMethod
         "Rates" => TableShippingRate::class
     ];
 
+    private static array $cascade_deletes = [
+        'Rates',
+    ];
+
+    private static array $cascade_duplicates = [
+        'Rates',
+    ];
+
     private static string $table_name = 'SilverShop_TableShippingMethod';
 
     private static string $singular_name = 'Table shipping method';
