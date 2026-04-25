@@ -5,8 +5,6 @@ namespace SilverShop\Shipping\Admin;
 use SilverStripe\Admin\ModelAdmin;
 use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
 use SilverStripe\Core\ClassInfo;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Core\Config\Config;
 use SilverShop\Shipping\Model\Warehouse;
 use SilverShop\Shipping\Model\ShippingMethod;
 use SilverStripe\Forms\Form;
@@ -40,12 +38,12 @@ class ShippingMethodAdmin extends ModelAdmin
             $config->removeComponentsByType(GridFieldAddNewButton::class);
             $config->removeComponentsByType(GridFieldPrintButton::class);
             $config->removeComponentsByType(GridFieldExportButton::class);
-            $addNew = Injector::inst()->create(GridFieldAddNewMultiClass::class, 'toolbar-header-left');
+            $addNew = GridFieldAddNewMultiClass::create('toolbar-header-left');
             $classes = ClassInfo::subclassesFor($this->modelClass);
             $classes = ArrayLib::valuekey($classes);
             unset($classes[$this->modelClass]);
 
-            foreach (Config::inst()->get(ShippingMethod::class, 'disable_methods') as $disable) {
+            foreach (ShippingMethod::config()->get('disable_methods') ?? [] as $disable) {
                 if (isset($classes[$disable])) {
                     unset($classes[$disable]);
                 }

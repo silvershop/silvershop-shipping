@@ -6,7 +6,7 @@ use SilverStripe\Core\Injector\Injectable;
 use SilverShop\Shipping\Model\ShippingMethod;
 use SilverShop\Model\Order;
 use SilverShop\Model\Address;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 
 /**
  * Helper class for calculating rates for available shipping options.
@@ -21,7 +21,7 @@ class ShippingEstimator
     protected $estimates;
     protected bool $calculated = false;
 
-    public function __construct(Order $order, Address $address = null)
+    public function __construct(Order $order, ?Address $address = null)
     {
         $this->order = $order;
         $this->address = $address instanceof Address ? $address : $order->getShippingAddress();

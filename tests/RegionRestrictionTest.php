@@ -21,7 +21,7 @@ class RegionRestrictionTest extends SapphireTest
     {
         $address = $this->objFromFixture(Address::class, "wnz6012");
         $rate = $this->getRate($address);
-        $this->assertTrue((boolean) $rate);
+        $this->assertTrue((bool) $rate);
         $this->assertEquals(2, $rate->Rate);
     }
 
@@ -29,7 +29,7 @@ class RegionRestrictionTest extends SapphireTest
     {
         $address = $this->objFromFixture(Address::class, "wnz6022");
         $rate = $this->getRate($address);
-        $this->assertTrue((boolean)$rate);
+        $this->assertTrue((bool) $rate);
         $this->assertEquals(10, $rate->Rate);
     }
 
@@ -37,7 +37,7 @@ class RegionRestrictionTest extends SapphireTest
     {
         $address = $this->objFromFixture(Address::class, "anz1010");
         $rate = $this->getRate($address);
-        $this->assertTrue((boolean)$rate);
+        $this->assertTrue((bool) $rate);
         $this->assertEquals(50, $rate->Rate);
     }
 
@@ -51,7 +51,7 @@ class RegionRestrictionTest extends SapphireTest
 
         $address = $this->objFromFixture(Address::class, "bukhp193eq");
         $rate = $this->getRate($address);
-        $this->assertTrue((boolean)$rate);
+        $this->assertTrue((bool) $rate);
         $this->assertEquals(100, $rate->Rate);
     }
 
@@ -72,7 +72,7 @@ class RegionRestrictionTest extends SapphireTest
         );
 
         $rate = $this->getRate($address);
-        $this->assertFalse((boolean)$rate, "Can't find rate with unescaped data");
+        $this->assertFalse((bool) $rate, "Can't find rate with unescaped data");
 
         $address = Address::create()->update(
             [
@@ -81,7 +81,7 @@ class RegionRestrictionTest extends SapphireTest
             ]
         );
         $rate = $this->getRate($address);
-        $this->assertTrue((boolean)$rate, "Rate with unescaped data found");
+        $this->assertTrue((bool) $rate, "Rate with unescaped data found");
     }
 
     public function getRate(Address $address)

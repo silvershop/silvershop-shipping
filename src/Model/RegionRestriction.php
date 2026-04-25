@@ -93,7 +93,7 @@ class RegionRestriction extends DataObject
         return static::get()->filter(self::getAddressFilters($address));
     }
 
-    public static function getAddressFilters(Address $address = null): array
+    public static function getAddressFilters(?Address $address = null): array
     {
         if (!$address instanceof Address) {
             // no filters if no address.

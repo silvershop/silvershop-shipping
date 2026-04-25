@@ -11,6 +11,6 @@ jobs:
     uses: silverstripe/gha-ci/.github/workflows/ci.yml@v1
     with:
       composer_require_extra:
-        phpunit/phpunit:^9.5
+        phpunit/phpunit:^11.5
         php-http/discovery:^1.18.1
         silvershop/core:dev-main

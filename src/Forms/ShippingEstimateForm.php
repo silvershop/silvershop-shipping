@@ -8,12 +8,11 @@ use SilverShop\Model\Address;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\FormAction;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverShop\Cart\ShoppingCart;
 use SilverShop\Shipping\ShippingEstimator;
 use SilverStripe\Core\Convert;
-use SilverStripe\Control\Director;
 
 class ShippingEstimateForm extends Form
 {
@@ -32,7 +31,7 @@ class ShippingEstimateForm extends Form
                 _t('ShippingEstimateForm.FormActionTitle', 'Estimate')
             )
         );
-        $validator = RequiredFields::create(['Country']);
+        $validator = RequiredFieldsValidator::create(['Country']);
         parent::__construct($controller, $name, $fields, $actions, $validator);
         $this->extend('updateForm');
     }
@@ -45,9 +44,15 @@ class ShippingEstimateForm extends Form
         }
 
         if ($order = ShoppingCart::singleton()->current()) {
+            $addressData = [
+                'Country' => Convert::raw2sql((string) ($data['Country'] ?? '')),
+                'State' => Convert::raw2sql((string) ($data['State'] ?? '')),
+                'City' => Convert::raw2sql((string) ($data['City'] ?? '')),
+                'PostalCode' => Convert::raw2sql((string) ($data['PostalCode'] ?? '')),
+            ];
             $estimator = ShippingEstimator::create(
                 $order,
-                Address::create(Convert::raw2sql($data))
+                Address::create()->update($addressData)
             );
 
             $estimates = $estimator->getEstimates();
@@ -70,7 +75,7 @@ class ShippingEstimateForm extends Form
                 $estimates
             );
 
-            if (Director::is_ajax()) {
+            if ($this->getRequest()->isAjax()) {
                 //TODO: replace with an AJAXResponse class that can output to different formats
                 return json_encode($estimates->toNestedArray());
             }

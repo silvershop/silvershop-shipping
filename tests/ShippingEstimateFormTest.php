@@ -51,7 +51,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                     'Country' => 'NZ',
                     'State' => 'Auckland',
                     'City' => 'Auckland',
-                    'PostalCode' => 1010
+                    'PostalCode' => '1010'
                 ];
                 $page1 = $this->post('/cart/ShippingEstimateForm', $data);
                 $this->assertEquals(200, $page1->getStatusCode(), "a page should load");
@@ -66,7 +66,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                     'Country' => 'NZ',
                     'State' => "Hawke's Bay",
                     'City' => 'SELECT * FROM \" \' WHERE AND EVIL',
-                    'PostalCode' => 1234
+                    'PostalCode' => '1234'
                 ];
                 $page2 = $this->post('/cart/ShippingEstimateForm', $data);
                 $this->assertEquals(200, $page2->getStatusCode(), "a page should load");
@@ -108,7 +108,7 @@ class ShippingEstimateFormTest extends FunctionalTest
                 $data = [
                     'State' => 'Waikato',
                     'City' => 'Hamilton',
-                    'PostalCode' => 3210
+                    'PostalCode' => '3210'
                 ];
                 $page3 = $this->post('/cart/ShippingEstimateForm', $data);
                 $this->assertEquals(200, $page3->getStatusCode(), "a page should load");
