@@ -1,4 +1,4 @@
-<table class="table estimatelist">
+<table class="silvershop-table silvershop-estimatelist">
 	<thead>
 		<tr>
 			<th>Rate</th>
