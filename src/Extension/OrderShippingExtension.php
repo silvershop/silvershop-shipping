@@ -9,7 +9,7 @@ use SilverShop\Shipping\Model\Zone;
 use SilverShop\Shipping\ShippingEstimator;
 use SilverShop\Shipping\ShippingPackage;
 use SilverStripe\Core\Extension;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 
 /**
  * @property float $ShippingTotal
