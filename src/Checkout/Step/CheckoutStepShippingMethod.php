@@ -9,6 +9,7 @@ use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\Form;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverShop\Shipping\Model\ShippingMethod;
 
 /**
@@ -52,11 +53,19 @@ class CheckoutStepShippingMethod extends CheckoutStep
                 $order->setShippingMethod($estimates->First());
             }
 
+            // Render each option label as HTML so a getTitle() containing markup (e.g. a currency
+            // entity, or rate/description markup added via updateTitle) is not escaped by SS6's
+            // OptionsetField, which escapes string labels (SS4 did not).
+            $source = [];
+            foreach ($estimates as $shippingMethod) {
+                $source[$shippingMethod->ID] = DBHTMLText::create()->setValue($shippingMethod->getTitle());
+            }
+
             $fields->push(
                 OptionsetField::create(
                     "ShippingMethodID",
                     _t('CheckoutStep_ShippingMethod.ShippingOptions', 'Shipping Options'),
-                    $estimates->map('ID', 'getTitle'),
+                    $source,
                     $estimates->First()->ID
                 )
             );
