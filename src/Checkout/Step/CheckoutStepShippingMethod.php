@@ -54,8 +54,10 @@ class CheckoutStepShippingMethod extends CheckoutStep
             }
 
             // Render each option label as HTML so a getTitle() containing markup (e.g. a currency
-            // entity, or rate/description markup added via updateTitle) is not escaped by SS6's
-            // OptionsetField, which escapes string labels (SS4 did not).
+            // entity, or markup added via the updateTitle extension hook) is not escaped by SS6's
+            // OptionsetField, which escapes string labels (SS4 did not). ShippingMethod::getTitle()
+            // already HTML-escapes the free-text Name/Description fields, so only trusted
+            // (config/developer-controlled) markup reaches the DBHTMLText value here.
             $source = [];
             foreach ($estimates as $shippingMethod) {
                 $source[$shippingMethod->ID] = DBHTMLText::create()->setValue($shippingMethod->getTitle());
