@@ -19,18 +19,20 @@ class WarehouseTest extends SapphireTest
 
     public function testClosestWarehouse(): void
     {
+        if (!method_exists(Address::class, 'distanceTo')) {
+            $this->markTestSkipped('Warehouse distance tests require geocoding support on addresses.');
+        }
+
         $warehouse = Warehouse::closest_to(
             $this->objFromFixture(Address::class, "customeraddress1")
         );
-        if ($warehouse instanceof Warehouse) {
-            $this->assertEquals("Main warehouse", $warehouse->Title);
-        }
+        $this->assertInstanceOf(Warehouse::class, $warehouse);
+        $this->assertEquals("Main warehouse", $warehouse->Title);
 
         $warehouse =  Warehouse::closest_to(
             $this->objFromFixture(Address::class, "customeraddress2")
         );
-        if ($warehouse instanceof Warehouse) {
-            $this->assertEquals("NSW depot", $warehouse->Title);
-        }
+        $this->assertInstanceOf(Warehouse::class, $warehouse);
+        $this->assertEquals("NSW depot", $warehouse->Title);
     }
 }
