@@ -2,6 +2,7 @@
 
 namespace SilverShop\Shipping\Model;
 
+use SilverStripe\Core\Convert;
 use SilverStripe\ORM\DataObject;
 use SilverShop\Model\Order;
 use SilverShop\ORM\FieldType\ShopCurrency;
@@ -67,13 +68,18 @@ class ShippingMethod extends DataObject
             $rate = ShopCurrency::config()->currency_symbol . $rate;
         }
 
+        // Escape the free-text admin fields: the checkout renders this title as HTML (see
+        // CheckoutStepShippingMethod, which passes it to an OptionsetField as DBHTMLText), so any
+        // markup in Name/Description would otherwise be output unescaped. The rate/currency symbol
+        // and any markup added by an updateTitle extension are config/developer-controlled (trusted)
+        // and left intact.
         $title = implode(
             " - ",
             array_filter(
                 [
                 $rate,
-                $this->Name,
-                $this->Description
+                $this->Name ? Convert::raw2xml($this->Name) : null,
+                $this->Description ? Convert::raw2xml($this->Description) : null
                 ]
             )
         );
