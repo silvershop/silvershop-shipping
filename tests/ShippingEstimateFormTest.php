@@ -6,7 +6,7 @@ use SilverShop\Cart\ShoppingCart;
 use SilverShop\Model\Order;
 use SilverShop\Page\Product;
 use SilverShop\Page\CartPage;
-use SilverShop\Tests\ShopTest;
+use SilverShop\Tests\ShopTestBootstrap;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\SiteConfig\SiteConfig;
 
@@ -25,7 +25,7 @@ class ShippingEstimateFormTest extends FunctionalTest
     protected function setup(): void
     {
         parent::setUp();
-        ShopTest::setConfiguration();
+        ShopTestBootstrap::setConfiguration();
         $this->logInWithPermission('ADMIN');
 
         // add product to the cart

@@ -26,27 +26,19 @@ class DistanceShippingMethodTest extends SapphireTest
 
     public function testCalculateRates(): void
     {
-        $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
-        $result = $method->calculateRate(
-            ShippingPackage::create(),
-            $this->objFromFixture(Address::class, "customeraddress1")
-        );
-        if ($result) {
-            $this->assertEquals(
-                234,
-                $result
-            );
+        if (!method_exists(Address::class, 'distanceTo')) {
+            $this->markTestSkipped('Distance shipping tests require geocoding support on addresses.');
         }
 
-        $result = $method->calculateRate(
+        $method = $this->objFromFixture(DistanceShippingMethod::class, "ds");
+        $this->assertSame(234, $method->calculateRate(
+            ShippingPackage::create(),
+            $this->objFromFixture(Address::class, "customeraddress1")
+        ));
+
+        $this->assertSame(567, $method->calculateRate(
             ShippingPackage::create(),
             $this->objFromFixture(Address::class, "customeraddress2")
-        );
-        if ($result) {
-            $this->assertEquals(
-                567,
-                $result
-            );
-        }
+        ));
     }
 }
