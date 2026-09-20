@@ -113,6 +113,45 @@ class TableShippingMethodTest extends SapphireTest
         $this->assertMatch($type, $this->p4, $address, 100);
     }
 
+    public function testAddressTablePrefersMostSpecificPostcodeMatch(): void
+    {
+        if (!$this->addressshipping instanceof TableShippingMethod) {
+            $this->markTestSkipped('Applies only to table shipping methods.');
+        }
+
+        foreach ([
+            ['Country' => 'GB', 'PostalCode' => 'NE', 'Rate' => 40],
+            ['Country' => 'GB', 'PostalCode' => 'NE17', 'Rate' => 30],
+            ['Country' => 'GB', 'PostalCode' => 'NE17', 'Rate' => 28],
+            ['Country' => 'GB', 'PostalCode' => 'NE177AH', 'Rate' => 20],
+            ['Country' => 'GB', 'PostalCode' => 'NE177AH', 'Rate' => 15],
+        ] as $data) {
+            $rate = TableShippingRate::create($data);
+            $rate->write();
+            $this->addressshipping->Rates()->add($rate);
+        }
+
+        $this->assertMatch(
+            'address',
+            $this->p0,
+            Address::create([
+                'Country' => 'GB',
+                'PostalCode' => 'NE17 7AH',
+            ]),
+            15
+        );
+
+        $this->assertMatch(
+            'address',
+            $this->p0,
+            Address::create([
+                'Country' => 'GB',
+                'PostalCode' => 'NE17 9ZZ',
+            ]),
+            28
+        );
+    }
+
     public function testInternationalRates(): void
     {
         $address_int = $this->internationaladdress;
