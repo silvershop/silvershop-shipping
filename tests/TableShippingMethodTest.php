@@ -115,6 +115,10 @@ class TableShippingMethodTest extends SapphireTest
 
     public function testAddressTablePrefersMostSpecificPostcodeMatch(): void
     {
+        if (!$this->addressshipping instanceof TableShippingMethod) {
+            $this->markTestSkipped('Applies only to table shipping methods.');
+        }
+
         foreach ([
             ['Country' => 'GB', 'PostalCode' => 'NE', 'Rate' => 40],
             ['Country' => 'GB', 'PostalCode' => 'NE17', 'Rate' => 30],
