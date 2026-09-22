@@ -53,6 +53,17 @@ class ShippingMethod extends DataObject
         return $this->CalculatedRate;
     }
 
+    public function setCalculatedRate(float|int|null $rate): static
+    {
+        $this->CalculatedRate = $rate;
+        return $this;
+    }
+
+    public function getCalculatedRate(): float|int|null
+    {
+        return $this->CalculatedRate;
+    }
+
     public function getTitle(): string
     {
         $rate = number_format(

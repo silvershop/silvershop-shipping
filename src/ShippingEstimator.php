@@ -40,13 +40,13 @@ class ShippingEstimator
             foreach ($options as $option) {
                 $rate = $option->getCalculator($this->order)->calculate($this->address, $total);
                 if ($rate !== null) {
-                    $option->CalculatedRate = $rate;
+                    $option->setCalculatedRate($rate);
                     $output->push($option);
                 }
             }
         }
 
-        $output->sort("CalculatedRate", "ASC"); //sort by rate, lowest to highest
+        $output = $output->sort("CalculatedRate", "ASC"); //sort by rate, lowest to highest
         // cache estimates
         $this->estimates = $output;
         $this->calculated = true;
