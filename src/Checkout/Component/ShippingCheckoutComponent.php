@@ -8,8 +8,8 @@ use SilverShop\Shipping\Model\ShippingMethod;
 use SilverShop\ShopTools;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\OptionsetField;
-use SilverStripe\ORM\ValidationResult;
-use SilverStripe\ORM\ValidationException;
+use SilverStripe\Core\Validation\ValidationResult;
+use SilverStripe\Core\Validation\ValidationException;
 
 class ShippingCheckoutComponent extends CheckoutComponent
 {
