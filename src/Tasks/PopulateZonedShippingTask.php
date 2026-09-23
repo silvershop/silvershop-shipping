@@ -24,7 +24,7 @@ class PopulateZonedShippingTask extends BuildTask
     protected function execute(InputInterface $input, PolyOutput $output): int
     {
         if (!ZonedShippingMethod::get()->first()) {
-            $factory = FixtureFactory::create();
+            $factory = new FixtureFactory();
             $fixture = YamlFixture::create(
                 ModuleResourceLoader::singleton()
                     ->resolvePath('silvershop/shipping:tests/ZonedShippingMethod.yml')
