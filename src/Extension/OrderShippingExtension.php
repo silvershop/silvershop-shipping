@@ -101,7 +101,14 @@ class OrderShippingExtension extends Extension
             throw new Exception(_t("OrderShippingExtension.NoAddress", "No address has been set"));
         }
 
-        $this->owner->ShippingTotal = $option->calculateRate($package, $address);
+        $rate = $option->calculateRate($package, $address);
+
+        // a null rate means the method can't ship this package to this address
+        if ($rate === null) {
+            return false;
+        }
+
+        $this->owner->ShippingTotal = $rate;
         $this->owner->ShippingMethodID = $option->ID;
         $this->owner->write();
 

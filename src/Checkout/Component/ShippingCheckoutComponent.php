@@ -48,7 +48,7 @@ class ShippingCheckoutComponent extends CheckoutComponent
             throw ValidationException::create($result);
         }
 
-        if (!ShippingMethod::get()->byID($data['ShippingMethodID'])) {
+        if (!$this->getAvailableShippingMethod($order, $data['ShippingMethodID'])) {
             $result->addError(
                 _t(
                     'ShippingCheckoutComponent.ShippingMethodDoesNotExistMessage',
@@ -78,14 +78,29 @@ class ShippingCheckoutComponent extends CheckoutComponent
     {
         $option = null;
         if (isset($data['ShippingMethodID'])) {
-            $option = ShippingMethod::get()
-                ->byID((int)$data['ShippingMethodID']);
+            $option = $this->getAvailableShippingMethod($order, $data['ShippingMethodID']);
         }
         //assign option to order / modifier
-        if ($option) {
-            $order->setShippingMethod($option);
+        if ($option && $order->setShippingMethod($option)) {
             ShopTools::getSession()->set("Checkout.ShippingMethod", $option);
         }
         return $order;
+    }
+
+    /**
+     * Only shipping methods that are currently offered for the order (enabled, and able to
+     * calculate a rate for its address and contents) may be chosen. Looking the method up by ID
+     * alone would let a customer submit a disabled method, or one that doesn't serve their
+     * address, and check out with no shipping charge.
+     */
+    protected function getAvailableShippingMethod(Order $order, mixed $id): ?ShippingMethod
+    {
+        if (!is_numeric($id) || (int) $id <= 0) {
+            return null;
+        }
+
+        $method = $order->getShippingEstimates()->find('ID', (int) $id);
+
+        return $method instanceof ShippingMethod ? $method : null;
     }
 }
