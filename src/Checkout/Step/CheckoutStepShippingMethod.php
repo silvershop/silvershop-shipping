@@ -101,10 +101,11 @@ class CheckoutStepShippingMethod extends CheckoutStep
         $order = $this->owner->Cart();
         $option = null;
 
-        if (isset($data['ShippingMethodID'])) {
-            $option = ShippingMethod::get()->byID($data['ShippingMethodID']);
+        if (isset($data['ShippingMethodID']) && is_numeric($data['ShippingMethodID'])) {
+            // only accept one of the methods offered for this order, never an arbitrary ID
+            $option = $order->getShippingEstimates()->find('ID', (int) $data['ShippingMethodID']);
 
-            if ($option) {
+            if ($option instanceof ShippingMethod) {
                 $order->setShippingMethod($option);
             }
         }
